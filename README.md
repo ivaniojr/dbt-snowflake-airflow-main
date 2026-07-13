@@ -28,6 +28,8 @@ Passo 6: Orquestrar o container do dbt conectado ao Snowflake com o Airflow
 ## Arquitetura
 ![image](assets/architecture-dbt-snowflake-airflow.png)
 
+![image](assets/arquitetura-solucao.jpeg)
+
 ## Introdução
 
 ### Snowflake
