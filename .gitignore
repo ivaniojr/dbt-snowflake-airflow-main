@@ -5,3 +5,4 @@ __pycache__/
 *.pyc
 src/dbt/seeds/tarefa.csv
 rsa_key.p8
+src/dbt/rsa_key.p8
