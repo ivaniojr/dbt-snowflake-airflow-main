@@ -1,5 +1,5 @@
 -- Select role to create warehouse, database, schema, role, and user
-USE ROLE ACCOUNTADMIN;
+USE ROLE TRAINING_ROLE;
 
 --Create Warehouse for dbt work
 CREATE OR REPLACE WAREHOUSE DBT_WH
