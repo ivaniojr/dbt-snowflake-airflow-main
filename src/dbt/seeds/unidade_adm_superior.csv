@@ -1,0 +1,23 @@
+"id","nome_unidade","sigla","responsavel","email","telefone","codigo_sei"
+1,"Gabinete do Secretário","GB","Sergio Vêncio","sergio.vencio@goias.gov.br","",NULL
+17,"Laboratório Estadual de Saúde Pública Dr. Giovanni Cysneiros LACEN-GO","LACEN","Vinicius Lemes da Silva","vinicius.silva@goias.gov.br","(62) 3201-3882",NULL
+18,"Gabinte de Crise - Dengue","","Rassível","","",NULL
+11,"Superintendência de Tecnologia, Inovação e Saúde Digital","SUTIS","Luiselena Luna Esmeraldo","luiselena.esmeraldo@goias.gov.br","(62) 3201-7763","18354"
+19,"Subsecretaria de Vigilância em Saúde","SUBVS","Flúvia Pereira Amorim da Silva"," fluvia.silva@goias.gov.br"," (62) 3201-3933","3084"
+4,"Subsecretaria de Políticas e Ações em Saúde","SUBPAS","Luciano de Moura Carvalho","luciano.carvalho@goias.gov.br","(62) 3201-4976 / 3767","21278"
+5,"Subsecretaria de Inovação, Planejamento, Educação e Infraestrutura","SUBIPEI","Ana Carolina Rezende Abrahão","ana.abrahao@goias.gov.br","(62) 3201-4908","21286"
+6,"Subsecretaria de Controle Interno e Compliance"," SUBCIC","José Augusto Carneiro","jose.acarneiro@goias.gov.br "," (62) 3201-3828","21299"
+2,"Superintendência de Gestão Integrada","SGI","Thalles Paulino de Ávila","thalles.avila@goias.gov.br","32013721","3079"
+10,"Superintendência de Vigilância Epidemiológica e Imunização","SUP-VEI","Cristina Aparecida Borges Pereira Laval","cristina.laval@goias.gov.br"," (62) 3201-7793","22953"
+20,"Superintendência de Vigilância Sanitária, Ambiental e Saúde do Trabalhador","SUPVSAST","Eliane Rodrigues da Cruz","eliane.cruz@goias.gov.br","","22954"
+7,"Superintendência de Regulação, Controle e Avaliação","SUREG","Lorena Nunes Mota","lorena.mota@goias.gov.br "," (62) 3201- 4976","15346"
+9,"Superintendência de Monitoramento dos Contratos de Gestão e Convênios","SUPECC","Wagner Assis Rodrigues","wagner.rodrigues@goias.gov.br","(62) 3201-3814","3082"
+21,"Superintendência de Regionalização","SUP-REG","Érika Lopes Rocha Batista","superre.saude@goias.gov.br","(62) 3201-3731","22955"
+12,"Superintendência de Planejamento","SPLAN","Túlio Silva Oliveira","tulio.oliveira@goias.gov.br","(62) 3201-3593","21290"
+13,"Superintendência da Escola de Saúde de Goiás","SESG","Rafaela Júlia Batista Veronezi","gabinete.escoladesaude@goias.gov.br","(62) 3201-3410","3776"
+14,"Superintendência de Infraestrutura","SUINFRA","Maurício Ertner de Almeida","mauricio.almeida@goias.gov.br","(62) 3201-3850","11734"
+15,"Superintendência de Governo Aberto e Participação Cidadã","SUPGAPC","Sérgio Gomes de Carvalho"," sergio.carvalho@goias.gov.br","(62) 3201-7771","21300"
+16,"Superintendência de Controle Interno e Correição","SUPCIC","Suellen Dantas Tobias e Silva Ravazzi","suellen.ravazzi@goias.gov.br","(62) 3201-3595","21302"
+3,"Gabinete do Secretário-Adjunto","GADJ","Sérgio Alberto Cunha Vencio"," sergio.vencio@goias.gov.br","32013828 / 38283471","3080"
+8,"Superintendência de Políticas e Atenção Integral à Saúde","SPAIS","Amanda Melo e Santos Limongi"," amanda.limongi@goias.gov.br ","(62) 3201-7027","3083"
+22,"Secretaria de Desenvolvimento Social","SEDS","Wellington Matos de Lima","ouvidoria.seds@goias.gov.br","(62) 3201-1975",NULL

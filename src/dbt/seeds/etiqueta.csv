@@ -1,0 +1,17 @@
+"id","nome","cor","unidade_adm_id"
+3,"Delegar","#ff9500",42
+1,"Helpdesk","#5aee58",42
+4,"Helpdesk","#05f040",41
+5,"Evolutiva","#c528c8",41
+6,"Rascunho","#a9ac06",41
+7,"Correção","#ff0000",41
+8,"Novo Desenv","#1100fa",41
+9,"Análise","#ece509",41
+10,"Delegar","#04defb",41
+11,"Melhorar Evidência","#020ae3",42
+12,"URGENTE","#e60000",43
+16,"Urgente","#ff0000",42
+15,"COMUM ","#19ad05",43
+14,"BAIXA CRITICIDADE","#0ad6ff",43
+13,"MÉDIA CRITICIDADE","#f1e904",43
+2,"Rascunho","#f95d5d",42

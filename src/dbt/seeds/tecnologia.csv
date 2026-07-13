@@ -1,0 +1,20 @@
+"id","nome","unidade_adm_id","id_tecnologia_old"
+1,"Pentaho",42,NULL
+2,"Java Script",42,NULL
+3,"PHP",42,NULL
+4,"Geoclip",42,NULL
+5,"NodeJS",42,NULL
+6,"Angular",42,NULL
+7,"Flask",42,NULL
+8,"Django",42,NULL
+9,"JAVA",41,1
+10,"PHP",41,2
+11,"NODEJS",41,3
+12,"PYTHON",41,5
+14,"Engenharia de Dados",43,NULL
+15,"Desenvolvimento",43,NULL
+16,"Gestão da Informação",43,NULL
+17,"Inteligência Artificial",43,NULL
+18,"Computação Quântica",43,NULL
+13,"Big Data e Data Analytics",43,NULL
+19,"Criação e Análise de Dados",43,NULL

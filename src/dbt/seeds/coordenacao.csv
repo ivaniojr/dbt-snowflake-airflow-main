@@ -1,0 +1,22 @@
+"id","nome","cor","unidade_adm_id"
+2,"BI","#2e2b36",42
+1,"Big Data","#46bbd2",42
+3,"Data Science","#418bb9",42
+4,"Negócio","#b05e9e",42
+15,"Coordenação de Sistemas DATASUS","#000000",43
+7,"Arquitetura	","#f90bcd",41
+6,"Manutenção/Evolução","#0008e6",41
+9,"Novos Projetos","#0af51a",41
+10,"Apoio BI","#ec0909",41
+11,"GESAD - Saúde Digital","#eb0000",43
+16,"HUB INDRA","#e7ea1f",41
+13,"FHIR","#f10ea9",42
+14,"Desenvolvimento","#10f500",42
+19,"Governança de Dados","#0652ea",42
+21,"Gerente de Projetos","#fd86f9",72
+22,"Especialista","#86f556",72
+23,"Preposto","#755ee8",72
+24,"PDTI","#bde010",42
+17,"GOMAP -Em Elaboração","#f8f00d",42
+18,"GOMAP -Em Andamento","#b914f5",42
+20,"GOMAP - Concluído","#ee301b",42

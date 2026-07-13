@@ -1,0 +1,11 @@
+"id","nome","pontuacao_maior_que","pontuacao_menor_que","unidade_adm_id"
+6,"Baixa",0,23,41
+8,"Alta",34,999,41
+7,"Média",24,33,41
+5,"Única",0,999,41
+9,"Única",0,999,43
+4,"Alta",24,999,42
+3,"Média",18,23,42
+2,"Baixa",0,17,42
+1,"Única",0,999,42
+10,"Única",0,99,72

@@ -1,0 +1,6 @@
+venv/
+.env
+airflow/logs/
+__pycache__/
+*.pyc
+src/dbt/seeds/tarefa.csv

@@ -1,0 +1,22 @@
+"id","nome","faturavel","unidade_adm_id"
+1,"Analista de BI",True,42
+2,"Cientista de Dados",True,42
+3,"Engenheiro de Dados",True,42
+4,"Arquiteto de Big Data",True,42
+5,"Servidor Efetivo",False,42
+6,"Estagiário",False,42
+7,"Terceirizado em Outro Contrato",False,42
+8,"Servidor Efetivo",False,41
+9,"Desenvolvedor",True,41
+10,"Analista de Processos",True,41
+11,"Analista de Sistemas",True,41
+12,"Arquiteto de Software",True,41
+13,"Designer de UX",True,41
+14,"Gerente de Projetos de TIC",True,41
+16,"Analista de Testes",True,41
+17,"Supervisor Técnico",True,41
+18,"Estagiário",False,41
+19,"Servidor Efetivo",False,43
+20,"Especialista em Big Data",True,43
+21,"Especialista em IA",True,72
+22,"Preposto",False,41

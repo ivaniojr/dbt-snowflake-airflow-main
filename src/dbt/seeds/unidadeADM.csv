@@ -1,0 +1,89 @@
+"id","nome_unidade","sigla","responsavel","email","telefone","codigo_sei","unidade_superior_id"
+5,"Gerência de Contratos e Convênios ","","Flávia Cristina Oliva Meireles Resende","flavia.mresende@goias.gov.br","(62) 3201-2450",NULL,2
+8,"Gerência de Contabilidade","","Murilo Lara de Faria","murilo.faria@goias.gov.br","(62) 3201-3713",NULL,2
+9,"Assessoria Técnica","","","","",NULL,3
+10,"Assessoria de Qualidade e Segurança do Paciente","","","","",NULL,3
+11,"Gerência de Redes de Atenção","","","","",NULL,3
+1,"Gerência de Gestão de Pessoa","GGDP","Fernando Augusto Ataíde Castro","fernando.castro@goias.gov.br"," (62) 3201-7336","3087",2
+19,"Gerência de Regulação de Exames e Consultas","","Bruna de Castro Fernandes","bruna.fernades@goias.gov.br","",NULL,7
+29,"Gerência de Monitoramento e Avaliação da Execução dos Contratos de Gestão","","Rafaela Troncha Camargo","rafaela.camargo@goias.gov.br"," (62) 3201-3870",NULL,9
+34,"Gerência de Vigilância Epidemiológica de Doenças Transmissíveis","","Ana Cristina Gonçalves de Oliveira","ana.coliveira@goias.gov.br","(62) 3201-2685",NULL,10
+36,"Gerência de Imunização","","Joice Kellen Silva Santos Nogueira Dorneles","","(62) 3201-6056",NULL,10
+37,"Gerência de Vigilância Epidemiológica de Agravos não Transmissíveis e Promoção à Saúde","","Magna Maria de Carvalho","magna.carvalho@goias.gov.br"," (62) 3201-7874",NULL,10
+40,"Assessoria Técnica","","","","",NULL,5
+41,"Gerência de Tecnologia","GETEC","Lara de Castro Bastos Oliveira","lara.oliveira@goias.gov.br","(62) 3201-3792",NULL,11
+50,"Gerência de Pesquisa e Inovação","","Fernanda Pimenta Simon Ferreira","welika.santos@goias.gov.br","(62) 3201-3616",NULL,13
+54,"Gerência de Engenharia e Arquitetura","","Cinthia Márcia Rachid","cinthia.rachid@goias.gov.br"," (62) 3201-4221",NULL,14
+58,"Gerência de Governo Aberto","","Lívia Oliveira Soares","livia.soares@goias.gov.br"," (62) 3201-3465",NULL,15
+62,"Gerência de Auditoria do SUS","","Júlia Elisa Willik","julia.willik@goias.gov.br"," (62) 3201-4994",NULL,16
+64,"Comunicação Setorial","","","","",NULL,1
+42,"Gerência de Inovação","GEIN","Carlos Augusto Gonçalves Tibiriça","carlos.tibirica@goias.gov.br","32013740","18354",11
+65,"Coordenação de Habilitação","COHAB","Ticiane Peixoto Nakae da Silva","ticiane.silva@goias.gov.br","","18897",8
+43,"Gerência de Saúde Digital","GESAD","Diana Guimaraes","","",NULL,11
+66,"Gerência de Ações Estratégicas na Secretaria de Estado da Saúde de Goiás (DGPC/GEAE-SES)","GEAE","Guilherme ","","","20003",1
+68,"Superintendência de Regulação, Controle e Avaliação","","Luciano de Moura Carvalho","","",NULL,4
+2,"Gerência Financeira","GEFIN","Ludymilla Maria do Carmo Leonel de Almeida"," ludymilla.almeida@goias.gov.br","(62) 3201-3760","3090",2
+3,"Gerência de Apoio Administrativo e Logístico","GEAAL","Rodrigo Rezende e Souza","rodrigo.souza@goias.gov.br"," (62) 3201-4250 / 4248 / 4249","21277",2
+4,"Gerência de Compras Governamentais","GECG","Lucas Araújo Garces"," lucas.garces@goias.gov.br","(62) 3201-3755 / 3856","3089",2
+7,"Gerência de Licitações","GELIC","Natal de Castro","natal.castro@goias.gov.br","(62) 3201-3800","3860",2
+33,"Gerência de Vigilância Sanitária","","Eliane Rodrigues da Cruz","eliane.cruz@goias.gov.br","(62) 3201-3909",NULL,20
+38,"Gerência de Vigilância Ambiental e Saúde do Trabalhador","GVAST","Kátia Martins Soares","suvisa.gvast.saude@gmail.com","(62) 3201-6021","3109",20
+27,"Gerência de Suporte Administrativo","SPAIS-GESA","Aline Bessa Parmeggiani Monteiro","aline.monteiro@goias.gov.br","(62) 3201-7871","18352",8
+53,"Gerência de Suporte Administrativo","GESA – SESG","Adriana Martins de Lucena","gsa.escoladesaude@goias.gov.br","(62) 3201-3401","21295",13
+67,"Assessoria Técnica","","CARGO VAGO","","",NULL,4
+15,"Assessoria Técnica de Redes de Atenção","ASSTRA","Marina de Pina e Abreu de Morais","marina.morais@goias.gov.br","(62) 3201-3757","21273",4
+70,"Superintendência de Monitoramento dos Contratos de Gestão e Convênios","SUPECC","Wagner Assis Rodrigues","wagner.rodrigues@goias.gov.br / super.ses.go@gmail.com","(62) 3201-3814","3082",4
+13,"Gerência de Humanização","GHUM","Maria Salette Batista Paulino","maria.paulino@goias.gov.br","(62) 3201-3471","21275",4
+18,"Gerência de Regulação de Cirurgias Eletivas","GERCE","Ellen Paula Urzeda Santos","ellen.urzeda@goias.gov.br","(62) 3201-4987 / 4922 / 3462","18344",7
+20,"Gerência de Regulação de Internações","GERINT","Daniele Marcelino Costa","daniele.mcosta@goias.gov.br"," (62) 3201-7666 / 4909","18343",7
+23,"Gerência de Atenção Especializada","GAE","Roberta Leão Mesquita","roberta.mesquita@goias.gov.br","(62) 3201-7886","18347",8
+25,"Gerência de Saúde Mental","GESM","Nathalia dos Santos Silva","nathalia.ssilva@goias.gov.br","(62) 3201-5502","18351",8
+24,"Gerência de Assistência Farmacêutica","GERAF","Gysella Santana Honório de Paiva","gysella.paiva@goias.gov.br","(62) 3201-2657 / 3995 / 6056","11187",8
+30,"Gerência de Modelagem","GEMOD","Rafael Hirt","rafael.hirt@goias.gov.br / modelagem.ses@goias.gov.br"," (62) 3201-3726","21281",9
+31,"Gerência de Custos","GEC","Marcelo Martins Nogueira Lima","marcelo.nlima@goias.gov.br / gec.saude@goias.gov.br","(62) 3201-4930","21282",9
+12,"Gerência das Regionais de Saúde","GERES","Jaqueline Gonçalves Rocha de Oliveira","gerenciaregionais.saude@goias.gov.br  ","(62) 3201-3740","21274",21
+46,"Gerência de Planejamento e Orçamento","GEPO","Flávio Augusto Curado Moraes","flavio.moraes@goias.gov.br","62) 3201-3469","11948",12
+47,"Gerência de Programação das Ações e Serviços de Saúde","GEPASS","Andressa Vieira de Moura","andressa.vmoura@goias.gov.br / gepass.splan@goias.gov.br.br","(62) 3201-7733","21292",12
+51,"Gerência de Projetos Educacionais  em Saúde","GPES","Rosana Mendes Reis Barbosa","gpes.escoladesaude@goias.gov.br","(62) 3201-3493","10975",13
+52,"Gerência de Desenvolvimento e Ensino em Saúde","GEDES","Letícia de Souza Pereira","gdes.escoladesaude@goias.gov.br","(62) 3201-3424","18345",13
+55,"Gerência de Manutenção","GEMAN","Teddy Henrique Borges","henrique.borges@goias.gov.br","(62) 3201-7542 / 4286","21297",14
+57,"Gerência de Patrimônio","GPAT","Valdir Rabelo Júnior","valdir.rabelo@goias.gov.br","(62) 3201-3441 / 4973 / 3438 / 4912","18356",14
+60,"Gerência de Auditoria Governamental","GEAG","Ana Cláudia Belo Vaz Araújo","ana.varaujo@goias.gov.br / geag.saude@goias.gov.br","(62) 3201-3595","21303",16
+63,"Gerência da Corregedoria Setorial","GECORSET","Jucélia de Souza Goulart","corset.saude@goias.gov.br","(62) 3201-9706","15669",16
+72,"Superintendência de Tecnologia e Inovação","SUTIN","Luiselena Luna Esmeraldo","","",NULL,5
+74,"Superintendência da Escola de Saúde de Goiás","","","","",NULL,5
+78,"Procuradoria Setorial","PROCSET","Antônio Flávio de Oliveira","antonio-fo@ pge.go.gov.br","32013737","5071",1
+81,"Assessoria de Prioridades Estratégicas","ASSTEC","","","","18339",1
+14,"Gerência de Dados e Informações Estratégicas em Saúde – ConectaSUS","Conecta SUS","Aline Resende ","aline.nogueira@goias.go.gov.br","(62) 3201-3780",NULL,12
+6,"Gerência de Acompanhamento e Controle de Aplicação de Recursos","GEACAR","Murilo Pereira Borges","murilo.borges@goias.gov.br","(62) 3201-3723","21276",2
+84,"Gerência de Vigilância Sanitária","GVS","Morgana Souto de Souza Pedrosa","morgana.pedrosa@goias.gov.br"," (62) 3201-3909","3108",20
+71,"Superintendência de Vigilância em Saúde","","","","",NULL,19
+73,"Superintendência de Planejamento","SPLAN","Túlio Silva Oliveira","tulio.oliveira@goias.gov.br / splan.saude@goias.gov.br","(62) 3201-3593","21290",5
+75,"Superintendência de Infraestrutura","","","","",NULL,5
+79,"Chefia de Gabinete","CG - GAB","Adriano Sullivan Chagas","adriano.chagas@goias.gov.br","(62) 3201-3759","5069",1
+83,"Gerência de Suporte Administrativo"," GSA-SUVISA","Mara Rúbia Rodrigues Ribeiro","gsa.suvisa@gmail.com","(62) 3201-4435","21285",19
+35,"Gerência de Emergências em Saúde Pública","GESP","Cristina Luiza Dália Pereira Paragó Musmanno","gesp.suvisa@goias.gov.br","(62) 3201-6459","21284",10
+32,"Gerência de Suporte Administrativo","GESA-SUPECC","Thais Mendonça","thais.mendonca@goias.gov.br"," (62) 3201-3764  / 3814","21283",9
+39,"Gerência de Suporte Administrativo","SUBIPEI/GESA","Anderson Smilley Freitas Alves","anderson.alves@goias.gov.br","(62) 3201-4908","21288",5
+16,"Assessoria de Relações Institucionais","ARINST","José Fernando Lemes de Jesus","jose.jesus@goias.gov.br","","18337",4
+69,"Superintendência de Políticas e Atenção Integral à Saúde"," SPAIS","Amanda Melo e Santos Limongi","amanda.limongi@goias.gov.br ","(62) 3201-7027","3083",4
+17,"Gerência de Transplantes","","Katiúscia Christiane Freitas","transplantes.saude@goias.gov.br"," (62) 3201-3956",NULL,7
+21,"Gerência de Processamento da Produção"," GEPP","Junelle Paganini Lopes","junelle.lopes@goias.gov.br","(62) 3201-4957 / 2489 / 4991 / 4985 / 2436","18341",7
+85,"Gerência de Regulação e Ações de Urgência","GRAU","Danielly Silvestre Bitencourt e Castro"," danielly.castro@goias.gov.br","(62) 3201-3834","22960",7
+22,"Gerência de Atenção Primária","GERAP","Lígia Vanessa Silva Cruz Duarte","ligia.duarte@goias.gov.br","(62) 3201-7028 / 7000/ 7876","18346",8
+26,"Gerência de Atenção às Populações Específicas","GERPOP","Maria José Vieira de Sena","gerpop.saude@goias.gov.br","(62) 3201-8116","18348",8
+28,"Gerência de Monitoramento e Avaliação da Execução de Convênios e Unidades de Gestão Direta","GMAE-CONV","Emanuelle de Queiroz Monteiro"," emanuelle.monteiro@goias.gov.br","(62) 3201-4988","18349",9
+48,"Gerência de Articulação Interfederativa","GEAI","Sônia Cristina Moreira Issler","sonia.issler@goias.gov.br / geai.saude@goias.gov.br","","21293",21
+44,"Assessoria Técnica","ASSTEC-SPLAN","Marcus Vinícius Borges Ferreira","marcus.bferreira@goias.gov.br / asstec.splan.saude@goias.gov.br","(62) 3201-3593","21291",12
+45,"Gerência de Planejamento Institucional"," GEPI","Raimundo Tiago de Lima Pires","raimundo.pires@goias.gov.br / gepi.saude@goias.gov.br","62) 3201-3702","18350",12
+86,"Gerência de Captação de Recursos","GCR","Sherlly Rodrigues de Lima","sherlly.lima@goias.gov.br / gcr.saude@goias.gov.br","(62) 3201-3544","22962",12
+87,"Gerência de Planejamento Regional","GPR","Simone Camilo Aquino Botelho","simone.botelho@goias.gov.br / gpr.saude@goias.gov.br","(62) 3201-2434","22963",12
+49,"Gerência de Desenvolvimento de Pessoas","GEDP-SESG","Ludmilla Cipriano de Melo"," ludmilla.melo@goias.gov.br","(62) 3201-3427","21294",13
+56,"Gerência de Projetos de Infraestrutura","GPINFRA","Pedro Vaz Neto","pedro.vvaz@goias.gov.br"," (62) 3201-4251","21298",14
+59,"Gerência da Ouvidoria Setorial","GEOS","Karen de Oliveira Santos","karen.osantos@goias.gov.br","(62) 3201-1801 / 0800 643 3700","18338",15
+88,"Gerência Extraordinária de Tomada de Contas Especial","GETCE","Reginaldo Guimarães Lobo","reginaldo.lobo@goias.gov.br","","22964",16
+82,"Escritório de Projetos Setorial","EPSET","Talles Mendes de Castro"," talles.castro@goias.gov.br"," (62) 3201-3735","21270",1
+76,"Superintendência de Governo Aberto e Participação Cidadã","","","","",NULL,6
+77,"Superintendência de Controle Interno e Correição","","","","",NULL,6
+80,"Gerência da Secretaria-Geral","GSEG","Ana Gabriela Siqueira Guerra","ana.sguerra@goias.gov.br","(62) 3201-3796","3076",1
+89,"Superintendência da Mulher","SUPEM","Evelin Geordana Rodrigues Dos Santos","supem.seds@goias.gov.br","55 (62) 98270-0285 / (62) 98270-0285",NULL,22

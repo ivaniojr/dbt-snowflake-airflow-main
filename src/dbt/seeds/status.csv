@@ -1,0 +1,37 @@
+"id","nome","ordem","mostrar_quadro","unidade_adm_id"
+35,"Evidência com Pendência",5,True,41
+2,"Arquivado",99,False,42
+15,"Backlog",1,True,41
+16,"Backlog Prioritário	",0,True,41
+17,"Pendente",3,True,41
+18,"Desenvolvimento",2,True,41
+19,"Concluído para o Supervisor",5,True,41
+20,"Homologação",4,True,41
+21,"Concluído",6,True,41
+22,"Arquivado",10,False,41
+23,"Backlog",1,True,43
+26,"Concluído",5,True,43
+27,"Pendente",2,True,43
+24,"Desenvolvimento",3,True,43
+25,"Homologação",4,True,43
+28,"Arquivado",999,False,43
+31,"Pronto para Revisão",98,True,42
+32,"Evidência com Pendência",97,True,42
+36,"Evidência com Pendência",9,True,43
+37,"Backlog",0,True,72
+38,"Desenvolvimento",1,True,72
+39,"Homologação",2,True,72
+40,"Concluído",3,True,72
+41,"Evidência com Pendência",4,True,72
+42,"Arquivado",10,False,72
+43,"KPI",999,False,42
+13,"Descontinuado",100,False,42
+12,"Produção",95,False,42
+6,"Homologação",94,True,42
+5,"Pendente",93,True,42
+4,"Desenvolvimento",92,True,42
+34,"Pronto para desenvolvimento",91,True,42
+10,"Sprint Backlog",90,True,42
+30,"Backlog Priorizado",89,True,42
+3,"Backlog",88,True,42
+14,"Ideias",87,False,42
