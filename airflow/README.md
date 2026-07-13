@@ -10,8 +10,6 @@ https://www.youtube.com/watch?v=pRFzDVn40rw&list=PLbPvnlmz6e_L_3Zw_fGtMcMY0eAOZn
 ## Como instalar o Airflow?
 Clone o repositório
 ```
-git clone https://github.com/wlcamargo/airflow
-```
 
 Entre na pasta
 ```

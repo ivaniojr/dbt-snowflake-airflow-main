@@ -70,6 +70,7 @@ https://www.youtube.com/watch?v=pRFzDVn40rw&list=PLbPvnlmz6e_L_3Zw_fGtMcMY0eAOZn
 ### Como criar um conta no Snowflake?
 https://www.snowflake.com/en/emea/
 
+
 ### Como criar o user com permissões?
 Entre na pasta ```scripts``` e use o arquivo ```snowflake-setup.sql``` como base.
 
