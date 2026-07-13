@@ -1,11 +1,9 @@
 # Engenharia de Dados com Apache Airflow, Snowflake e dbt
-Repositório do projeto "Engenharia de Dados com Apache Airflow, Snowflake e dbt". Este projeto é baseado no seguinte Guia Snowflake para engenharia de dados com Apache Airflow, Snowflake e dbt.
+
+Repositório do projeto "Engenharia de Dados com Apache Airflow, Snowflake, AWS e dbt". 
+Este projeto é baseado no seguinte Guia Snowflake para engenharia de dados com Apache Airflow, Snowflake e dbt.
 
 Vale ressaltar que esse repo foi criado usando como base o repo abaixo:
-
-```
-https://github.com/jacob-mennell/snowflakeAirflowDBT
-```
 
 ## Vídeo tutorial
 
