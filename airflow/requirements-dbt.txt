@@ -1,0 +1,6 @@
+# Versões compatíveis com Apache Airflow 2.10.0
+# Evita conflito entre dbt 1.11.x e protobuf/opentelemetry do Airflow.
+dbt-core==1.7.19
+dbt-snowflake==1.7.5
+apache-airflow-providers-snowflake==5.6.1
+apache-airflow-providers-amazon==8.28.0

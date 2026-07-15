@@ -1,17 +1,27 @@
-name: 'snowflake_airflow_dbt'
-version: 0.21
+name: munka_warehouse
+version: '1.0.0'
 config-version: 2
-profile: 'default'
 
+profile: munka_warehouse
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+vars:
+  raw_database: "DRAGON_DB"
+  raw_schema: "MUNKA"
 
 models:
-  snowflake_airflow_dbt:
-      # Applies to all files under models/example/
-      transform:
-          schema: transform
-          materialized: view
-          enabled: true
-      analysis:
-          schema: analysis
-          materialized: view
-          enabled: true
+  munka_warehouse:
+    +persist_docs:
+      relation: true
+      columns: true

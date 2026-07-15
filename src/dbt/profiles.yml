@@ -1,8 +1,8 @@
 #profiles.yml
-default:
+munka_warehouse:
   outputs:
     dev:
-      account: sfedu02-gfb24387 #change for your account
+      account: sfedu02-gfb24387
       database: DRAGON_DB
       private_key_path: "rsa_key.p8"
       role: TRAINING_ROLE
@@ -11,5 +11,14 @@ default:
       type: snowflake
       user: DRAGON
       warehouse: DBT_WH
+    prod:
+      account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
+      database: "{{ env_var('DBT_SNOWFLAKE_DATABASE') }}"
+      private_key_path: "rsa_key.p8"
+      role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
+      schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA') }}"
+      threads: 4
+      type: snowflake
+      user: "{{ env_var('DBT_SNOWFLAKE_USER') }}"
+      warehouse: "{{ env_var('DBT_SNOWFLAKE_WAREHOUSE') }}"
   target: dev
-  

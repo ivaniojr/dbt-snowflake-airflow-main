@@ -1,49 +1,79 @@
-# Airflow:2.10 no Docker
-Airflow 2.10 rodando no Docker. 
+# Docker Compose — Airflow + dbt + Snowflake
 
-## Pré-requisitos
-* Docker
+## Estrutura esperada
 
-## Como instalar o Docker?
-https://www.youtube.com/watch?v=pRFzDVn40rw&list=PLbPvnlmz6e_L_3Zw_fGtMcMY0eAOZnN-H
-
-## Como instalar o Airflow?
-Clone o repositório
+```text
+seu-airflow/
+├── docker-compose.yaml
+├── Dockerfile.dbt
+├── requirements-dbt.txt
+├── .env
+├── dags/
+│   └── munka_dbt_create_raw_tables.py
+└── dbt/
+    └── munka_warehouse/
+        ├── dbt_project.yml
+        ├── profiles.yml
+        ├── macros/
+        └── models/
 ```
 
-Entre na pasta
-```
-cd airflow
-```
+## Instalação
 
-Execute o comando para baixar as imagens e rodar os containers
-```
-sudo docker compose up -d
-```
+1. Copie `.env.example` para `.env`.
+2. Confirme que a rede externa existe:
 
-## Warning
-Possivelmente vai dar um erro pela falta da Network. Para criar a network utilize o comando:
-```
-docker create network network-bigdata
+```bash
+docker network inspect network-bigdata >/dev/null 2>&1 || docker network create network-bigdata
 ```
 
-Depois de criar, execute novamente o comando para rodar o container.
+3. Reconstrua a imagem:
 
-## Como acessar o Airflow?
-localhost:8081
+```bash
+docker compose down
+docker compose build --no-cache
+docker compose up airflow-init
+docker compose up -d
+```
 
----------------------------------------------
+4. Verifique dbt e o provider:
 
-Exemplo Airflow UI:
+```bash
+docker compose exec airflow-scheduler dbt --version
+docker compose exec airflow-scheduler airflow providers list | grep snowflake
+```
 
-![image](assets/sample-airflow-ui.png)
+5. Abra o Airflow em `http://localhost:8081`.
 
----------------------------------------------
+## Conexão Snowflake
 
-## Credenciais
+Crie a conexão `snowflake_munka` em **Admin > Connections**:
 
-username: airflow
+- Connection Type: `Snowflake`
+- Login: usuário Snowflake
+- Password: senha Snowflake
+- Schema: `MUNKA`
 
+Extra:
+
+```json
+{
+  "account": "identificador_da_conta",
+  "database": "DRAGON_DB",
+  "warehouse": "COMPUTE_WH",
+  "role": "SYSADMIN"
+}
+```
+
+## DAG
+
+Execute o DAG:
+
+```text
+munka_dbt_create_raw_tables
+```
+
+## Usuário/Senha Padrão
 password: airflow
 
 ---------------------------------------------
@@ -57,4 +87,3 @@ https://airflow.apache.org/docs/apache-airflow/stable/installation/index.html
 ## Developer
 | Desenvolvedor      | LinkedIn                                   | Email                        | Portfólio                              |
 |--------------------|--------------------------------------------|------------------------------|----------------------------------------|
-

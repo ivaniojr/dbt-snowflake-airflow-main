@@ -1,0 +1,106 @@
+version: 2
+
+sources:
+  - name: munka_raw
+    description: "Camada bruta do sistema Munka no Snowflake."
+    database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'DRAGON_DB') }}"
+    schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA', 'MUNKA') }}"
+    tables:
+      - name: raw_ab_permission
+        identifier: RAW_AB_PERMISSION
+      - name: raw_ab_permission_view
+        identifier: RAW_AB_PERMISSION_VIEW
+      - name: raw_ab_permission_view_role
+        identifier: RAW_AB_PERMISSION_VIEW_ROLE
+      - name: raw_ab_register_user
+        identifier: RAW_AB_REGISTER_USER
+      - name: raw_ab_role
+        identifier: RAW_AB_ROLE
+      - name: raw_ab_user
+        identifier: RAW_AB_USER
+      - name: raw_ab_user_role
+        identifier: RAW_AB_USER_ROLE
+      - name: raw_ab_view_menu
+        identifier: RAW_AB_VIEW_MENU
+      - name: raw_ajuste
+        identifier: RAW_AJUSTE
+      - name: raw_alembic_version
+        identifier: RAW_ALEMBIC_VERSION
+      - name: raw_anexos
+        identifier: RAW_ANEXOS
+      - name: raw_cargo
+        identifier: RAW_CARGO
+      - name: raw_cenario
+        identifier: RAW_CENARIO
+      - name: raw_comentario
+        identifier: RAW_COMENTARIO
+      - name: raw_complexidade
+        identifier: RAW_COMPLEXIDADE
+      - name: raw_contrato
+        identifier: RAW_CONTRATO
+      - name: raw_contratos_usuarios
+        identifier: RAW_CONTRATOS_USUARIOS
+      - name: raw_coord_projeto
+        identifier: RAW_COORD_PROJETO
+      - name: raw_coordenacao
+        identifier: RAW_COORDENACAO
+      - name: raw_etiqueta
+        identifier: RAW_ETIQUETA
+      - name: raw_fator_complexidade_ust
+        identifier: RAW_FATOR_COMPLEXIDADE_UST
+      - name: raw_fatura
+        identifier: RAW_FATURA
+      - name: raw_ficha_indicador
+        identifier: RAW_FICHA_INDICADOR
+      - name: raw_fichas_projetos
+        identifier: RAW_FICHAS_PROJETOS
+      - name: raw_lider_projetos
+        identifier: RAW_LIDER_PROJETOS
+      - name: raw_nivel
+        identifier: RAW_NIVEL
+      - name: raw_nivel_superior
+        identifier: RAW_NIVEL_SUPERIOR
+      - name: raw_objetivo
+        identifier: RAW_OBJETIVO
+      - name: raw_origem
+        identifier: RAW_ORIGEM
+      - name: raw_origens_projeto
+        identifier: RAW_ORIGENS_PROJETO
+      - name: raw_produto
+        identifier: RAW_PRODUTO
+      - name: raw_projeto
+        identifier: RAW_PROJETO
+      - name: raw_projeto_resultado_chave
+        identifier: RAW_PROJETO_RESULTADO_CHAVE
+      - name: raw_reajuste
+        identifier: RAW_REAJUSTE
+      - name: raw_regra
+        identifier: RAW_REGRA
+      - name: raw_renovacao
+        identifier: RAW_RENOVACAO
+      - name: raw_requisito
+        identifier: RAW_REQUISITO
+      - name: raw_resultado_chave
+        identifier: RAW_RESULTADO_CHAVE
+      - name: raw_servico
+        identifier: RAW_SERVICO
+      - name: raw_sprint
+        identifier: RAW_SPRINT
+      - name: raw_status
+        identifier: RAW_STATUS
+      - name: raw_tarefa
+        identifier: RAW_TAREFA
+      - name: raw_tarefas_cenarios
+        identifier: RAW_TAREFAS_CENARIOS
+      - name: raw_tecnologia
+        identifier: RAW_TECNOLOGIA
+      - name: raw_tecnologias_projeto
+        identifier: RAW_TECNOLOGIAS_PROJETO
+      - name: raw_tipo
+        identifier: RAW_TIPO
+      - name: raw_tipo_status
+        identifier: RAW_TIPO_STATUS
+      - name: raw_unidade_adm
+        identifier: RAW_UNIDADE_ADM
+      - name: raw_unidade_adm_superior
+        identifier: RAW_UNIDADE_ADM_SUPERIOR
