@@ -28,3 +28,13 @@ models:
     staging:
       +materialized: view
       +schema: munka_stg
+    intermediate:
+      +materialized: view
+      +schema: munka_int
+    marts:
+      gold:
+        +materialized: table
+        +schema: munka_gold
+      ml:
+        +materialized: table
+        +schema: munka_ml
