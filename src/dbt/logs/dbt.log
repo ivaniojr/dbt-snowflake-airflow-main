@@ -377,3 +377,1738 @@ https://docs.getdbt.com/docs/configure-your-profile
 [0m15:53:57.710662 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x7935a0dfd9d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79359f389670>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x79359f801f70>]}
 [0m15:53:57.711150 [debug] [MainThread]: Flushing usage events
 [0m15:53:58.604269 [debug] [MainThread]: An error was encountered while trying to flush usage events
+
+
+============================== 11:56:27.820896 | 45ed0296-ab2d-4049-adff-601775c0d2b5 ==============================
+[0m11:56:27.820896 [info ] [MainThread]: Running with dbt=1.7.19
+[0m11:56:27.826340 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': '*****', 'debug': 'False', 'version_check': 'True', 'log_path': '/opt/airflow/dbt/munka_warehouse/logs', 'fail_fast': 'False', 'profiles_dir': '/opt/airflow/dbt/munka_warehouse', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': '*****', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'invocation_command': 'dbt debug --project-dir /opt/airflow/dbt/munka_warehouse --profiles-dir /opt/airflow/dbt/munka_warehouse --target prod', 'static_parser': 'True', 'introspect': 'True', 'target_path': '*****', 'log_format': 'default', 'send_anonymous_usage_stats': 'False'}
+[0m11:56:27.827026 [info ] [MainThread]: dbt version: 1.7.19
+[0m11:56:27.827514 [info ] [MainThread]: python version: 3.11.9
+[0m11:56:27.827887 [info ] [MainThread]: python path: /home/airflow/.local/bin/python
+[0m11:56:27.828221 [info ] [MainThread]: os info: Linux-6.17.0-35-generic-x86_64-with-glibc2.36
+[0m11:56:28.523511 [info ] [MainThread]: Using profiles dir at /opt/airflow/dbt/munka_warehouse
+[0m11:56:28.524182 [info ] [MainThread]: Using profiles.yml file at /opt/airflow/dbt/munka_warehouse/profiles.yml
+[0m11:56:28.524751 [info ] [MainThread]: Using dbt_project.yml file at /opt/airflow/dbt/munka_warehouse/dbt_project.yml
+[0m11:56:28.525550 [info ] [MainThread]: adapter type: snowflake
+[0m11:56:28.526017 [info ] [MainThread]: adapter version: 1.7.5
+[0m11:56:28.579685 [info ] [MainThread]: Configuration:
+[0m11:56:28.580363 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m11:56:28.580939 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m11:56:28.581422 [info ] [MainThread]: Required dependencies:
+[0m11:56:28.581979 [debug] [MainThread]: Executing "git --help"
+[0m11:56:28.592077 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]\n           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]\n           [--super-prefix=<path>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone     Clone a repository into a new directory\n   init      Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add       Add file contents to the index\n   mv        Move or rename a file, a directory, or a symlink\n   restore   Restore working tree files\n   rm        Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect    Use binary search to find the commit that introduced a bug\n   diff      Show changes between commits, commit and working tree, etc\n   grep      Print lines matching a pattern\n   log       Show commit logs\n   show      Show various types of objects\n   status    Show the working tree status\n\ngrow, mark and tweak your common history\n   branch    List, create, or delete branches\n   commit    Record changes to the repository\n   merge     Join two or more development histories together\n   rebase    Reapply commits on top of another base tip\n   reset     Reset current HEAD to the specified state\n   switch    Switch branches\n   tag       Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch     Download objects and refs from another repository\n   pull      Fetch from and integrate with another repository or a local branch\n   push      Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m11:56:28.592757 [debug] [MainThread]: STDERR: "b''"
+[0m11:56:28.593196 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m11:56:28.593654 [info ] [MainThread]: Connection:
+[0m11:56:28.594261 [info ] [MainThread]:   account: sfedu02-gfb24387
+[0m11:56:28.594743 [info ] [MainThread]:   user: DRAGON
+[0m11:56:28.595154 [info ] [MainThread]:   database: DRAGON_DB
+[0m11:56:28.595554 [info ] [MainThread]:   warehouse: DRAGON_WH
+[0m11:56:28.596110 [info ] [MainThread]:   role: TRAINING_ROLE
+[0m11:56:28.596680 [info ] [MainThread]:   schema: MUNKA_RAW
+[0m11:56:28.597040 [info ] [MainThread]:   authenticator: *****
+[0m11:56:28.597382 [info ] [MainThread]:   oauth_client_id: *****
+[0m11:56:28.597710 [info ] [MainThread]:   query_tag: *****
+[0m11:56:28.598032 [info ] [MainThread]:   client_session_keep_alive: False
+[0m11:56:28.598339 [info ] [MainThread]:   host: *****
+[0m11:56:28.598642 [info ] [MainThread]:   port: *****
+[0m11:56:28.598969 [info ] [MainThread]:   proxy_host: *****
+[0m11:56:28.599396 [info ] [MainThread]:   proxy_port: *****
+[0m11:56:28.599864 [info ] [MainThread]:   protocol: *****
+[0m11:56:28.600314 [info ] [MainThread]:   connect_retries: 1
+[0m11:56:28.600782 [info ] [MainThread]:   connect_timeout: *****
+[0m11:56:28.601150 [info ] [MainThread]:   retry_on_database_errors: False
+[0m11:56:28.601478 [info ] [MainThread]:   retry_all: False
+[0m11:56:28.601765 [info ] [MainThread]:   insecure_mode: False
+[0m11:56:28.602058 [info ] [MainThread]:   reuse_connections: *****
+[0m11:56:28.602444 [info ] [MainThread]: Registered adapter: snowflake=1.7.5
+[0m11:56:28.603191 [debug] [MainThread]: Acquiring new snowflake connection 'debug'
+[0m11:56:28.603977 [debug] [MainThread]: Using snowflake connection "debug"
+[0m11:56:28.604354 [debug] [MainThread]: On debug: select 1 as id
+[0m11:56:28.604709 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:56:30.868604 [debug] [MainThread]: SQL status: SUCCESS 1 in 2.0 seconds
+[0m11:56:30.869582 [debug] [MainThread]: On debug: Close
+[0m11:56:31.355604 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m11:56:31.356232 [info ] [MainThread]: [32mAll checks passed![0m
+[0m11:56:31.357225 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": true, "command_wall_clock_time": 3.5658367, "process_user_time": 3.412053, "process_kernel_time": 0.846984, "process_mem_max_rss": "197200", "process_in_blocks": "79328", "process_out_blocks": "2448"}
+[0m11:56:31.357781 [debug] [MainThread]: Command `dbt debug` succeeded at 11:56:31.357635 after 3.57 seconds
+[0m11:56:31.358174 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m11:56:31.358518 [debug] [MainThread]: Flushing usage events
+
+
+============================== 11:56:35.359763 | a21ce369-8985-40ad-9d87-65c265157046 ==============================
+[0m11:56:35.359763 [info ] [MainThread]: Running with dbt=1.7.19
+[0m11:56:35.364555 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'profiles_dir': '/opt/airflow/dbt/munka_warehouse', 'debug': 'False', 'fail_fast': 'False', 'log_path': '/opt/airflow/dbt/munka_warehouse/logs', 'version_check': 'True', 'warn_error': '*****', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': '*****', 'quiet': 'False', 'log_format': 'default', 'introspect': 'True', 'invocation_command': 'dbt run-operation create_raw_tables --project-dir /opt/airflow/dbt/munka_warehouse --profiles-dir /opt/airflow/dbt/munka_warehouse --target prod', 'static_parser': 'True', 'target_path': '*****', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'send_anonymous_usage_stats': 'False'}
+[0m11:56:36.129104 [info ] [MainThread]: Registered adapter: snowflake=1.7.5
+[0m11:56:36.136000 [debug] [MainThread]: checksum: 5bea1b3ccb143e6ea5cdff236881537f4bbf1d3de5538a69b98ed242654a2c79, vars: {}, profile: , target: prod, version: 1.7.19
+[0m11:56:36.262753 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m11:56:36.263725 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m11:56:37.466592 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.munka_warehouse
+[0m11:56:37.484686 [info ] [MainThread]: Found 1 analysis, 47 seeds, 49 sources, 0 exposures, 0 metrics, 433 macros, 0 groups, 0 semantic models
+[0m11:56:37.485517 [debug] [MainThread]: Acquiring new snowflake connection 'macro_create_raw_tables'
+[0m11:56:37.518224 [info ] [MainThread]: Criando camada RAW em DRAGON_DB.MUNKA_RAW
+[0m11:56:37.522683 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:37.523275 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE SCHEMA IF NOT EXISTS DRAGON_DB.MUNKA_RAW
+[0m11:56:37.523704 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:56:39.713729 [debug] [MainThread]: SQL status: SUCCESS 1 in 2.0 seconds
+[0m11:56:39.715682 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:39.716146 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_PERMISSION (
+            ID                               NUMBER(38,0),
+            NAME                             VARCHAR(100),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:40.192884 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:40.194348 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:40.194739 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_PERMISSION_VIEW (
+            ID                               NUMBER(38,0),
+            PERMISSION_ID                    NUMBER(38,0),
+            VIEW_MENU_ID                     NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:40.704531 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:40.706650 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:40.707245 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_PERMISSION_VIEW_ROLE (
+            ID                               NUMBER(38,0),
+            PERMISSION_VIEW_ID               NUMBER(38,0),
+            ROLE_ID                          NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:41.128150 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:41.130093 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:41.130576 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_REGISTER_USER (
+            ID                               NUMBER(38,0),
+            FIRST_NAME                       VARCHAR(64),
+            LAST_NAME                        VARCHAR(64),
+            USERNAME                         VARCHAR(64),
+            PASSWORD                         VARCHAR(256),
+            EMAIL                            VARCHAR(64),
+            REGISTRATION_DATE                TIMESTAMP_NTZ,
+            REGISTRATION_HASH                VARCHAR(256),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:41.597102 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:41.598601 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:41.599094 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_ROLE (
+            ID                               NUMBER(38,0),
+            NAME                             VARCHAR(64),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:42.025746 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:42.027866 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:42.028336 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_USER (
+            ID                               NUMBER(38,0),
+            FIRST_NAME                       VARCHAR(64),
+            LAST_NAME                        VARCHAR(64),
+            USERNAME                         VARCHAR(64),
+            PASSWORD                         VARCHAR(256),
+            ACTIVE                           BOOLEAN,
+            EMAIL                            VARCHAR(64),
+            LAST_LOGIN                       TIMESTAMP_NTZ,
+            LOGIN_COUNT                      NUMBER(38,0),
+            FAIL_LOGIN_COUNT                 NUMBER(38,0),
+            CREATED_ON                       TIMESTAMP_NTZ,
+            CHANGED_ON                       TIMESTAMP_NTZ,
+            CREATED_BY_FK                    NUMBER(38,0),
+            CHANGED_BY_FK                    NUMBER(38,0),
+            CARGO_ID                         NUMBER(38,0),
+            NIVEL_ID                         NUMBER(38,0),
+            COORDENACAO_ID                   NUMBER(38,0),
+            JORNADA_SEMANAL                  NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:42.615118 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:42.616658 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:42.617077 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_USER_ROLE (
+            ID                               NUMBER(38,0),
+            USER_ID                          NUMBER(38,0),
+            ROLE_ID                          NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:43.108293 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:43.109779 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:43.110199 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AB_VIEW_MENU (
+            ID                               NUMBER(38,0),
+            NAME                             VARCHAR(250),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:43.611316 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:43.612682 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:43.613052 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_AJUSTE (
+            ID                               NUMBER(38,0),
+            DATA_INICIO                      DATE,
+            DATA_FIM                         DATE,
+            TIPO                             VARCHAR,
+            UST_VALOR                        FLOAT,
+            UST_CONTRATADAS                  FLOAT,
+            CONTRATO_ID                      NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:44.127651 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:44.129005 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:44.129364 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_ALEMBIC_VERSION (
+            VERSION_NUM                      VARCHAR(32),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:44.622502 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:44.623877 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:44.624219 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_ANEXOS (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            DESCRICAO                        VARCHAR,
+            ARQUIVO                          VARCHAR,
+            HORARIO                          TIMESTAMP_NTZ,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:45.033696 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:45.035090 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:45.035447 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_CARGO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            FATURAVEL                        BOOLEAN,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:45.545024 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:45.546494 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:45.546852 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_CENARIO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            PONTUACAO                        NUMBER(38,0),
+            REQUISITO_ID                     NUMBER(38,0),
+            CENARIO_PADRAO                   BOOLEAN,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:46.025425 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:46.026919 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:46.027277 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_COMENTARIO (
+            ID                               NUMBER(38,0),
+            AUTOR_ID                         NUMBER(38,0),
+            TAREFA_ID                        NUMBER(38,0),
+            CONTEUDO                         VARCHAR,
+            HORARIO                          TIMESTAMP_NTZ,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            ID_COMENTARIO_OLD                NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:46.547428 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:46.548888 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:46.549242 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_COMPLEXIDADE (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            PONTUACAO_MAIOR_QUE              NUMBER(38,0),
+            PONTUACAO_MENOR_QUE              NUMBER(38,0),
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:47.454081 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:47.456300 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:47.456891 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_CONTRATO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            ATIVO                            BOOLEAN,
+            UST_VALOR                        FLOAT,
+            UST_CONTRATADAS                  FLOAT,
+            UST_ADITIVADAS                   FLOAT,
+            DEDUCOES_HORAS                   FLOAT,
+            DEDUCOES_UST                     FLOAT,
+            OUTROS_HORAS                     FLOAT,
+            OUTROS_UST                       FLOAT,
+            DATA_INICIO                      DATE,
+            DATA_FIM                         DATE,
+            DATA_VIGENCIA                    DATE,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            FATURAR_HPA                      BOOLEAN,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:47.898064 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:47.899814 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:47.900291 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_CONTRATOS_USUARIOS (
+            ID                               NUMBER(38,0),
+            USUARIO_ID                       NUMBER(38,0),
+            CONTRATO_ID                      NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:48.352450 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:48.353955 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:48.354313 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_COORD_PROJETO (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            COORDENACAO_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:48.805377 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:48.807016 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:48.807481 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_COORDENACAO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            COR                              VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:49.233230 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:49.235157 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:49.235600 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_ETIQUETA (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            COR                              VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:49.654329 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:49.655860 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:49.656220 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_FATOR_COMPLEXIDADE_UST (
+            ID                               NUMBER(38,0),
+            FATOR_COMPLEXIDADE               FLOAT,
+            CARGO_ID                         NUMBER(38,0),
+            NIVEL_ID                         NUMBER(38,0),
+            CONTRATO_ID                      NUMBER(38,0),
+            ATIVO                            BOOLEAN,
+            ID_FATOR_OLD                     NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:50.091805 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:50.093527 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:50.093879 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_FATURA (
+            ID                               NUMBER(38,0),
+            DATA_INICIO                      TIMESTAMP_NTZ,
+            DATA_FIM                         TIMESTAMP_NTZ,
+            DATA_CRIACAO                     TIMESTAMP_NTZ,
+            CONTRATO_ID                      NUMBER(38,0),
+            ID_FATURA_OLD                    NUMBER(38,0),
+            REAJUSTE_ID                      NUMBER(38,0),
+            RENOVACAO_ID                     NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:50.585948 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:50.587472 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:50.587896 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_FICHA_INDICADOR (
+            ID                               NUMBER(38,0),
+            TITULO                           VARCHAR,
+            GUIA_ID                          NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:51.054130 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:51.055549 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:51.055948 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_FICHAS_PROJETOS (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            FICHA_ID                         NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:51.494395 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:51.495728 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:51.496088 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_LIDER_PROJETOS (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            AB_USER_ID                       NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:51.934787 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:51.936368 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:51.936788 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_NIVEL (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:52.393901 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:52.395394 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:52.395822 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_NIVEL_SUPERIOR (
+            ID                               NUMBER(38,0),
+            NIVEL_SUPERIOR_ID                NUMBER(38,0),
+            NIVEL_INFERIOR_ID                NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:52.862005 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:52.863442 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:52.863814 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_OBJETIVO (
+            ID                               NUMBER(38,0),
+            NUMERO                           VARCHAR,
+            TITULO                           VARCHAR,
+            DESCRICAO                        VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:53.317274 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:53.318888 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:53.319324 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_ORIGEM (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            ENDERECO                         VARCHAR,
+            DESCRICAO                        VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:53.723452 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:53.725014 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:53.725431 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_ORIGENS_PROJETO (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            ORIGEM_ID                        NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:54.163710 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:54.165569 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:54.166038 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_PRODUTO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            UNIDADE_SUPERIOR_ID              NUMBER(38,0),
+            UNIDADE_EXECUTANTE_ID            NUMBER(38,0),
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DATA_SOLICITACAO                 TIMESTAMP_NTZ,
+            LINK_GIT                         VARCHAR,
+            DESCRICAO                        VARCHAR,
+            LINK_HOMOLOG                     VARCHAR,
+            LINK_PROD                        VARCHAR,
+            INF_ADICIONAL                    VARCHAR,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:54.646877 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:54.649298 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:54.649808 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_PROJETO (
+            ID                               NUMBER(38,0),
+            UNIDADE_SUPERIOR_ID              NUMBER(38,0),
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DATA_SOLICITACAO                 TIMESTAMP_NTZ,
+            DESCRICAO                        VARCHAR,
+            NOME                             VARCHAR,
+            PRODUTO_ID                       NUMBER(38,0),
+            ABRANGENCIA                      VARCHAR,
+            ACESSO                           VARCHAR,
+            NUMERO_SEI                       NUMBER(38,0),
+            DATA_PROTOTIPO                   TIMESTAMP_NTZ,
+            LINK_PROTOTIPO                   VARCHAR,
+            DATA_DESENV                      TIMESTAMP_NTZ,
+            LINK_DESENV                      VARCHAR,
+            DATA_HOMOLOG                     TIMESTAMP_NTZ,
+            DATA_PROD                        TIMESTAMP_NTZ,
+            STATUS_ID                        NUMBER(38,0),
+            PROGRESSO                        NUMBER(38,0),
+            OBS_PROGRESSO                    VARCHAR,
+            JUSTIFICATIVA                    VARCHAR,
+            INATIVO                          BOOLEAN,
+            DATA_PREVISAO_INICIO             TIMESTAMP_NTZ,
+            DATA_PREVISAO_TERMINO            TIMESTAMP_NTZ,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:55.212419 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:55.213967 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:55.214347 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_PROJETO_RESULTADO_CHAVE (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            RESULTADO_CHAVE_ID               NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:55.670923 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:55.672373 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:55.672750 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_REAJUSTE (
+            ID                               NUMBER(38,0),
+            DATA_INICIO                      DATE,
+            DATA_FIM                         DATE,
+            UST_VALOR                        FLOAT,
+            CONTRATO_ID                      NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:56.125864 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:56.127587 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:56.128014 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_REGRA (
+            ID                               NUMBER(38,0),
+            SERVICO_ID                       NUMBER(38,0),
+            COMPLEXIDADE_ID                  NUMBER(38,0),
+            CARGO_ID                         NUMBER(38,0),
+            NIVEL_ID                         NUMBER(38,0),
+            HET_MAX                          FLOAT,
+            DESATIVADA                       BOOLEAN,
+            ID_REGRA_OLD                     NUMBER(38,0),
+            FATOR_AJUSTE                     FLOAT,
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:56.573729 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:56.575212 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:56.575615 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_RENOVACAO (
+            ID                               NUMBER(38,0),
+            DATA_INICIO                      DATE,
+            DATA_FIM                         DATE,
+            UST_CONTRATADAS                  FLOAT,
+            CONTRATO_ID                      NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:56.996507 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:56.998529 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:56.999139 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_REQUISITO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:57.498522 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:57.500226 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:57.500692 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_RESULTADO_CHAVE (
+            ID                               NUMBER(38,0),
+            OBJETIVO_ID                      NUMBER(38,0),
+            NUMERO                           VARCHAR,
+            TITULO                           VARCHAR,
+            DESCRICAO                        VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:57.943174 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:57.944778 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:57.945217 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_SERVICO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            ESCOPO                           VARCHAR,
+            ENTREGAVEIS                      VARCHAR,
+            ATIVIDADES                       VARCHAR,
+            FATURAVEL                        BOOLEAN,
+            CONTRATO_ID                      NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:58.467970 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:56:58.469589 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:58.470045 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_SPRINT (
+            ID                               NUMBER(38,0),
+            DATA_INICIO                      TIMESTAMP_NTZ,
+            DATA_FIM                         TIMESTAMP_NTZ,
+            OBJETIVOS                        VARCHAR,
+            COORDENACAO_ID                   NUMBER(38,0),
+            DESCRICAO_CURTA                  VARCHAR,
+            ID_SPRINT_OLD                    NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:58.890521 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:58.892157 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:58.892574 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_STATUS (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            ORDEM                            NUMBER(38,0),
+            MOSTRAR_QUADRO                   BOOLEAN,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:59.329958 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:59.333250 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:59.333738 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TAREFA (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            DESCRICAO                        VARCHAR,
+            CARGO_ID                         NUMBER(38,0),
+            NIVEL_ID                         NUMBER(38,0),
+            RESPONSAVEL_ID                   NUMBER(38,0),
+            DATA_INICIO                      TIMESTAMP_NTZ,
+            DATA_FIM                         TIMESTAMP_NTZ,
+            ETIQUETA_ID                      NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            PRODUTO_ID                       NUMBER(38,0),
+            TIPO                             VARCHAR,
+            NUM_HELPDESK                     VARCHAR,
+            SPRINT_ID                        NUMBER(38,0),
+            REGRA_ID                         NUMBER(38,0),
+            STATUS_ID                        NUMBER(38,0),
+            HORAS_EXECUTADAS                 FLOAT,
+            EVIDENCIAS                       VARCHAR,
+            EVIDENCIA_COMMIT_SHA             VARCHAR,
+            EVIDENCIA_ANEXO                  VARCHAR,
+            FATURA_ID                        NUMBER(38,0),
+            VALOR_FATURADO                   FLOAT,
+            TOTAL_UST                        FLOAT,
+            DATA_ULTIMA_ATUALIZACAO          TIMESTAMP_NTZ,
+            USER_ABERTURA_ID                 NUMBER(38,0),
+            DATA_ABERTURA                    TIMESTAMP_NTZ,
+            APROVADA                         BOOLEAN,
+            USER_APROVADA_ID                 NUMBER(38,0),
+            ID_TAREFA_OLD                    NUMBER(38,0),
+            USER_ULTIMA_ATUALIZACAO_ID       NUMBER(38,0),
+            TAREFA_PAI_ID                    NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:56:59.797820 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:56:59.799385 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:56:59.799799 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TAREFAS_CENARIOS (
+            ID                               NUMBER(38,0),
+            TAREFA_ID                        NUMBER(38,0),
+            CENARIO_ID                       NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:00.251011 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:57:00.252541 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:00.252957 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TECNOLOGIA (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            ID_TECNOLOGIA_OLD                NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:00.749316 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:57:00.750874 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:00.751258 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TECNOLOGIAS_PROJETO (
+            ID                               NUMBER(38,0),
+            PROJETO_ID                       NUMBER(38,0),
+            TECNOLOGIA_ID                    NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:01.249100 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:57:01.250653 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:01.251239 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TIPO (
+            ID                               NUMBER(38,0),
+            NOME                             VARCHAR,
+            UNIDADE_ADM_ID                   NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:01.677463 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:57:01.678990 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:01.679387 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_TIPO_STATUS (
+            ID                               NUMBER(38,0),
+            STATUS_ID                        NUMBER(38,0),
+            TIPO_ID                          NUMBER(38,0),
+            ID_TIPO_STATUS_OLD               NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:02.129800 [debug] [MainThread]: SQL status: SUCCESS 1 in 0.0 seconds
+[0m11:57:02.131513 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:02.131967 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_UNIDADE_ADM (
+            ID                               NUMBER(38,0),
+            NOME_UNIDADE                     VARCHAR,
+            SIGLA                            VARCHAR,
+            RESPONSAVEL                      VARCHAR,
+            EMAIL                            VARCHAR,
+            TELEFONE                         VARCHAR,
+            CODIGO_SEI                       NUMBER(38,0),
+            UNIDADE_SUPERIOR_ID              NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:02.642363 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:57:02.643964 [debug] [MainThread]: Using snowflake connection "macro_create_raw_tables"
+[0m11:57:02.644394 [debug] [MainThread]: On macro_create_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_create_raw_tables"} */
+CREATE TABLE IF NOT EXISTS DRAGON_DB.MUNKA_RAW.RAW_UNIDADE_ADM_SUPERIOR (
+            ID                               NUMBER(38,0),
+            NOME_UNIDADE                     VARCHAR,
+            SIGLA                            VARCHAR,
+            RESPONSAVEL                      VARCHAR,
+            EMAIL                            VARCHAR,
+            TELEFONE                         VARCHAR,
+            CODIGO_SEI                       NUMBER(38,0),
+            DW_BATCH_ID                      VARCHAR,
+            DW_RECORD_SOURCE                 VARCHAR DEFAULT 'POSTGRES.MUNKA',
+            DW_SOURCE_UPDATED_AT             TIMESTAMP_NTZ,
+            DW_INGESTED_AT                   TIMESTAMP_NTZ DEFAULT CURRENT_TIMESTAMP(),
+            DW_ROW_HASH                      VARCHAR
+        )
+[0m11:57:03.161892 [debug] [MainThread]: SQL status: SUCCESS 1 in 1.0 seconds
+[0m11:57:03.162740 [info ] [MainThread]: 49 tabelas RAW verificadas/criadas.
+[0m11:57:03.163139 [debug] [MainThread]: On macro_create_raw_tables: Close
+[0m11:57:03.620234 [debug] [MainThread]: Resource report: {"command_name": "run-operation", "command_success": true, "command_wall_clock_time": 28.290363, "process_user_time": 4.674272, "process_kernel_time": 1.158359, "process_mem_max_rss": "207868", "process_in_blocks": "6168", "process_out_blocks": "2736"}
+[0m11:57:03.620911 [debug] [MainThread]: Command `dbt run-operation` succeeded at 11:57:03.620737 after 28.29 seconds
+[0m11:57:03.621307 [debug] [MainThread]: Connection 'macro_create_raw_tables' was properly closed.
+[0m11:57:03.621690 [debug] [MainThread]: Flushing usage events
+
+
+============================== 11:57:06.598602 | 83fe1499-bf3a-4c68-93f8-9a7e5996abcb ==============================
+[0m11:57:06.598602 [info ] [MainThread]: Running with dbt=1.7.19
+[0m11:57:06.603334 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'log_cache_events': 'False', 'write_json': 'True', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': '*****', 'debug': 'False', 'profiles_dir': '/opt/airflow/dbt/munka_warehouse', 'log_path': '/opt/airflow/dbt/munka_warehouse/logs', 'fail_fast': 'False', 'version_check': 'True', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': '*****', 'quiet': 'False', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'static_parser': 'True', 'introspect': 'True', 'invocation_command': 'dbt run-operation validate_raw_tables --project-dir /opt/airflow/dbt/munka_warehouse --profiles-dir /opt/airflow/dbt/munka_warehouse --target prod', 'target_path': '*****', 'log_format': 'default', 'send_anonymous_usage_stats': 'False'}
+[0m11:57:07.493140 [info ] [MainThread]: Registered adapter: snowflake=1.7.5
+[0m11:57:07.500206 [debug] [MainThread]: checksum: 5bea1b3ccb143e6ea5cdff236881537f4bbf1d3de5538a69b98ed242654a2c79, vars: {}, profile: , target: prod, version: 1.7.19
+[0m11:57:07.654441 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m11:57:07.655065 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m11:57:07.657135 [warn ] [MainThread]: [[33mWARNING[0m]: Configuration paths exist in your dbt_project.yml file which do not apply to any resources.
+There are 1 unused configuration paths:
+- models.munka_warehouse
+[0m11:57:07.684144 [info ] [MainThread]: Found 1 analysis, 47 seeds, 49 sources, 0 exposures, 0 metrics, 433 macros, 0 groups, 0 semantic models
+[0m11:57:07.685356 [debug] [MainThread]: Acquiring new snowflake connection 'macro_validate_raw_tables'
+[0m11:57:07.697440 [debug] [MainThread]: Using snowflake connection "macro_validate_raw_tables"
+[0m11:57:07.697949 [debug] [MainThread]: On macro_validate_raw_tables: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "prod", "connection_name": "macro_validate_raw_tables"} */
+WITH EXPECTED_TABLES (TABLE_NAME) AS (
+            SELECT COLUMN1
+            FROM VALUES
+            ('RAW_AB_PERMISSION'),
+            ('RAW_AB_PERMISSION_VIEW'),
+            ('RAW_AB_PERMISSION_VIEW_ROLE'),
+            ('RAW_AB_REGISTER_USER'),
+            ('RAW_AB_ROLE'),
+            ('RAW_AB_USER'),
+            ('RAW_AB_USER_ROLE'),
+            ('RAW_AB_VIEW_MENU'),
+            ('RAW_AJUSTE'),
+            ('RAW_ALEMBIC_VERSION'),
+            ('RAW_ANEXOS'),
+            ('RAW_CARGO'),
+            ('RAW_CENARIO'),
+            ('RAW_COMENTARIO'),
+            ('RAW_COMPLEXIDADE'),
+            ('RAW_CONTRATO'),
+            ('RAW_CONTRATOS_USUARIOS'),
+            ('RAW_COORD_PROJETO'),
+            ('RAW_COORDENACAO'),
+            ('RAW_ETIQUETA'),
+            ('RAW_FATOR_COMPLEXIDADE_UST'),
+            ('RAW_FATURA'),
+            ('RAW_FICHA_INDICADOR'),
+            ('RAW_FICHAS_PROJETOS'),
+            ('RAW_LIDER_PROJETOS'),
+            ('RAW_NIVEL'),
+            ('RAW_NIVEL_SUPERIOR'),
+            ('RAW_OBJETIVO'),
+            ('RAW_ORIGEM'),
+            ('RAW_ORIGENS_PROJETO'),
+            ('RAW_PRODUTO'),
+            ('RAW_PROJETO'),
+            ('RAW_PROJETO_RESULTADO_CHAVE'),
+            ('RAW_REAJUSTE'),
+            ('RAW_REGRA'),
+            ('RAW_RENOVACAO'),
+            ('RAW_REQUISITO'),
+            ('RAW_RESULTADO_CHAVE'),
+            ('RAW_SERVICO'),
+            ('RAW_SPRINT'),
+            ('RAW_STATUS'),
+            ('RAW_TAREFA'),
+            ('RAW_TAREFAS_CENARIOS'),
+            ('RAW_TECNOLOGIA'),
+            ('RAW_TECNOLOGIAS_PROJETO'),
+            ('RAW_TIPO'),
+            ('RAW_TIPO_STATUS'),
+            ('RAW_UNIDADE_ADM'),
+            ('RAW_UNIDADE_ADM_SUPERIOR')
+        ),
+        EXISTING_TABLES AS (
+            SELECT TABLE_NAME
+            FROM DRAGON_DB.INFORMATION_SCHEMA.TABLES
+            WHERE TABLE_SCHEMA = UPPER('MUNKA_RAW')
+              AND TABLE_TYPE = 'BASE TABLE'
+        )
+        SELECT
+            COUNT(*) AS MISSING_COUNT,
+            COALESCE(
+                LISTAGG(E.TABLE_NAME, ', ') WITHIN GROUP (ORDER BY E.TABLE_NAME),
+                ''
+            ) AS MISSING_TABLES
+        FROM EXPECTED_TABLES E
+        LEFT JOIN EXISTING_TABLES T
+            ON T.TABLE_NAME = E.TABLE_NAME
+        WHERE T.TABLE_NAME IS NULL
+[0m11:57:07.698361 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m11:57:11.112208 [debug] [MainThread]: SQL status: SUCCESS 1 in 3.0 seconds
+[0m11:57:11.116534 [info ] [MainThread]: Validação concluída: todas as 49 tabelas RAW existem.
+[0m11:57:11.117030 [debug] [MainThread]: On macro_validate_raw_tables: Close
+[0m11:57:11.583973 [debug] [MainThread]: Resource report: {"command_name": "run-operation", "command_success": true, "command_wall_clock_time": 5.014153, "process_user_time": 3.31855, "process_kernel_time": 1.107844, "process_mem_max_rss": "201972", "process_in_blocks": "63664", "process_out_blocks": "1424"}
+[0m11:57:11.584617 [debug] [MainThread]: Command `dbt run-operation` succeeded at 11:57:11.584468 after 5.01 seconds
+[0m11:57:11.585014 [debug] [MainThread]: Connection 'macro_validate_raw_tables' was properly closed.
+[0m11:57:11.585381 [debug] [MainThread]: Flushing usage events
+
+
+============================== 12:43:33.806181 | ccd1a11f-f849-4b25-acfc-86c7d5ec6205 ==============================
+[0m12:43:33.806181 [info ] [MainThread]: Running with dbt=1.7.19
+[0m12:43:33.834743 [debug] [MainThread]: running dbt with arguments {'printer_width': '80', 'indirect_selection': 'eager', 'write_json': 'True', 'log_cache_events': 'False', 'partial_parse': 'True', 'cache_selected_only': 'False', 'warn_error': 'None', 'fail_fast': 'False', 'version_check': 'True', 'log_path': '/opt/airflow/dbt/munka_warehouse/logs', 'debug': 'False', 'profiles_dir': '/opt/airflow/dbt/munka_warehouse', 'use_colors': 'True', 'use_experimental_parser': 'False', 'no_print': 'None', 'quiet': 'False', 'log_format': 'default', 'static_parser': 'True', 'warn_error_options': 'WarnErrorOptions(include=[], exclude=[])', 'introspect': 'True', 'target_path': 'None', 'invocation_command': 'dbt compile', 'send_anonymous_usage_stats': 'False'}
+[0m12:43:34.892893 [info ] [MainThread]: Registered adapter: snowflake=1.7.5
+[0m12:43:34.899861 [debug] [MainThread]: checksum: a8d43cdff37d0f32d7fbe4c5c25bea4bb6c86e162f8ce8fdb1a38cdcf7495431, vars: {}, profile: , target: , version: 1.7.19
+[0m12:43:35.011559 [info ] [MainThread]: Unable to do partial parsing because config vars, config profile, or config target have changed
+[0m12:43:35.012148 [debug] [MainThread]: previous checksum: a8d43cdff37d0f32d7fbe4c5c25bea4bb6c86e162f8ce8fdb1a38cdcf7495431, current checksum: 5bea1b3ccb143e6ea5cdff236881537f4bbf1d3de5538a69b98ed242654a2c79
+[0m12:43:35.012533 [info ] [MainThread]: Unable to do partial parsing because profile has changed
+[0m12:43:35.012906 [info ] [MainThread]: Unable to do partial parsing because a project config has changed
+[0m12:43:36.320641 [info ] [MainThread]: Found 49 models, 1 analysis, 47 seeds, 49 sources, 0 exposures, 0 metrics, 434 macros, 0 groups, 0 semantic models
+[0m12:43:36.326266 [info ] [MainThread]: 
+[0m12:43:36.327322 [debug] [MainThread]: Acquiring new snowflake connection 'master'
+[0m12:43:36.331429 [debug] [ThreadPool]: Acquiring new snowflake connection 'list_DRAGON_DB_JM'
+[0m12:43:36.346470 [debug] [ThreadPool]: Using snowflake connection "list_DRAGON_DB_JM"
+[0m12:43:36.347237 [debug] [ThreadPool]: On list_DRAGON_DB_JM: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "dev", "connection_name": "list_DRAGON_DB_JM"} */
+show objects in DRAGON_DB.JM limit 10000
+[0m12:43:36.347637 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m12:43:38.631877 [debug] [ThreadPool]: Snowflake adapter: Snowflake query id: 01c5bf3b-0409-f1bb-0023-eac70067892e
+[0m12:43:38.632454 [debug] [ThreadPool]: Snowflake adapter: Snowflake error: 002043 (02000): SQL compilation error:
+Object does not exist, or operation cannot be performed.
+[0m12:43:38.632936 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_relations_without_caching
+[0m12:43:38.633231 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m12:43:38.633698 [debug] [ThreadPool]: On list_DRAGON_DB_JM: Close
+[0m12:43:39.109429 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_DRAGON_DB_JM, now list_DRAGON_DB_munka_stg)
+[0m12:43:39.111404 [debug] [ThreadPool]: Using snowflake connection "list_DRAGON_DB_munka_stg"
+[0m12:43:39.111920 [debug] [ThreadPool]: On list_DRAGON_DB_munka_stg: /* {"app": "dbt", "dbt_version": "1.7.19", "profile_name": "munka_warehouse", "target_name": "dev", "connection_name": "list_DRAGON_DB_munka_stg"} */
+show objects in DRAGON_DB.munka_stg limit 10000
+[0m12:43:39.112352 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m12:43:40.374385 [debug] [ThreadPool]: Snowflake adapter: Snowflake query id: 01c5bf3b-0409-f1bc-0023-eac7006454c6
+[0m12:43:40.374971 [debug] [ThreadPool]: Snowflake adapter: Snowflake error: 002043 (02000): SQL compilation error:
+Object does not exist, or operation cannot be performed.
+[0m12:43:40.375406 [debug] [ThreadPool]: Snowflake adapter: Error running SQL: macro list_relations_without_caching
+[0m12:43:40.375750 [debug] [ThreadPool]: Snowflake adapter: Rolling back transaction.
+[0m12:43:40.376151 [debug] [ThreadPool]: On list_DRAGON_DB_munka_stg: Close
+[0m12:43:40.838683 [info ] [MainThread]: Concurrency: 1 threads (target='dev')
+[0m12:43:40.839188 [info ] [MainThread]: 
+[0m12:43:40.846579 [debug] [Thread-1 (]: Began running node analysis.munka_warehouse.raw_ddl_reference
+[0m12:43:40.848483 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly list_DRAGON_DB_munka_stg, now analysis.munka_warehouse.raw_ddl_reference)
+[0m12:43:40.848919 [debug] [Thread-1 (]: Began compiling node analysis.munka_warehouse.raw_ddl_reference
+[0m12:43:40.854199 [debug] [Thread-1 (]: Writing injected SQL for node "analysis.munka_warehouse.raw_ddl_reference"
+[0m12:43:40.855072 [debug] [Thread-1 (]: Timing info for analysis.munka_warehouse.raw_ddl_reference (compile): 12:43:40.849140 => 12:43:40.854869
+[0m12:43:40.855436 [debug] [Thread-1 (]: Began executing node analysis.munka_warehouse.raw_ddl_reference
+[0m12:43:40.855949 [debug] [Thread-1 (]: Timing info for analysis.munka_warehouse.raw_ddl_reference (execute): 12:43:40.855736 => 12:43:40.855750
+[0m12:43:40.856767 [debug] [Thread-1 (]: Finished running node analysis.munka_warehouse.raw_ddl_reference
+[0m12:43:40.857156 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_permission
+[0m12:43:40.857743 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly analysis.munka_warehouse.raw_ddl_reference, now model.munka_warehouse.stg_ab_permission)
+[0m12:43:40.858079 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_permission
+[0m12:43:40.860271 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_permission"
+[0m12:43:40.860864 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission (compile): 12:43:40.858276 => 12:43:40.860675
+[0m12:43:40.861176 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_permission
+[0m12:43:40.861533 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission (execute): 12:43:40.861366 => 12:43:40.861373
+[0m12:43:40.862699 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_permission
+[0m12:43:40.863289 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_permission_view
+[0m12:43:40.863930 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_permission, now model.munka_warehouse.stg_ab_permission_view)
+[0m12:43:40.864248 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_permission_view
+[0m12:43:40.866636 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_permission_view"
+[0m12:43:40.867173 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission_view (compile): 12:43:40.864470 => 12:43:40.866977
+[0m12:43:40.867492 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_permission_view
+[0m12:43:40.867956 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission_view (execute): 12:43:40.867698 => 12:43:40.867711
+[0m12:43:40.868793 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_permission_view
+[0m12:43:40.869194 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_permission_view_role
+[0m12:43:40.869872 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_permission_view, now model.munka_warehouse.stg_ab_permission_view_role)
+[0m12:43:40.870193 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_permission_view_role
+[0m12:43:40.872546 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_permission_view_role"
+[0m12:43:40.873064 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission_view_role (compile): 12:43:40.870388 => 12:43:40.872880
+[0m12:43:40.873376 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_permission_view_role
+[0m12:43:40.873738 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_permission_view_role (execute): 12:43:40.873566 => 12:43:40.873575
+[0m12:43:40.874414 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_permission_view_role
+[0m12:43:40.874757 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_register_user
+[0m12:43:40.875310 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_permission_view_role, now model.munka_warehouse.stg_ab_register_user)
+[0m12:43:40.875633 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_register_user
+[0m12:43:40.878303 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_register_user"
+[0m12:43:40.878889 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_register_user (compile): 12:43:40.875889 => 12:43:40.878689
+[0m12:43:40.879281 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_register_user
+[0m12:43:40.879672 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_register_user (execute): 12:43:40.879496 => 12:43:40.879504
+[0m12:43:40.880611 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_register_user
+[0m12:43:40.881012 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_role
+[0m12:43:40.881708 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_register_user, now model.munka_warehouse.stg_ab_role)
+[0m12:43:40.882061 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_role
+[0m12:43:40.885089 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_role"
+[0m12:43:40.885771 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_role (compile): 12:43:40.882262 => 12:43:40.885562
+[0m12:43:40.886112 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_role
+[0m12:43:40.886494 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_role (execute): 12:43:40.886319 => 12:43:40.886326
+[0m12:43:40.887217 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_role
+[0m12:43:40.887563 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_user
+[0m12:43:40.888126 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_role, now model.munka_warehouse.stg_ab_user)
+[0m12:43:40.888438 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_user
+[0m12:43:40.893266 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_user"
+[0m12:43:40.893974 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_user (compile): 12:43:40.888630 => 12:43:40.893754
+[0m12:43:40.894311 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_user
+[0m12:43:40.894683 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_user (execute): 12:43:40.894511 => 12:43:40.894518
+[0m12:43:40.895397 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_user
+[0m12:43:40.895755 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_user_role
+[0m12:43:40.896345 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_user, now model.munka_warehouse.stg_ab_user_role)
+[0m12:43:40.896659 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_user_role
+[0m12:43:40.898992 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_user_role"
+[0m12:43:40.899493 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_user_role (compile): 12:43:40.896864 => 12:43:40.899312
+[0m12:43:40.899807 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_user_role
+[0m12:43:40.900179 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_user_role (execute): 12:43:40.900012 => 12:43:40.900018
+[0m12:43:40.900859 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_user_role
+[0m12:43:40.901210 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ab_view_menu
+[0m12:43:40.901767 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_user_role, now model.munka_warehouse.stg_ab_view_menu)
+[0m12:43:40.902088 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ab_view_menu
+[0m12:43:40.904630 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ab_view_menu"
+[0m12:43:40.905134 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_view_menu (compile): 12:43:40.902279 => 12:43:40.904954
+[0m12:43:40.905442 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ab_view_menu
+[0m12:43:40.905798 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ab_view_menu (execute): 12:43:40.905634 => 12:43:40.905639
+[0m12:43:40.906468 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ab_view_menu
+[0m12:43:40.906812 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ajuste
+[0m12:43:40.907373 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ab_view_menu, now model.munka_warehouse.stg_ajuste)
+[0m12:43:40.907681 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ajuste
+[0m12:43:40.909979 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ajuste"
+[0m12:43:40.910490 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ajuste (compile): 12:43:40.907880 => 12:43:40.910308
+[0m12:43:40.910815 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ajuste
+[0m12:43:40.911189 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ajuste (execute): 12:43:40.911023 => 12:43:40.911028
+[0m12:43:40.911868 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ajuste
+[0m12:43:40.912215 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_alembic_version
+[0m12:43:40.912811 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ajuste, now model.munka_warehouse.stg_alembic_version)
+[0m12:43:40.913167 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_alembic_version
+[0m12:43:40.917017 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_alembic_version"
+[0m12:43:40.917759 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_alembic_version (compile): 12:43:40.913377 => 12:43:40.917517
+[0m12:43:40.918159 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_alembic_version
+[0m12:43:40.918575 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_alembic_version (execute): 12:43:40.918386 => 12:43:40.918394
+[0m12:43:40.919335 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_alembic_version
+[0m12:43:40.919685 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_anexos
+[0m12:43:40.920241 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_alembic_version, now model.munka_warehouse.stg_anexos)
+[0m12:43:40.920551 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_anexos
+[0m12:43:40.922685 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_anexos"
+[0m12:43:40.923182 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_anexos (compile): 12:43:40.920742 => 12:43:40.923005
+[0m12:43:40.923528 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_anexos
+[0m12:43:40.923930 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_anexos (execute): 12:43:40.923749 => 12:43:40.923754
+[0m12:43:40.924803 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_anexos
+[0m12:43:40.925223 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_cargo
+[0m12:43:40.925944 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_anexos, now model.munka_warehouse.stg_cargo)
+[0m12:43:40.926271 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_cargo
+[0m12:43:40.929079 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_cargo"
+[0m12:43:40.929592 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_cargo (compile): 12:43:40.926487 => 12:43:40.929406
+[0m12:43:40.929914 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_cargo
+[0m12:43:40.930273 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_cargo (execute): 12:43:40.930109 => 12:43:40.930114
+[0m12:43:40.930939 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_cargo
+[0m12:43:40.931282 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_cenario
+[0m12:43:40.931812 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_cargo, now model.munka_warehouse.stg_cenario)
+[0m12:43:40.932142 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_cenario
+[0m12:43:40.934289 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_cenario"
+[0m12:43:40.934766 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_cenario (compile): 12:43:40.932332 => 12:43:40.934594
+[0m12:43:40.935085 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_cenario
+[0m12:43:40.935441 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_cenario (execute): 12:43:40.935278 => 12:43:40.935283
+[0m12:43:40.936096 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_cenario
+[0m12:43:40.936437 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_comentario
+[0m12:43:40.936980 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_cenario, now model.munka_warehouse.stg_comentario)
+[0m12:43:40.937289 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_comentario
+[0m12:43:40.939481 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_comentario"
+[0m12:43:40.940005 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_comentario (compile): 12:43:40.937482 => 12:43:40.939786
+[0m12:43:40.940315 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_comentario
+[0m12:43:40.940667 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_comentario (execute): 12:43:40.940506 => 12:43:40.940510
+[0m12:43:40.941395 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_comentario
+[0m12:43:40.941736 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_complexidade
+[0m12:43:40.942317 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_comentario, now model.munka_warehouse.stg_complexidade)
+[0m12:43:40.942629 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_complexidade
+[0m12:43:40.945037 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_complexidade"
+[0m12:43:40.945651 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_complexidade (compile): 12:43:40.942823 => 12:43:40.945445
+[0m12:43:40.946049 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_complexidade
+[0m12:43:40.946480 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_complexidade (execute): 12:43:40.946286 => 12:43:40.946294
+[0m12:43:40.947342 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_complexidade
+[0m12:43:40.947768 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_contrato
+[0m12:43:40.948434 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_complexidade, now model.munka_warehouse.stg_contrato)
+[0m12:43:40.948759 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_contrato
+[0m12:43:40.951935 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_contrato"
+[0m12:43:40.952555 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_contrato (compile): 12:43:40.948979 => 12:43:40.952360
+[0m12:43:40.952895 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_contrato
+[0m12:43:40.953269 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_contrato (execute): 12:43:40.953096 => 12:43:40.953105
+[0m12:43:40.953998 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_contrato
+[0m12:43:40.954334 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_contratos_usuarios
+[0m12:43:40.954863 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_contrato, now model.munka_warehouse.stg_contratos_usuarios)
+[0m12:43:40.955173 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_contratos_usuarios
+[0m12:43:40.958379 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_contratos_usuarios"
+[0m12:43:40.958953 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_contratos_usuarios (compile): 12:43:40.955364 => 12:43:40.958751
+[0m12:43:40.959351 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_contratos_usuarios
+[0m12:43:40.959842 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_contratos_usuarios (execute): 12:43:40.959642 => 12:43:40.959651
+[0m12:43:40.960576 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_contratos_usuarios
+[0m12:43:40.960952 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_coord_projeto
+[0m12:43:40.961562 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_contratos_usuarios, now model.munka_warehouse.stg_coord_projeto)
+[0m12:43:40.961884 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_coord_projeto
+[0m12:43:40.964016 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_coord_projeto"
+[0m12:43:40.964490 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_coord_projeto (compile): 12:43:40.962080 => 12:43:40.964314
+[0m12:43:40.964796 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_coord_projeto
+[0m12:43:40.965207 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_coord_projeto (execute): 12:43:40.965035 => 12:43:40.965040
+[0m12:43:40.965854 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_coord_projeto
+[0m12:43:40.966189 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_coordenacao
+[0m12:43:40.966701 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_coord_projeto, now model.munka_warehouse.stg_coordenacao)
+[0m12:43:40.967029 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_coordenacao
+[0m12:43:40.971237 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_coordenacao"
+[0m12:43:40.971736 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_coordenacao (compile): 12:43:40.967221 => 12:43:40.971557
+[0m12:43:40.972052 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_coordenacao
+[0m12:43:40.972407 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_coordenacao (execute): 12:43:40.972244 => 12:43:40.972248
+[0m12:43:40.973046 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_coordenacao
+[0m12:43:40.973379 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_etiqueta
+[0m12:43:40.973899 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_coordenacao, now model.munka_warehouse.stg_etiqueta)
+[0m12:43:40.974206 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_etiqueta
+[0m12:43:40.976186 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_etiqueta"
+[0m12:43:40.976648 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_etiqueta (compile): 12:43:40.974400 => 12:43:40.976475
+[0m12:43:40.976963 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_etiqueta
+[0m12:43:40.977324 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_etiqueta (execute): 12:43:40.977161 => 12:43:40.977165
+[0m12:43:40.977952 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_etiqueta
+[0m12:43:40.978285 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_fator_complexidade_ust
+[0m12:43:40.978814 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_etiqueta, now model.munka_warehouse.stg_fator_complexidade_ust)
+[0m12:43:40.979137 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_fator_complexidade_ust
+[0m12:43:40.981519 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_fator_complexidade_ust"
+[0m12:43:40.982017 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fator_complexidade_ust (compile): 12:43:40.979326 => 12:43:40.981830
+[0m12:43:40.982331 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_fator_complexidade_ust
+[0m12:43:40.982690 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fator_complexidade_ust (execute): 12:43:40.982525 => 12:43:40.982530
+[0m12:43:40.983329 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_fator_complexidade_ust
+[0m12:43:40.983730 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_fatura
+[0m12:43:40.984249 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_fator_complexidade_ust, now model.munka_warehouse.stg_fatura)
+[0m12:43:40.984557 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_fatura
+[0m12:43:40.986749 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_fatura"
+[0m12:43:40.987251 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fatura (compile): 12:43:40.984751 => 12:43:40.987070
+[0m12:43:40.987563 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_fatura
+[0m12:43:40.987930 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fatura (execute): 12:43:40.987756 => 12:43:40.987760
+[0m12:43:40.988744 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_fatura
+[0m12:43:40.989102 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_ficha_indicador
+[0m12:43:40.989619 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_fatura, now model.munka_warehouse.stg_ficha_indicador)
+[0m12:43:40.989935 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_ficha_indicador
+[0m12:43:40.991822 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_ficha_indicador"
+[0m12:43:40.992305 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ficha_indicador (compile): 12:43:40.990171 => 12:43:40.992119
+[0m12:43:40.992620 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_ficha_indicador
+[0m12:43:40.992978 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_ficha_indicador (execute): 12:43:40.992809 => 12:43:40.992813
+[0m12:43:40.993601 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_ficha_indicador
+[0m12:43:40.993939 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_fichas_projetos
+[0m12:43:40.994445 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_ficha_indicador, now model.munka_warehouse.stg_fichas_projetos)
+[0m12:43:40.994751 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_fichas_projetos
+[0m12:43:40.996729 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_fichas_projetos"
+[0m12:43:40.997226 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fichas_projetos (compile): 12:43:40.994956 => 12:43:40.997029
+[0m12:43:40.997552 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_fichas_projetos
+[0m12:43:40.997950 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_fichas_projetos (execute): 12:43:40.997770 => 12:43:40.997776
+[0m12:43:40.998605 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_fichas_projetos
+[0m12:43:40.998950 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_lider_projetos
+[0m12:43:40.999463 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_fichas_projetos, now model.munka_warehouse.stg_lider_projetos)
+[0m12:43:40.999768 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_lider_projetos
+[0m12:43:41.001863 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_lider_projetos"
+[0m12:43:41.002411 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_lider_projetos (compile): 12:43:40.999970 => 12:43:41.002227
+[0m12:43:41.002741 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_lider_projetos
+[0m12:43:41.003115 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_lider_projetos (execute): 12:43:41.002948 => 12:43:41.002952
+[0m12:43:41.003776 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_lider_projetos
+[0m12:43:41.004121 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_nivel
+[0m12:43:41.004701 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_lider_projetos, now model.munka_warehouse.stg_nivel)
+[0m12:43:41.005027 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_nivel
+[0m12:43:41.007154 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_nivel"
+[0m12:43:41.007631 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_nivel (compile): 12:43:41.005224 => 12:43:41.007455
+[0m12:43:41.007947 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_nivel
+[0m12:43:41.008303 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_nivel (execute): 12:43:41.008139 => 12:43:41.008144
+[0m12:43:41.009138 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_nivel
+[0m12:43:41.009485 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_nivel_superior
+[0m12:43:41.010057 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_nivel, now model.munka_warehouse.stg_nivel_superior)
+[0m12:43:41.010374 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_nivel_superior
+[0m12:43:41.012541 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_nivel_superior"
+[0m12:43:41.013102 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_nivel_superior (compile): 12:43:41.010572 => 12:43:41.012898
+[0m12:43:41.013430 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_nivel_superior
+[0m12:43:41.013790 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_nivel_superior (execute): 12:43:41.013623 => 12:43:41.013629
+[0m12:43:41.014456 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_nivel_superior
+[0m12:43:41.014805 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_objetivo
+[0m12:43:41.015426 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_nivel_superior, now model.munka_warehouse.stg_objetivo)
+[0m12:43:41.015745 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_objetivo
+[0m12:43:41.018036 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_objetivo"
+[0m12:43:41.018548 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_objetivo (compile): 12:43:41.015953 => 12:43:41.018369
+[0m12:43:41.018882 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_objetivo
+[0m12:43:41.019254 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_objetivo (execute): 12:43:41.019084 => 12:43:41.019089
+[0m12:43:41.019956 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_objetivo
+[0m12:43:41.020297 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_origem
+[0m12:43:41.020813 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_objetivo, now model.munka_warehouse.stg_origem)
+[0m12:43:41.021129 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_origem
+[0m12:43:41.023197 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_origem"
+[0m12:43:41.023657 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_origem (compile): 12:43:41.021319 => 12:43:41.023485
+[0m12:43:41.023965 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_origem
+[0m12:43:41.024315 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_origem (execute): 12:43:41.024154 => 12:43:41.024158
+[0m12:43:41.024952 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_origem
+[0m12:43:41.025285 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_origens_projeto
+[0m12:43:41.025810 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_origem, now model.munka_warehouse.stg_origens_projeto)
+[0m12:43:41.026156 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_origens_projeto
+[0m12:43:41.028208 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_origens_projeto"
+[0m12:43:41.028676 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_origens_projeto (compile): 12:43:41.026382 => 12:43:41.028503
+[0m12:43:41.028986 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_origens_projeto
+[0m12:43:41.029336 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_origens_projeto (execute): 12:43:41.029175 => 12:43:41.029179
+[0m12:43:41.029958 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_origens_projeto
+[0m12:43:41.030287 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_produto
+[0m12:43:41.030790 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_origens_projeto, now model.munka_warehouse.stg_produto)
+[0m12:43:41.031102 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_produto
+[0m12:43:41.033084 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_produto"
+[0m12:43:41.033625 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_produto (compile): 12:43:41.031290 => 12:43:41.033448
+[0m12:43:41.033934 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_produto
+[0m12:43:41.034287 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_produto (execute): 12:43:41.034125 => 12:43:41.034129
+[0m12:43:41.034916 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_produto
+[0m12:43:41.035287 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_projeto
+[0m12:43:41.035803 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_produto, now model.munka_warehouse.stg_projeto)
+[0m12:43:41.036132 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_projeto
+[0m12:43:41.040698 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_projeto"
+[0m12:43:41.041267 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_projeto (compile): 12:43:41.036326 => 12:43:41.041075
+[0m12:43:41.041596 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_projeto
+[0m12:43:41.041977 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_projeto (execute): 12:43:41.041797 => 12:43:41.041801
+[0m12:43:41.042704 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_projeto
+[0m12:43:41.043174 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_projeto_resultado_chave
+[0m12:43:41.043730 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_projeto, now model.munka_warehouse.stg_projeto_resultado_chave)
+[0m12:43:41.044102 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_projeto_resultado_chave
+[0m12:43:41.046506 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_projeto_resultado_chave"
+[0m12:43:41.047087 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_projeto_resultado_chave (compile): 12:43:41.044302 => 12:43:41.046891
+[0m12:43:41.047409 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_projeto_resultado_chave
+[0m12:43:41.047776 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_projeto_resultado_chave (execute): 12:43:41.047603 => 12:43:41.047612
+[0m12:43:41.048502 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_projeto_resultado_chave
+[0m12:43:41.048898 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_reajuste
+[0m12:43:41.049487 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_projeto_resultado_chave, now model.munka_warehouse.stg_reajuste)
+[0m12:43:41.049805 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_reajuste
+[0m12:43:41.161002 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_reajuste"
+[0m12:43:41.161632 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_reajuste (compile): 12:43:41.050016 => 12:43:41.161421
+[0m12:43:41.161983 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_reajuste
+[0m12:43:41.162356 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_reajuste (execute): 12:43:41.162186 => 12:43:41.162193
+[0m12:43:41.163059 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_reajuste
+[0m12:43:41.163407 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_regra
+[0m12:43:41.164027 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_reajuste, now model.munka_warehouse.stg_regra)
+[0m12:43:41.164383 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_regra
+[0m12:43:41.166712 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_regra"
+[0m12:43:41.167215 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_regra (compile): 12:43:41.164584 => 12:43:41.167034
+[0m12:43:41.167530 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_regra
+[0m12:43:41.167910 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_regra (execute): 12:43:41.167731 => 12:43:41.167738
+[0m12:43:41.168603 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_regra
+[0m12:43:41.168992 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_renovacao
+[0m12:43:41.169656 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_regra, now model.munka_warehouse.stg_renovacao)
+[0m12:43:41.169992 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_renovacao
+[0m12:43:41.172097 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_renovacao"
+[0m12:43:41.172571 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_renovacao (compile): 12:43:41.170189 => 12:43:41.172398
+[0m12:43:41.172880 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_renovacao
+[0m12:43:41.173233 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_renovacao (execute): 12:43:41.173072 => 12:43:41.173077
+[0m12:43:41.173871 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_renovacao
+[0m12:43:41.174208 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_requisito
+[0m12:43:41.174720 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_renovacao, now model.munka_warehouse.stg_requisito)
+[0m12:43:41.175036 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_requisito
+[0m12:43:41.177636 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_requisito"
+[0m12:43:41.178196 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_requisito (compile): 12:43:41.175254 => 12:43:41.178003
+[0m12:43:41.178523 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_requisito
+[0m12:43:41.178900 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_requisito (execute): 12:43:41.178721 => 12:43:41.178727
+[0m12:43:41.179650 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_requisito
+[0m12:43:41.180037 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_resultado_chave
+[0m12:43:41.180685 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_requisito, now model.munka_warehouse.stg_resultado_chave)
+[0m12:43:41.181024 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_resultado_chave
+[0m12:43:41.183738 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_resultado_chave"
+[0m12:43:41.184232 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_resultado_chave (compile): 12:43:41.181221 => 12:43:41.184055
+[0m12:43:41.184540 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_resultado_chave
+[0m12:43:41.184908 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_resultado_chave (execute): 12:43:41.184732 => 12:43:41.184737
+[0m12:43:41.185615 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_resultado_chave
+[0m12:43:41.185978 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_servico
+[0m12:43:41.186497 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_resultado_chave, now model.munka_warehouse.stg_servico)
+[0m12:43:41.186805 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_servico
+[0m12:43:41.188771 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_servico"
+[0m12:43:41.189258 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_servico (compile): 12:43:41.187008 => 12:43:41.189081
+[0m12:43:41.189564 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_servico
+[0m12:43:41.190095 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_servico (execute): 12:43:41.189922 => 12:43:41.189927
+[0m12:43:41.190723 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_servico
+[0m12:43:41.191107 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_sprint
+[0m12:43:41.191624 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_servico, now model.munka_warehouse.stg_sprint)
+[0m12:43:41.191943 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_sprint
+[0m12:43:41.193810 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_sprint"
+[0m12:43:41.194286 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_sprint (compile): 12:43:41.192142 => 12:43:41.194111
+[0m12:43:41.194593 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_sprint
+[0m12:43:41.194959 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_sprint (execute): 12:43:41.194785 => 12:43:41.194789
+[0m12:43:41.195577 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_sprint
+[0m12:43:41.195923 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_status
+[0m12:43:41.196416 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_sprint, now model.munka_warehouse.stg_status)
+[0m12:43:41.196718 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_status
+[0m12:43:41.198769 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_status"
+[0m12:43:41.199264 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_status (compile): 12:43:41.196951 => 12:43:41.199085
+[0m12:43:41.199574 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_status
+[0m12:43:41.199943 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_status (execute): 12:43:41.199767 => 12:43:41.199771
+[0m12:43:41.200572 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_status
+[0m12:43:41.200920 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tarefa
+[0m12:43:41.201465 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_status, now model.munka_warehouse.stg_tarefa)
+[0m12:43:41.201792 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tarefa
+[0m12:43:41.204757 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tarefa"
+[0m12:43:41.205320 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tarefa (compile): 12:43:41.202003 => 12:43:41.205131
+[0m12:43:41.205702 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tarefa
+[0m12:43:41.206097 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tarefa (execute): 12:43:41.205919 => 12:43:41.205926
+[0m12:43:41.206841 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tarefa
+[0m12:43:41.207207 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tarefas_cenarios
+[0m12:43:41.207767 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tarefa, now model.munka_warehouse.stg_tarefas_cenarios)
+[0m12:43:41.208090 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tarefas_cenarios
+[0m12:43:41.210286 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tarefas_cenarios"
+[0m12:43:41.210795 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tarefas_cenarios (compile): 12:43:41.208281 => 12:43:41.210616
+[0m12:43:41.211126 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tarefas_cenarios
+[0m12:43:41.211492 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tarefas_cenarios (execute): 12:43:41.211324 => 12:43:41.211330
+[0m12:43:41.212130 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tarefas_cenarios
+[0m12:43:41.212464 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tecnologia
+[0m12:43:41.212983 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tarefas_cenarios, now model.munka_warehouse.stg_tecnologia)
+[0m12:43:41.213292 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tecnologia
+[0m12:43:41.215265 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tecnologia"
+[0m12:43:41.215731 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tecnologia (compile): 12:43:41.213483 => 12:43:41.215555
+[0m12:43:41.216075 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tecnologia
+[0m12:43:41.216449 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tecnologia (execute): 12:43:41.216275 => 12:43:41.216279
+[0m12:43:41.217080 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tecnologia
+[0m12:43:41.217418 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tecnologias_projeto
+[0m12:43:41.217963 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tecnologia, now model.munka_warehouse.stg_tecnologias_projeto)
+[0m12:43:41.218281 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tecnologias_projeto
+[0m12:43:41.220655 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tecnologias_projeto"
+[0m12:43:41.221198 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tecnologias_projeto (compile): 12:43:41.218474 => 12:43:41.221012
+[0m12:43:41.221508 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tecnologias_projeto
+[0m12:43:41.221875 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tecnologias_projeto (execute): 12:43:41.221702 => 12:43:41.221707
+[0m12:43:41.222521 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tecnologias_projeto
+[0m12:43:41.222867 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tipo
+[0m12:43:41.223422 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tecnologias_projeto, now model.munka_warehouse.stg_tipo)
+[0m12:43:41.223731 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tipo
+[0m12:43:41.227263 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tipo"
+[0m12:43:41.227726 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tipo (compile): 12:43:41.223933 => 12:43:41.227553
+[0m12:43:41.228040 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tipo
+[0m12:43:41.228404 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tipo (execute): 12:43:41.228239 => 12:43:41.228243
+[0m12:43:41.229034 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tipo
+[0m12:43:41.229363 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_tipo_status
+[0m12:43:41.229865 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tipo, now model.munka_warehouse.stg_tipo_status)
+[0m12:43:41.230170 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_tipo_status
+[0m12:43:41.232058 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_tipo_status"
+[0m12:43:41.232520 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tipo_status (compile): 12:43:41.230362 => 12:43:41.232344
+[0m12:43:41.232826 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_tipo_status
+[0m12:43:41.233191 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_tipo_status (execute): 12:43:41.233027 => 12:43:41.233030
+[0m12:43:41.233861 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_tipo_status
+[0m12:43:41.234200 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_unidade_adm
+[0m12:43:41.234718 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_tipo_status, now model.munka_warehouse.stg_unidade_adm)
+[0m12:43:41.235044 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_unidade_adm
+[0m12:43:41.237700 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_unidade_adm"
+[0m12:43:41.238251 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_unidade_adm (compile): 12:43:41.235238 => 12:43:41.238062
+[0m12:43:41.238563 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_unidade_adm
+[0m12:43:41.238940 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_unidade_adm (execute): 12:43:41.238758 => 12:43:41.238764
+[0m12:43:41.239658 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_unidade_adm
+[0m12:43:41.240064 [debug] [Thread-1 (]: Began running node model.munka_warehouse.stg_unidade_adm_superior
+[0m12:43:41.240634 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_unidade_adm, now model.munka_warehouse.stg_unidade_adm_superior)
+[0m12:43:41.240960 [debug] [Thread-1 (]: Began compiling node model.munka_warehouse.stg_unidade_adm_superior
+[0m12:43:41.243048 [debug] [Thread-1 (]: Writing injected SQL for node "model.munka_warehouse.stg_unidade_adm_superior"
+[0m12:43:41.243520 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_unidade_adm_superior (compile): 12:43:41.241197 => 12:43:41.243343
+[0m12:43:41.243826 [debug] [Thread-1 (]: Began executing node model.munka_warehouse.stg_unidade_adm_superior
+[0m12:43:41.244201 [debug] [Thread-1 (]: Timing info for model.munka_warehouse.stg_unidade_adm_superior (execute): 12:43:41.244032 => 12:43:41.244037
+[0m12:43:41.244828 [debug] [Thread-1 (]: Finished running node model.munka_warehouse.stg_unidade_adm_superior
+[0m12:43:41.245183 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_permission
+[0m12:43:41.245684 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.munka_warehouse.stg_unidade_adm_superior, now seed.munka_warehouse.ab_permission)
+[0m12:43:41.246029 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_permission
+[0m12:43:41.247290 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission (compile): 12:43:41.246226 => 12:43:41.247103
+[0m12:43:41.247883 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_permission
+[0m12:43:41.248267 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission (execute): 12:43:41.248095 => 12:43:41.248101
+[0m12:43:41.248954 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_permission
+[0m12:43:41.249312 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_permission_view
+[0m12:43:41.249859 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_permission, now seed.munka_warehouse.ab_permission_view)
+[0m12:43:41.250176 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_permission_view
+[0m12:43:41.251518 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission_view (compile): 12:43:41.250369 => 12:43:41.251316
+[0m12:43:41.251864 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_permission_view
+[0m12:43:41.252246 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission_view (execute): 12:43:41.252071 => 12:43:41.252078
+[0m12:43:41.253045 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_permission_view
+[0m12:43:41.253418 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_permission_view_role
+[0m12:43:41.253977 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_permission_view, now seed.munka_warehouse.ab_permission_view_role)
+[0m12:43:41.254293 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_permission_view_role
+[0m12:43:41.256010 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission_view_role (compile): 12:43:41.254487 => 12:43:41.255826
+[0m12:43:41.256324 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_permission_view_role
+[0m12:43:41.256690 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_permission_view_role (execute): 12:43:41.256522 => 12:43:41.256527
+[0m12:43:41.257356 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_permission_view_role
+[0m12:43:41.257688 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_role
+[0m12:43:41.258198 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_permission_view_role, now seed.munka_warehouse.ab_role)
+[0m12:43:41.258525 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_role
+[0m12:43:41.259992 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_role (compile): 12:43:41.258721 => 12:43:41.259800
+[0m12:43:41.260303 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_role
+[0m12:43:41.260680 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_role (execute): 12:43:41.260512 => 12:43:41.260517
+[0m12:43:41.261316 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_role
+[0m12:43:41.261649 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_user
+[0m12:43:41.262159 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_role, now seed.munka_warehouse.ab_user)
+[0m12:43:41.262463 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_user
+[0m12:43:41.263760 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_user (compile): 12:43:41.262654 => 12:43:41.263590
+[0m12:43:41.264071 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_user
+[0m12:43:41.264424 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_user (execute): 12:43:41.264263 => 12:43:41.264266
+[0m12:43:41.265046 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_user
+[0m12:43:41.265380 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_user_role
+[0m12:43:41.265894 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_user, now seed.munka_warehouse.ab_user_role)
+[0m12:43:41.266228 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_user_role
+[0m12:43:41.267544 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_user_role (compile): 12:43:41.266432 => 12:43:41.267368
+[0m12:43:41.267908 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_user_role
+[0m12:43:41.268279 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_user_role (execute): 12:43:41.268115 => 12:43:41.268119
+[0m12:43:41.268993 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_user_role
+[0m12:43:41.269362 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ab_view_menu
+[0m12:43:41.269970 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_user_role, now seed.munka_warehouse.ab_view_menu)
+[0m12:43:41.270281 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ab_view_menu
+[0m12:43:41.271956 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_view_menu (compile): 12:43:41.270473 => 12:43:41.271765
+[0m12:43:41.272267 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ab_view_menu
+[0m12:43:41.272624 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ab_view_menu (execute): 12:43:41.272461 => 12:43:41.272465
+[0m12:43:41.273315 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ab_view_menu
+[0m12:43:41.273662 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ajuste
+[0m12:43:41.274483 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ab_view_menu, now seed.munka_warehouse.ajuste)
+[0m12:43:41.275023 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ajuste
+[0m12:43:41.276777 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ajuste (compile): 12:43:41.275226 => 12:43:41.276427
+[0m12:43:41.277248 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ajuste
+[0m12:43:41.277607 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ajuste (execute): 12:43:41.277444 => 12:43:41.277447
+[0m12:43:41.278392 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ajuste
+[0m12:43:41.278731 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.alembic_version
+[0m12:43:41.279253 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ajuste, now seed.munka_warehouse.alembic_version)
+[0m12:43:41.279562 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.alembic_version
+[0m12:43:41.280728 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.alembic_version (compile): 12:43:41.279753 => 12:43:41.280555
+[0m12:43:41.281045 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.alembic_version
+[0m12:43:41.281399 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.alembic_version (execute): 12:43:41.281237 => 12:43:41.281240
+[0m12:43:41.282022 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.alembic_version
+[0m12:43:41.282428 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.anexos
+[0m12:43:41.282949 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.alembic_version, now seed.munka_warehouse.anexos)
+[0m12:43:41.283424 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.anexos
+[0m12:43:41.285231 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.anexos (compile): 12:43:41.283728 => 12:43:41.285021
+[0m12:43:41.285572 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.anexos
+[0m12:43:41.286091 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.anexos (execute): 12:43:41.285764 => 12:43:41.285769
+[0m12:43:41.287280 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.anexos
+[0m12:43:41.287642 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.cargo
+[0m12:43:41.288243 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.anexos, now seed.munka_warehouse.cargo)
+[0m12:43:41.288557 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.cargo
+[0m12:43:41.294924 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.cargo (compile): 12:43:41.288754 => 12:43:41.294628
+[0m12:43:41.295324 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.cargo
+[0m12:43:41.295709 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.cargo (execute): 12:43:41.295538 => 12:43:41.295544
+[0m12:43:41.296428 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.cargo
+[0m12:43:41.296777 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.cenario
+[0m12:43:41.297351 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.cargo, now seed.munka_warehouse.cenario)
+[0m12:43:41.297661 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.cenario
+[0m12:43:41.299060 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.cenario (compile): 12:43:41.297863 => 12:43:41.298883
+[0m12:43:41.299381 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.cenario
+[0m12:43:41.299736 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.cenario (execute): 12:43:41.299574 => 12:43:41.299579
+[0m12:43:41.300386 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.cenario
+[0m12:43:41.300745 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.comentario
+[0m12:43:41.301289 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.cenario, now seed.munka_warehouse.comentario)
+[0m12:43:41.301599 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.comentario
+[0m12:43:41.303192 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.comentario (compile): 12:43:41.301791 => 12:43:41.303013
+[0m12:43:41.303528 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.comentario
+[0m12:43:41.303895 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.comentario (execute): 12:43:41.303722 => 12:43:41.303726
+[0m12:43:41.304525 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.comentario
+[0m12:43:41.304862 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.complexidade
+[0m12:43:41.305376 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.comentario, now seed.munka_warehouse.complexidade)
+[0m12:43:41.305680 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.complexidade
+[0m12:43:41.307008 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.complexidade (compile): 12:43:41.305877 => 12:43:41.306827
+[0m12:43:41.307312 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.complexidade
+[0m12:43:41.307662 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.complexidade (execute): 12:43:41.307501 => 12:43:41.307505
+[0m12:43:41.308301 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.complexidade
+[0m12:43:41.308643 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.contrato
+[0m12:43:41.309408 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.complexidade, now seed.munka_warehouse.contrato)
+[0m12:43:41.309893 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.contrato
+[0m12:43:41.311150 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.contrato (compile): 12:43:41.310117 => 12:43:41.310975
+[0m12:43:41.311457 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.contrato
+[0m12:43:41.311811 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.contrato (execute): 12:43:41.311647 => 12:43:41.311651
+[0m12:43:41.312621 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.contrato
+[0m12:43:41.312996 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.contratos_usuarios
+[0m12:43:41.313523 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.contrato, now seed.munka_warehouse.contratos_usuarios)
+[0m12:43:41.313830 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.contratos_usuarios
+[0m12:43:41.315151 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.contratos_usuarios (compile): 12:43:41.314037 => 12:43:41.314978
+[0m12:43:41.315455 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.contratos_usuarios
+[0m12:43:41.315809 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.contratos_usuarios (execute): 12:43:41.315645 => 12:43:41.315650
+[0m12:43:41.316509 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.contratos_usuarios
+[0m12:43:41.316864 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.coord_projeto
+[0m12:43:41.317448 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.contratos_usuarios, now seed.munka_warehouse.coord_projeto)
+[0m12:43:41.317792 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.coord_projeto
+[0m12:43:41.319393 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.coord_projeto (compile): 12:43:41.318048 => 12:43:41.319218
+[0m12:43:41.319697 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.coord_projeto
+[0m12:43:41.320078 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.coord_projeto (execute): 12:43:41.319914 => 12:43:41.319918
+[0m12:43:41.320690 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.coord_projeto
+[0m12:43:41.321139 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.coordenacao
+[0m12:43:41.321739 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.coord_projeto, now seed.munka_warehouse.coordenacao)
+[0m12:43:41.322080 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.coordenacao
+[0m12:43:41.323408 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.coordenacao (compile): 12:43:41.322277 => 12:43:41.323238
+[0m12:43:41.323704 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.coordenacao
+[0m12:43:41.324273 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.coordenacao (execute): 12:43:41.323973 => 12:43:41.323980
+[0m12:43:41.325267 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.coordenacao
+[0m12:43:41.325606 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.etiqueta
+[0m12:43:41.326109 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.coordenacao, now seed.munka_warehouse.etiqueta)
+[0m12:43:41.326412 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.etiqueta
+[0m12:43:41.327683 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.etiqueta (compile): 12:43:41.326601 => 12:43:41.327511
+[0m12:43:41.327988 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.etiqueta
+[0m12:43:41.328335 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.etiqueta (execute): 12:43:41.328175 => 12:43:41.328179
+[0m12:43:41.328950 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.etiqueta
+[0m12:43:41.329280 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.fator_complexidade_ust
+[0m12:43:41.329776 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.etiqueta, now seed.munka_warehouse.fator_complexidade_ust)
+[0m12:43:41.330089 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.fator_complexidade_ust
+[0m12:43:41.331886 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fator_complexidade_ust (compile): 12:43:41.330307 => 12:43:41.331693
+[0m12:43:41.332220 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.fator_complexidade_ust
+[0m12:43:41.332622 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fator_complexidade_ust (execute): 12:43:41.332427 => 12:43:41.332432
+[0m12:43:41.333305 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.fator_complexidade_ust
+[0m12:43:41.333780 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.fatura
+[0m12:43:41.334540 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.fator_complexidade_ust, now seed.munka_warehouse.fatura)
+[0m12:43:41.334987 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.fatura
+[0m12:43:41.336749 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fatura (compile): 12:43:41.335204 => 12:43:41.336564
+[0m12:43:41.337090 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.fatura
+[0m12:43:41.337483 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fatura (execute): 12:43:41.337305 => 12:43:41.337310
+[0m12:43:41.338173 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.fatura
+[0m12:43:41.338541 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.ficha_indicador
+[0m12:43:41.339110 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.fatura, now seed.munka_warehouse.ficha_indicador)
+[0m12:43:41.339430 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.ficha_indicador
+[0m12:43:41.340827 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ficha_indicador (compile): 12:43:41.339623 => 12:43:41.340657
+[0m12:43:41.341151 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.ficha_indicador
+[0m12:43:41.341534 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.ficha_indicador (execute): 12:43:41.341343 => 12:43:41.341347
+[0m12:43:41.342331 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.ficha_indicador
+[0m12:43:41.342674 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.fichas_projetos
+[0m12:43:41.343245 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.ficha_indicador, now seed.munka_warehouse.fichas_projetos)
+[0m12:43:41.343574 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.fichas_projetos
+[0m12:43:41.344757 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fichas_projetos (compile): 12:43:41.343770 => 12:43:41.344591
+[0m12:43:41.345078 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.fichas_projetos
+[0m12:43:41.345441 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.fichas_projetos (execute): 12:43:41.345270 => 12:43:41.345274
+[0m12:43:41.346278 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.fichas_projetos
+[0m12:43:41.346868 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.lider_projetos
+[0m12:43:41.347466 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.fichas_projetos, now seed.munka_warehouse.lider_projetos)
+[0m12:43:41.347784 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.lider_projetos
+[0m12:43:41.349225 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.lider_projetos (compile): 12:43:41.347993 => 12:43:41.349018
+[0m12:43:41.349569 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.lider_projetos
+[0m12:43:41.350064 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.lider_projetos (execute): 12:43:41.349842 => 12:43:41.349847
+[0m12:43:41.350781 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.lider_projetos
+[0m12:43:41.351157 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.nivel
+[0m12:43:41.351830 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.lider_projetos, now seed.munka_warehouse.nivel)
+[0m12:43:41.352189 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.nivel
+[0m12:43:41.357576 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.nivel (compile): 12:43:41.352391 => 12:43:41.357379
+[0m12:43:41.357917 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.nivel
+[0m12:43:41.358297 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.nivel (execute): 12:43:41.358127 => 12:43:41.358132
+[0m12:43:41.358962 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.nivel
+[0m12:43:41.359305 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.objetivo
+[0m12:43:41.359845 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.nivel, now seed.munka_warehouse.objetivo)
+[0m12:43:41.360158 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.objetivo
+[0m12:43:41.361483 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.objetivo (compile): 12:43:41.360354 => 12:43:41.361310
+[0m12:43:41.361803 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.objetivo
+[0m12:43:41.362171 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.objetivo (execute): 12:43:41.362008 => 12:43:41.362011
+[0m12:43:41.362790 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.objetivo
+[0m12:43:41.363134 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.origem
+[0m12:43:41.363630 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.objetivo, now seed.munka_warehouse.origem)
+[0m12:43:41.363944 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.origem
+[0m12:43:41.365215 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.origem (compile): 12:43:41.364136 => 12:43:41.365043
+[0m12:43:41.365516 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.origem
+[0m12:43:41.365870 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.origem (execute): 12:43:41.365705 => 12:43:41.365709
+[0m12:43:41.366496 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.origem
+[0m12:43:41.366876 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.origens_projeto
+[0m12:43:41.367438 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.origem, now seed.munka_warehouse.origens_projeto)
+[0m12:43:41.367841 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.origens_projeto
+[0m12:43:41.369498 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.origens_projeto (compile): 12:43:41.368073 => 12:43:41.369285
+[0m12:43:41.369846 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.origens_projeto
+[0m12:43:41.370227 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.origens_projeto (execute): 12:43:41.370053 => 12:43:41.370061
+[0m12:43:41.370930 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.origens_projeto
+[0m12:43:41.371291 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.produto
+[0m12:43:41.371857 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.origens_projeto, now seed.munka_warehouse.produto)
+[0m12:43:41.372175 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.produto
+[0m12:43:41.373784 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.produto (compile): 12:43:41.372427 => 12:43:41.373602
+[0m12:43:41.374108 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.produto
+[0m12:43:41.374494 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.produto (execute): 12:43:41.374326 => 12:43:41.374331
+[0m12:43:41.375344 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.produto
+[0m12:43:41.375697 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.projeto
+[0m12:43:41.376236 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.produto, now seed.munka_warehouse.projeto)
+[0m12:43:41.376606 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.projeto
+[0m12:43:41.377859 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.projeto (compile): 12:43:41.376806 => 12:43:41.377678
+[0m12:43:41.378168 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.projeto
+[0m12:43:41.378519 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.projeto (execute): 12:43:41.378358 => 12:43:41.378362
+[0m12:43:41.379148 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.projeto
+[0m12:43:41.379483 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.projeto_resultado_chave
+[0m12:43:41.379986 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.projeto, now seed.munka_warehouse.projeto_resultado_chave)
+[0m12:43:41.380294 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.projeto_resultado_chave
+[0m12:43:41.381611 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.projeto_resultado_chave (compile): 12:43:41.380485 => 12:43:41.381421
+[0m12:43:41.381942 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.projeto_resultado_chave
+[0m12:43:41.382300 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.projeto_resultado_chave (execute): 12:43:41.382135 => 12:43:41.382139
+[0m12:43:41.382927 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.projeto_resultado_chave
+[0m12:43:41.383261 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.reajuste
+[0m12:43:41.383886 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.projeto_resultado_chave, now seed.munka_warehouse.reajuste)
+[0m12:43:41.384302 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.reajuste
+[0m12:43:41.385878 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.reajuste (compile): 12:43:41.384522 => 12:43:41.385674
+[0m12:43:41.386232 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.reajuste
+[0m12:43:41.386612 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.reajuste (execute): 12:43:41.386443 => 12:43:41.386447
+[0m12:43:41.387310 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.reajuste
+[0m12:43:41.387652 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.regra
+[0m12:43:41.388476 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.reajuste, now seed.munka_warehouse.regra)
+[0m12:43:41.389017 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.regra
+[0m12:43:41.390563 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.regra (compile): 12:43:41.389232 => 12:43:41.390388
+[0m12:43:41.390879 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.regra
+[0m12:43:41.391235 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.regra (execute): 12:43:41.391074 => 12:43:41.391078
+[0m12:43:41.391880 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.regra
+[0m12:43:41.392238 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.renovacao
+[0m12:43:41.392739 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.regra, now seed.munka_warehouse.renovacao)
+[0m12:43:41.393052 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.renovacao
+[0m12:43:41.394326 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.renovacao (compile): 12:43:41.393239 => 12:43:41.394155
+[0m12:43:41.394625 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.renovacao
+[0m12:43:41.394981 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.renovacao (execute): 12:43:41.394814 => 12:43:41.394817
+[0m12:43:41.395584 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.renovacao
+[0m12:43:41.395995 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.requisitos
+[0m12:43:41.396902 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.renovacao, now seed.munka_warehouse.requisitos)
+[0m12:43:41.397248 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.requisitos
+[0m12:43:41.398516 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.requisitos (compile): 12:43:41.397441 => 12:43:41.398343
+[0m12:43:41.398820 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.requisitos
+[0m12:43:41.399177 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.requisitos (execute): 12:43:41.399018 => 12:43:41.399022
+[0m12:43:41.400023 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.requisitos
+[0m12:43:41.400555 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.resultado_chave
+[0m12:43:41.401303 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.requisitos, now seed.munka_warehouse.resultado_chave)
+[0m12:43:41.401631 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.resultado_chave
+[0m12:43:41.402971 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.resultado_chave (compile): 12:43:41.401825 => 12:43:41.402780
+[0m12:43:41.403300 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.resultado_chave
+[0m12:43:41.403653 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.resultado_chave (execute): 12:43:41.403490 => 12:43:41.403495
+[0m12:43:41.404466 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.resultado_chave
+[0m12:43:41.404806 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.servico
+[0m12:43:41.405348 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.resultado_chave, now seed.munka_warehouse.servico)
+[0m12:43:41.405647 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.servico
+[0m12:43:41.406791 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.servico (compile): 12:43:41.405842 => 12:43:41.406603
+[0m12:43:41.407101 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.servico
+[0m12:43:41.407443 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.servico (execute): 12:43:41.407287 => 12:43:41.407291
+[0m12:43:41.408105 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.servico
+[0m12:43:41.408431 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.sprint
+[0m12:43:41.408932 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.servico, now seed.munka_warehouse.sprint)
+[0m12:43:41.409258 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.sprint
+[0m12:43:41.410594 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.sprint (compile): 12:43:41.409446 => 12:43:41.410403
+[0m12:43:41.410947 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.sprint
+[0m12:43:41.411301 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.sprint (execute): 12:43:41.411142 => 12:43:41.411145
+[0m12:43:41.411927 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.sprint
+[0m12:43:41.412274 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.status
+[0m12:43:41.412777 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.sprint, now seed.munka_warehouse.status)
+[0m12:43:41.413088 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.status
+[0m12:43:41.415744 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.status (compile): 12:43:41.413277 => 12:43:41.415567
+[0m12:43:41.416070 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.status
+[0m12:43:41.416424 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.status (execute): 12:43:41.416264 => 12:43:41.416269
+[0m12:43:41.417051 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.status
+[0m12:43:41.417377 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tarefa
+[0m12:43:41.417921 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.status, now seed.munka_warehouse.tarefa)
+[0m12:43:41.418232 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tarefa
+[0m12:43:41.419628 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tarefa (compile): 12:43:41.418423 => 12:43:41.419454
+[0m12:43:41.419945 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tarefa
+[0m12:43:41.420295 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tarefa (execute): 12:43:41.420136 => 12:43:41.420141
+[0m12:43:41.420930 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tarefa
+[0m12:43:41.421260 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tarefas_cenarios
+[0m12:43:41.421765 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tarefa, now seed.munka_warehouse.tarefas_cenarios)
+[0m12:43:41.422078 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tarefas_cenarios
+[0m12:43:41.424222 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tarefas_cenarios (compile): 12:43:41.422347 => 12:43:41.424006
+[0m12:43:41.424604 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tarefas_cenarios
+[0m12:43:41.425190 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tarefas_cenarios (execute): 12:43:41.424891 => 12:43:41.424897
+[0m12:43:41.426391 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tarefas_cenarios
+[0m12:43:41.426755 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tecnologia
+[0m12:43:41.427378 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tarefas_cenarios, now seed.munka_warehouse.tecnologia)
+[0m12:43:41.427694 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tecnologia
+[0m12:43:41.429153 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tecnologia (compile): 12:43:41.427898 => 12:43:41.428974
+[0m12:43:41.429460 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tecnologia
+[0m12:43:41.429813 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tecnologia (execute): 12:43:41.429650 => 12:43:41.429654
+[0m12:43:41.430457 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tecnologia
+[0m12:43:41.430793 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tecnologias_projeto
+[0m12:43:41.431313 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tecnologia, now seed.munka_warehouse.tecnologias_projeto)
+[0m12:43:41.431621 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tecnologias_projeto
+[0m12:43:41.432929 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tecnologias_projeto (compile): 12:43:41.431813 => 12:43:41.432743
+[0m12:43:41.433246 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tecnologias_projeto
+[0m12:43:41.433660 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tecnologias_projeto (execute): 12:43:41.433440 => 12:43:41.433444
+[0m12:43:41.434600 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tecnologias_projeto
+[0m12:43:41.434974 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tipo
+[0m12:43:41.435579 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tecnologias_projeto, now seed.munka_warehouse.tipo)
+[0m12:43:41.436624 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tipo
+[0m12:43:41.438349 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tipo (compile): 12:43:41.436850 => 12:43:41.438169
+[0m12:43:41.438669 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tipo
+[0m12:43:41.439052 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tipo (execute): 12:43:41.438871 => 12:43:41.438877
+[0m12:43:41.439812 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tipo
+[0m12:43:41.440174 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.tipo_status
+[0m12:43:41.440721 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tipo, now seed.munka_warehouse.tipo_status)
+[0m12:43:41.441045 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.tipo_status
+[0m12:43:41.442523 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tipo_status (compile): 12:43:41.441244 => 12:43:41.442346
+[0m12:43:41.442857 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.tipo_status
+[0m12:43:41.443215 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.tipo_status (execute): 12:43:41.443053 => 12:43:41.443057
+[0m12:43:41.443864 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.tipo_status
+[0m12:43:41.444204 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.unidadeADM
+[0m12:43:41.444729 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.tipo_status, now seed.munka_warehouse.unidadeADM)
+[0m12:43:41.445053 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.unidadeADM
+[0m12:43:41.446911 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.unidadeADM (compile): 12:43:41.445247 => 12:43:41.446649
+[0m12:43:41.447299 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.unidadeADM
+[0m12:43:41.447712 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.unidadeADM (execute): 12:43:41.447521 => 12:43:41.447528
+[0m12:43:41.448452 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.unidadeADM
+[0m12:43:41.448848 [debug] [Thread-1 (]: Began running node seed.munka_warehouse.unidade_adm_superior
+[0m12:43:41.449506 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly seed.munka_warehouse.unidadeADM, now seed.munka_warehouse.unidade_adm_superior)
+[0m12:43:41.449862 [debug] [Thread-1 (]: Began compiling node seed.munka_warehouse.unidade_adm_superior
+[0m12:43:41.451988 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.unidade_adm_superior (compile): 12:43:41.450080 => 12:43:41.451735
+[0m12:43:41.452369 [debug] [Thread-1 (]: Began executing node seed.munka_warehouse.unidade_adm_superior
+[0m12:43:41.452805 [debug] [Thread-1 (]: Timing info for seed.munka_warehouse.unidade_adm_superior (execute): 12:43:41.452592 => 12:43:41.452598
+[0m12:43:41.453735 [debug] [Thread-1 (]: Finished running node seed.munka_warehouse.unidade_adm_superior
+[0m12:43:41.454971 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m12:43:41.455290 [debug] [MainThread]: Connection 'seed.munka_warehouse.unidade_adm_superior' was properly closed.
+[0m12:43:41.463977 [debug] [MainThread]: Command end result
+[0m12:43:41.485105 [debug] [MainThread]: Resource report: {"command_name": "compile", "command_success": true, "command_wall_clock_time": 7.726753, "process_user_time": 5.600137, "process_kernel_time": 1.228662, "process_mem_max_rss": "215320", "process_in_blocks": "185504", "process_out_blocks": "10568"}
+[0m12:43:41.485949 [debug] [MainThread]: Command `dbt compile` succeeded at 12:43:41.485768 after 7.73 seconds
+[0m12:43:41.486296 [debug] [MainThread]: Flushing usage events
