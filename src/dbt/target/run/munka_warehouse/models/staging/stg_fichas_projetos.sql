@@ -1,0 +1,39 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_fichas_projetos
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "PROJETO_ID" COMMENT $$$$, 
+  
+    "FICHA_ID" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    PROJETO_ID,
+    FICHA_ID,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_FICHAS_PROJETOS
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+

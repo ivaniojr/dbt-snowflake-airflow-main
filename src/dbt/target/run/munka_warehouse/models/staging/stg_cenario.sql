@@ -1,0 +1,48 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_cenario
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "NOME" COMMENT $$$$, 
+  
+    "PONTUACAO" COMMENT $$$$, 
+  
+    "REQUISITO_ID" COMMENT $$$$, 
+  
+    "CENARIO_PADRAO" COMMENT $$$$, 
+  
+    "UNIDADE_ADM_ID" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    NULLIF(TRIM(NOME), '') AS NOME,
+    PONTUACAO,
+    REQUISITO_ID,
+    CENARIO_PADRAO,
+    UNIDADE_ADM_ID,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_CENARIO
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+

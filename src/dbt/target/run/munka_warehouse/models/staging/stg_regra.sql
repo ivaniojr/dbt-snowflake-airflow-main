@@ -1,0 +1,57 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_regra
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "SERVICO_ID" COMMENT $$$$, 
+  
+    "COMPLEXIDADE_ID" COMMENT $$$$, 
+  
+    "CARGO_ID" COMMENT $$$$, 
+  
+    "NIVEL_ID" COMMENT $$$$, 
+  
+    "HET_MAX" COMMENT $$$$, 
+  
+    "DESATIVADA" COMMENT $$$$, 
+  
+    "ID_REGRA_OLD" COMMENT $$$$, 
+  
+    "FATOR_AJUSTE" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    SERVICO_ID,
+    COMPLEXIDADE_ID,
+    CARGO_ID,
+    NIVEL_ID,
+    HET_MAX,
+    DESATIVADA,
+    ID_REGRA_OLD,
+    FATOR_AJUSTE,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_REGRA
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+

@@ -1,0 +1,75 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_contrato
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "NOME" COMMENT $$$$, 
+  
+    "ATIVO" COMMENT $$$$, 
+  
+    "UST_VALOR" COMMENT $$$$, 
+  
+    "UST_CONTRATADAS" COMMENT $$$$, 
+  
+    "UST_ADITIVADAS" COMMENT $$$$, 
+  
+    "DEDUCOES_HORAS" COMMENT $$$$, 
+  
+    "DEDUCOES_UST" COMMENT $$$$, 
+  
+    "OUTROS_HORAS" COMMENT $$$$, 
+  
+    "OUTROS_UST" COMMENT $$$$, 
+  
+    "DATA_INICIO" COMMENT $$$$, 
+  
+    "DATA_FIM" COMMENT $$$$, 
+  
+    "DATA_VIGENCIA" COMMENT $$$$, 
+  
+    "UNIDADE_ADM_ID" COMMENT $$$$, 
+  
+    "FATURAR_HPA" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    NULLIF(TRIM(NOME), '') AS NOME,
+    ATIVO,
+    UST_VALOR,
+    UST_CONTRATADAS,
+    UST_ADITIVADAS,
+    DEDUCOES_HORAS,
+    DEDUCOES_UST,
+    OUTROS_HORAS,
+    OUTROS_UST,
+    DATA_INICIO,
+    DATA_FIM,
+    DATA_VIGENCIA,
+    UNIDADE_ADM_ID,
+    FATURAR_HPA,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_CONTRATO
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+

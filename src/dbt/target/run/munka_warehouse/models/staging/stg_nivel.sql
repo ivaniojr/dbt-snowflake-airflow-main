@@ -1,0 +1,36 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_nivel
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "NOME" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    NULLIF(TRIM(NOME), '') AS NOME,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_NIVEL
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+

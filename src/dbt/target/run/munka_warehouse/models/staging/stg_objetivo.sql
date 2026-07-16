@@ -1,0 +1,45 @@
+
+  create or replace   view DRAGON_DB.munka_stg.stg_objetivo
+  
+    
+    
+(
+  
+    "ID" COMMENT $$$$, 
+  
+    "NUMERO" COMMENT $$$$, 
+  
+    "TITULO" COMMENT $$$$, 
+  
+    "DESCRICAO" COMMENT $$$$, 
+  
+    "UNIDADE_ADM_ID" COMMENT $$$$, 
+  
+    "DW_BATCH_ID" COMMENT $$$$, 
+  
+    "DW_RECORD_SOURCE" COMMENT $$$$, 
+  
+    "DW_SOURCE_UPDATED_AT" COMMENT $$$$, 
+  
+    "DW_INGESTED_AT" COMMENT $$$$, 
+  
+    "DW_ROW_HASH" COMMENT $$$$
+  
+)
+
+   as (
+    SELECT
+    ID,
+    NULLIF(TRIM(NUMERO), '') AS NUMERO,
+    NULLIF(TRIM(TITULO), '') AS TITULO,
+    NULLIF(TRIM(DESCRICAO), '') AS DESCRICAO,
+    UNIDADE_ADM_ID,
+    DW_BATCH_ID,
+    DW_RECORD_SOURCE,
+    DW_SOURCE_UPDATED_AT,
+    DW_INGESTED_AT,
+    DW_ROW_HASH
+FROM DRAGON_DB.MUNKA_RAW.RAW_OBJETIVO
+QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
+  );
+
