@@ -71,7 +71,7 @@ with DAG(
             task_id=f"load_{table.lower()}",
             snowflake_conn_id=SNOWFLAKE_CONN_ID,
             database="DRAGON_DB",
-            schema="MUNKA",
+            schema="MUNKA_RAW",
             sql=get_copy_query(table),
             execution_timeout=timedelta(minutes=5),
         )

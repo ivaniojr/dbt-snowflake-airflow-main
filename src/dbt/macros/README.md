@@ -1,6 +1,6 @@
 # Airflow + dbt + Snowflake — RAW Munka
 
-Este pacote cria e valida 49 tabelas RAW em `DRAGON_DB.MUNKA` usando:
+Este pacote cria e valida 49 tabelas RAW em `DRAGON_DB.MUNKA_RAW` usando:
 
 - Airflow para orquestração;
 - dbt Core para executar os macros de DDL;
@@ -82,7 +82,7 @@ Connection Id: snowflake_munka
 Connection Type: Snowflake
 Login: USUARIO_SNOWFLAKE
 Password: SENHA
-Schema: MUNKA
+Schema: MUNKA_RAW
 ```
 
 Extra:

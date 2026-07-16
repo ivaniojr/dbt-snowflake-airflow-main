@@ -46,7 +46,7 @@ DBT_ENV = {
         + ".extra_dejson.get('database', 'DRAGON_DB') }}"
     ),
     "DBT_SNOWFLAKE_SCHEMA": (
-        "{{ conn." + SNOWFLAKE_CONN_ID + ".schema or 'MUNKA' }}"
+        "{{ conn." + SNOWFLAKE_CONN_ID + ".schema or 'MUNKA_RAW' }}"
     ),
     "DBT_SEND_ANONYMOUS_USAGE_STATS": "false",
 }
@@ -60,7 +60,7 @@ with DAG(
     dag_id=DAG_ID,
     description=(
         "Executa dbt Core para criar e validar as tabelas RAW do "
-        "DRAGON_DB.MUNKA no Snowflake."
+        "DRAGON_DB.MUNKA_RAW no Snowflake."
     ),
     default_args=DEFAULT_ARGS,
     start_date=pendulum.datetime(2026, 1, 1, tz="America/Sao_Paulo"),

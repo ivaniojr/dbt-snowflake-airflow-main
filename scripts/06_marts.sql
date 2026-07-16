@@ -1,5 +1,5 @@
 USE DATABASE DRAGON_DB;
-USE SCHEMA MUNKA;
+USE SCHEMA MUNKA_RAW;
 
 -- ============================================================================
 -- 7. MARTS / CAMADA GOLD

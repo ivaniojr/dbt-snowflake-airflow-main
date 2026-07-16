@@ -14,9 +14,9 @@
 -- ============================================================================
 
 CREATE DATABASE IF NOT EXISTS DRAGON_DB;
-CREATE SCHEMA IF NOT EXISTS DRAGON_DB.MUNKA;
+CREATE SCHEMA IF NOT EXISTS DRAGON_DB.MUNKA_RAW;
 USE DATABASE DRAGON_DB;
-USE SCHEMA MUNKA;
+USE SCHEMA MUNKA_RAW;
 
 -- ============================================================================
 -- 1. CAMADA DE CONTROLE

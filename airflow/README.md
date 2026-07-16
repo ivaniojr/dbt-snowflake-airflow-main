@@ -52,7 +52,7 @@ Crie a conexão `snowflake_munka` em **Admin > Connections**:
 - Connection Type: `Snowflake`
 - Login: usuário Snowflake
 - Password: senha Snowflake
-- Schema: `MUNKA`
+- Schema: `MUNKA_RAW`
 
 Extra:
 
