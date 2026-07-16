@@ -51,6 +51,7 @@ def get_copy_query(table_name: str) -> str:
         SKIP_HEADER=1
         FIELD_OPTIONALLY_ENCLOSED_BY='"'
         NULL_IF=('NULL', 'null', '')
+        ERROR_ON_COLUMN_COUNT_MISMATCH=FALSE
     )
     ON_ERROR='CONTINUE';
     """
