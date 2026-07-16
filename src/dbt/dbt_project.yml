@@ -25,3 +25,6 @@ models:
     +persist_docs:
       relation: true
       columns: true
+    staging:
+      +materialized: view
+      +schema: munka_stg
