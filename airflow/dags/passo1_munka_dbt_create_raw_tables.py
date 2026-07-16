@@ -12,7 +12,7 @@ except ImportError:
     # Compatibilidade com instalações Airflow 2.x mais antigas.
     from airflow.operators.bash import BashOperator
 
-DAG_ID = "munka_dbt_create_raw_tables"
+DAG_ID = "passo1_munka_dbt_create_raw_tables"
 SNOWFLAKE_CONN_ID = "snowflake_munka"
 DBT_PROJECT_DIR = "/opt/airflow/dbt/munka_warehouse"
 DBT_PROFILES_DIR = DBT_PROJECT_DIR

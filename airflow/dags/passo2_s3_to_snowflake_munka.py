@@ -4,7 +4,7 @@ from airflow import DAG
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
 
 
-DAG_ID = "s3_to_snowflake_munka_raw"
+DAG_ID = "passo2_s3_to_snowflake_munka_raw"
 SNOWFLAKE_CONN_ID = "snowflake_munka"
 AWS_CONN_ID = "aws_default"
 
