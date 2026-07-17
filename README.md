@@ -50,8 +50,18 @@ O projeto requer os seguintes elementos:
 ### Como criar um conta no Snowflake?
 https://www.snowflake.com/en/emea/
 
-### Como criar o user com permissões?
+### Como criar o user com permissões no Snowflake?
 Entre na pasta `scripts` e use o arquivo `00_setup_controle.sql` como base.
+
+### Como configurar a conexão com AWS S3?
+A ingestão de dados brutos (`passo2_s3_to_snowflake_munka_raw`) copia os arquivos `.csv` de um bucket S3 para o Snowflake. Para que funcione:
+1. Suba os arquivos CSV gerados do sistema legado para o seu bucket S3 (ex: `munka-dev-070980587239-us-east-2`). O nome dos arquivos deve estar em minúsculo (ex: `ab_user.csv`).
+2. Vá até a interface do Airflow: **Admin** -> **Connections**.
+3. Edite ou crie a conexão com `Conn Id: aws_default`.
+4. Defina o tipo de conexão (`Conn Type`) como **Amazon Web Services**.
+5. Em **Login**, insira o seu `AWS Access Key ID`.
+6. Em **Password**, insira o seu `AWS Secret Access Key`.
+*O Airflow injetará essas credenciais automaticamente no comando `COPY INTO` disparado no Snowflake.*
 
 ## Como utilizar o projeto?
 Faça clone com o comando:
