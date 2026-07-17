@@ -2,16 +2,13 @@ WITH fato AS (
     SELECT * FROM DRAGON_DB.munka_gold.fato_tarefa_evidencia
 ),
 projeto AS (
-    SELECT ID, NOME AS NOME_PROJETO FROM DRAGON_DB.munka_stg.stg_projeto
+    SELECT SK_PROJETO, NOME AS NOME_PROJETO FROM DRAGON_DB.munka_gold.dim_projeto
 ),
 sprint AS (
-    SELECT ID, OBJETIVOS AS SPRINT_OBJETIVOS FROM DRAGON_DB.munka_stg.stg_sprint
+    SELECT SK_SPRINT, OBJETIVOS AS SPRINT_OBJETIVOS FROM DRAGON_DB.munka_gold.dim_sprint
 ),
 regra AS (
-    SELECT ID, FATOR_AJUSTE, COMPLEXIDADE_ID, SERVICO_ID FROM DRAGON_DB.munka_stg.stg_regra
-),
-complexidade AS (
-    SELECT ID, NOME AS NOME_COMPLEXIDADE, PONTUACAO_MAIOR_QUE FROM DRAGON_DB.munka_stg.stg_complexidade
+    SELECT SK_REGRA, FATOR_AJUSTE, COMPLEXIDADE AS NOME_COMPLEXIDADE, HET_MAX FROM DRAGON_DB.munka_gold.dim_regra
 )
 
 SELECT
@@ -23,8 +20,8 @@ SELECT
     
     -- Contexto da Estimativa/Complexidade
     r.FATOR_AJUSTE,
-    c.NOME_COMPLEXIDADE,
-    c.PONTUACAO_MAIOR_QUE AS PONTUACAO_BASE_COMPLEXIDADE,
+    r.NOME_COMPLEXIDADE,
+    r.HET_MAX,
     
     -- Features Extraídas das Evidências (Inputs para o Modelo)
     f.QTD_IMAGENS,
@@ -40,7 +37,6 @@ SELECT
     f.HORAS_EXECUTADAS,
     f.TOTAL_UST
 FROM fato f
-LEFT JOIN projeto p ON f.PROJETO_ID = p.ID
-LEFT JOIN sprint s ON f.SPRINT_ID = s.ID
-LEFT JOIN regra r ON f.REGRA_ID = r.ID
-LEFT JOIN complexidade c ON r.COMPLEXIDADE_ID = c.ID
+LEFT JOIN projeto p ON f.SK_PROJETO = p.SK_PROJETO
+LEFT JOIN sprint s ON f.SK_SPRINT = s.SK_SPRINT
+LEFT JOIN regra r ON f.SK_REGRA = r.SK_REGRA

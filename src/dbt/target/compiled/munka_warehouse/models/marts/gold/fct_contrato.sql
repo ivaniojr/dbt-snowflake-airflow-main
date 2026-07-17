@@ -1,0 +1,41 @@
+SELECT
+    HASH('CONTRATO', C.ID)                                     AS SK_CONTRATO,
+    C.ID                                                       AS ID_CONTRATO,
+    HASH('UNIDADE', C.UNIDADE_ADM_ID)                          AS SK_UNIDADE,
+    IFF(C.DATA_INICIO IS NULL, NULL, TO_NUMBER(TO_CHAR(C.DATA_INICIO, 'YYYYMMDD'))) AS SK_DATA_INICIO,
+    IFF(C.DATA_FIM IS NULL, NULL, TO_NUMBER(TO_CHAR(C.DATA_FIM, 'YYYYMMDD'))) AS SK_DATA_FIM,
+    C.ATIVO                                                    AS FL_ATIVO,
+    C.UST_VALOR,
+    C.UST_CONTRATADAS,
+    C.UST_ADITIVADAS,
+    C.DEDUCOES_HORAS,
+    C.DEDUCOES_UST,
+    C.OUTROS_HORAS,
+    C.OUTROS_UST,
+    COALESCE(T.TOTAL_UST_EXECUTADA, 0)                         AS TOTAL_UST_EXECUTADA,
+    COALESCE(T.TOTAL_VALOR_FATURADO, 0)                        AS TOTAL_VALOR_FATURADO,
+    COALESCE(T.TOTAL_HORAS_EXECUTADAS, 0)                      AS TOTAL_HORAS_EXECUTADAS,
+    COALESCE(T.QUANTIDADE_TAREFAS, 0)                          AS QUANTIDADE_TAREFAS,
+    COALESCE(F.QUANTIDADE_FATURAS, 0)                          AS QUANTIDADE_FATURAS,
+    IFF(COALESCE(C.UST_CONTRATADAS, 0) + COALESCE(C.UST_ADITIVADAS, 0) = 0, NULL,
+        100.0 * COALESCE(T.TOTAL_UST_EXECUTADA, 0)
+        / (COALESCE(C.UST_CONTRATADAS, 0) + COALESCE(C.UST_ADITIVADAS, 0))) AS PERCENTUAL_UST_CONSUMIDA,
+    C.DW_INGESTED_AT                                           AS DT_CARGA
+FROM DRAGON_DB.munka_stg.stg_contrato C
+LEFT JOIN (
+    SELECT
+        S.CONTRATO_ID,
+        COUNT(T.ID)                                             AS QUANTIDADE_TAREFAS,
+        SUM(COALESCE(T.TOTAL_UST, 0))                           AS TOTAL_UST_EXECUTADA,
+        SUM(COALESCE(T.VALOR_FATURADO, 0))                      AS TOTAL_VALOR_FATURADO,
+        SUM(COALESCE(T.HORAS_EXECUTADAS, 0))                    AS TOTAL_HORAS_EXECUTADAS
+    FROM DRAGON_DB.munka_stg.stg_servico S
+    LEFT JOIN DRAGON_DB.munka_stg.stg_regra R ON R.SERVICO_ID = S.ID
+    LEFT JOIN DRAGON_DB.munka_stg.stg_tarefa T ON T.REGRA_ID = R.ID
+    GROUP BY S.CONTRATO_ID
+) T ON T.CONTRATO_ID = C.ID
+LEFT JOIN (
+    SELECT CONTRATO_ID, COUNT(*) AS QUANTIDADE_FATURAS
+    FROM DRAGON_DB.munka_stg.stg_fatura
+    GROUP BY CONTRATO_ID
+) F ON F.CONTRATO_ID = C.ID
