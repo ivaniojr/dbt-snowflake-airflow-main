@@ -1,0 +1,40 @@
+SELECT
+    HASH('PROJETO', P.ID)                                      AS SK_PROJETO,
+    P.ID                                                       AS ID_PROJETO,
+    HASH('PRODUTO', P.PRODUTO_ID)                              AS SK_PRODUTO,
+    HASH('STATUS', P.STATUS_ID)                                AS SK_STATUS,
+    HASH('UNIDADE', P.UNIDADE_ADM_ID)                          AS SK_UNIDADE,
+    IFF(P.DATA_SOLICITACAO IS NULL, NULL, TO_NUMBER(TO_CHAR(P.DATA_SOLICITACAO::DATE, 'YYYYMMDD'))) AS SK_DATA_SOLICITACAO,
+    IFF(P.DATA_PROTOTIPO IS NULL, NULL, TO_NUMBER(TO_CHAR(P.DATA_PROTOTIPO::DATE, 'YYYYMMDD'))) AS SK_DATA_PROTOTIPO,
+    IFF(P.DATA_DESENV IS NULL, NULL, TO_NUMBER(TO_CHAR(P.DATA_DESENV::DATE, 'YYYYMMDD'))) AS SK_DATA_DESENV,
+    IFF(P.DATA_HOMOLOG IS NULL, NULL, TO_NUMBER(TO_CHAR(P.DATA_HOMOLOG::DATE, 'YYYYMMDD'))) AS SK_DATA_HOMOLOG,
+    IFF(P.DATA_PROD IS NULL, NULL, TO_NUMBER(TO_CHAR(P.DATA_PROD::DATE, 'YYYYMMDD'))) AS SK_DATA_PRODUCAO,
+    P.PROGRESSO,
+    IFF(P.INATIVO, FALSE, TRUE)                                AS FL_ATIVO,
+    DATEDIFF('DAY', P.DATA_SOLICITACAO, P.DATA_PROD)           AS LEAD_TIME_DIAS,
+    COALESCE(T.QTD_TAREFAS, 0)                                 AS QUANTIDADE_TAREFAS,
+    COALESCE(T.QTD_TAREFAS_CONCLUIDAS, 0)                      AS QUANTIDADE_TAREFAS_CONCLUIDAS,
+    COALESCE(T.QTD_TAREFAS_APROVADAS, 0)                       AS QUANTIDADE_TAREFAS_APROVADAS,
+    COALESCE(T.HORAS_EXECUTADAS, 0)                            AS HORAS_EXECUTADAS,
+    COALESCE(T.TOTAL_UST, 0)                                   AS TOTAL_UST,
+    COALESCE(T.VALOR_FATURADO, 0)                              AS VALOR_FATURADO,
+    COALESCE(T.PERCENTUAL_COM_EVIDENCIA, 0)                    AS PERCENTUAL_TAREFAS_COM_EVIDENCIA,
+    P.DW_INGESTED_AT                                           AS DT_CARGA
+FROM {{ ref('stg_projeto') }} P
+LEFT JOIN (
+    SELECT
+        PROJETO_ID,
+        COUNT(*)                                                AS QTD_TAREFAS,
+        COUNT_IF(DATA_FIM IS NOT NULL)                          AS QTD_TAREFAS_CONCLUIDAS,
+        COUNT_IF(APROVADA)                                      AS QTD_TAREFAS_APROVADAS,
+        SUM(COALESCE(HORAS_EXECUTADAS, 0))                      AS HORAS_EXECUTADAS,
+        SUM(COALESCE(TOTAL_UST, 0))                             AS TOTAL_UST,
+        SUM(COALESCE(VALOR_FATURADO, 0))                        AS VALOR_FATURADO,
+        100.0 * COUNT_IF(NULLIF(TRIM(EVIDENCIAS), '') IS NOT NULL
+                      OR NULLIF(TRIM(EVIDENCIA_COMMIT_SHA), '') IS NOT NULL
+                      OR NULLIF(TRIM(EVIDENCIA_ANEXO), '') IS NOT NULL)
+              / NULLIF(COUNT(*), 0)                             AS PERCENTUAL_COM_EVIDENCIA
+    FROM {{ ref('stg_tarefa') }}
+    WHERE PROJETO_ID IS NOT NULL
+    GROUP BY PROJETO_ID
+) T ON T.PROJETO_ID = P.ID
