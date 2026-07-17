@@ -1,0 +1,333 @@
+version: 2
+models:
+- name: dim_cargo
+  description: Modelo dimensional dim_cargo criado automaticamente a partir do legado.
+  columns:
+  - name: SK_CARGO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_cenario
+  description: Modelo dimensional dim_cenario criado automaticamente a partir do legado.
+  columns:
+  - name: SK_CENARIO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_complexidade
+  description: Modelo dimensional dim_complexidade criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_COMPLEXIDADE
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_contrato
+  description: Modelo dimensional dim_contrato criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_CONTRATO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_coordenacao
+  description: Modelo dimensional dim_coordenacao criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_COORDENACAO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_data
+  description: Modelo dimensional dim_data criado automaticamente a partir do legado.
+  columns:
+  - name: SK_DATA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_etiqueta
+  description: Modelo dimensional dim_etiqueta criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_ETIQUETA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_fator_complexidade_ust
+  description: Modelo dimensional dim_fator_complexidade_ust criado automaticamente
+    a partir do legado.
+  columns:
+  - name: SK_FATOR_COMPLEXIDADE_UST
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_ficha_indicador
+  description: Modelo dimensional dim_ficha_indicador criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_FICHA_INDICADOR
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_menu
+  description: Modelo dimensional dim_menu criado automaticamente a partir do legado.
+  columns:
+  - name: SK_MENU
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_nivel
+  description: Modelo dimensional dim_nivel criado automaticamente a partir do legado.
+  columns:
+  - name: SK_NIVEL
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_objetivo
+  description: Modelo dimensional dim_objetivo criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_OBJETIVO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_origem
+  description: Modelo dimensional dim_origem criado automaticamente a partir do legado.
+  columns:
+  - name: SK_ORIGEM
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_permissao
+  description: Modelo dimensional dim_permissao criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_PERMISSAO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_produto
+  description: Modelo dimensional dim_produto criado automaticamente a partir do legado.
+  columns:
+  - name: SK_PRODUTO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_projeto
+  description: Modelo dimensional dim_projeto criado automaticamente a partir do legado.
+  columns:
+  - name: SK_PROJETO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_regra
+  description: Modelo dimensional dim_regra criado automaticamente a partir do legado.
+  columns:
+  - name: SK_REGRA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_requisito
+  description: Modelo dimensional dim_requisito criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_REQUISITO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_resultado_chave
+  description: Modelo dimensional dim_resultado_chave criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_RESULTADO_CHAVE
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_role
+  description: Modelo dimensional dim_role criado automaticamente a partir do legado.
+  columns:
+  - name: SK_ROLE
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_servico
+  description: Modelo dimensional dim_servico criado automaticamente a partir do legado.
+  columns:
+  - name: SK_SERVICO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_sprint
+  description: Modelo dimensional dim_sprint criado automaticamente a partir do legado.
+  columns:
+  - name: SK_SPRINT
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_status
+  description: Modelo dimensional dim_status criado automaticamente a partir do legado.
+  columns:
+  - name: SK_STATUS
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_tecnologia
+  description: Modelo dimensional dim_tecnologia criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_TECNOLOGIA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_tipo
+  description: Modelo dimensional dim_tipo criado automaticamente a partir do legado.
+  columns:
+  - name: SK_TIPO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_unidade
+  description: Modelo dimensional dim_unidade criado automaticamente a partir do legado.
+  columns:
+  - name: SK_UNIDADE
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_unidade_superior
+  description: Modelo dimensional dim_unidade_superior criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_UNIDADE_SUPERIOR
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_usuario
+  description: Modelo dimensional dim_usuario criado automaticamente a partir do legado.
+  columns:
+  - name: SK_USUARIO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: dim_usuario_registro
+  description: Modelo dimensional dim_usuario_registro criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_USUARIO_REGISTRO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fato_tarefa_evidencia
+  description: Modelo dimensional fato_tarefa_evidencia criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_PROJETO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_anexo_projeto
+  description: Modelo dimensional fct_anexo_projeto criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_ANEXO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_comentario
+  description: Modelo dimensional fct_comentario criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_COMENTARIO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_contrato
+  description: Modelo dimensional fct_contrato criado automaticamente a partir do
+    legado.
+  columns:
+  - name: SK_CONTRATO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_evidencia_tarefa
+  description: Modelo dimensional fct_evidencia_tarefa criado automaticamente a partir
+    do legado.
+  columns:
+  - name: SK_EVIDENCIA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_fatura
+  description: Modelo dimensional fct_fatura criado automaticamente a partir do legado.
+  columns:
+  - name: SK_FATURA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_movimento_contrato
+  description: Modelo dimensional fct_movimento_contrato criado automaticamente a
+    partir do legado.
+  columns:
+  - name: SK_MOVIMENTO_CONTRATO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_projeto
+  description: Modelo dimensional fct_projeto criado automaticamente a partir do legado.
+  columns:
+  - name: SK_PROJETO
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_sprint
+  description: Modelo dimensional fct_sprint criado automaticamente a partir do legado.
+  columns:
+  - name: SK_SPRINT
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
+- name: fct_tarefa
+  description: Modelo dimensional fct_tarefa criado automaticamente a partir do legado.
+  columns:
+  - name: SK_TAREFA
+    description: Chave primária da tabela.
+    tests:
+    - unique
+    - not_null
