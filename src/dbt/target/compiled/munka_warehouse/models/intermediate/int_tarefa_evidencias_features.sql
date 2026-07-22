@@ -27,6 +27,18 @@ parsed AS (
         -- Anexo:
         IFF(EVIDENCIA_ANEXO IS NOT NULL, 1, 0) AS TEM_ANEXO,
         
+        -- Novas métricas: Detecção de Tecnologias (Tech Stack)
+        IFF(REGEXP_LIKE(EVIDENCIAS, '.*\\b(react|vue|angular|html|css|javascript|typescript)\\b.*', 'is'), 1, 0) AS FL_ENVOLVE_FRONTEND,
+        IFF(REGEXP_LIKE(EVIDENCIAS, '.*\\b(python|java|php|c#|node|golang)\\b.*', 'is'), 1, 0) AS FL_ENVOLVE_BACKEND,
+        IFF(REGEXP_LIKE(EVIDENCIAS, '.*\\b(sql|pandas|snowflake|aws|airflow|dbt)\\b.*', 'is'), 1, 0) AS FL_ENVOLVE_DADOS,
+
+        -- Novas métricas: Classificador de Erros/Bugs
+        IFF(REGEXP_LIKE(EVIDENCIAS, '.*\\b(exception|traceback|nullpointer|erro|bug|falha|corrigido|fix)\\b.*', 'is'), 1, 0) AS FL_IS_BUGFIX,
+
+        -- Novas métricas: Estruturais e Compliance de PR
+        REGEXP_COUNT(EVIDENCIAS, '<(code|pre)[^>]*>', 1, 'i') AS QTD_BLOCOS_CODIGO,
+        IFF(REGEXP_LIKE(EVIDENCIAS, '.*(github\\.com/.*/pull/|gitlab\\.com/.*/merge_requests/).*', 'is'), 1, 0) AS FL_TEM_PULL_REQUEST,
+
         -- Tamanho do texto puro
         LENGTH(NVL(EVIDENCIAS, '')) AS TAMANHO_TEXTO
     FROM source
@@ -40,15 +52,23 @@ scored AS (
         TEM_SQL,
         TEM_COMMIT,
         TEM_ANEXO,
+        FL_ENVOLVE_FRONTEND,
+        FL_ENVOLVE_BACKEND,
+        FL_ENVOLVE_DADOS,
+        FL_IS_BUGFIX,
+        QTD_BLOCOS_CODIGO,
+        FL_TEM_PULL_REQUEST,
         TAMANHO_TEXTO,
         -- Score heurístico básico para ML (Feature Engineering)
         (
             (QTD_IMAGENS * 2) + 
             (QTD_LINKS * 1) + 
-            (TEM_CODIGO * 3) + 
+            (QTD_BLOCOS_CODIGO * 3) + 
             (TEM_SQL * 2) + 
-            (TEM_COMMIT * 5) +
+            (TEM_COMMIT * 2) +
+            (FL_TEM_PULL_REQUEST * 5) + 
             (TEM_ANEXO * 3) +
+            (FL_IS_BUGFIX * 2) +
             IFF(TAMANHO_TEXTO > 100, 1, 0)
         ) AS SCORE_QUALIDADE_EVIDENCIA
     FROM parsed

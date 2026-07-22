@@ -22,6 +22,12 @@ evidencias AS (
         TEM_SQL,
         TEM_COMMIT,
         TEM_ANEXO,
+        FL_ENVOLVE_FRONTEND,
+        FL_ENVOLVE_BACKEND,
+        FL_ENVOLVE_DADOS,
+        FL_IS_BUGFIX,
+        QTD_BLOCOS_CODIGO,
+        FL_TEM_PULL_REQUEST,
         TAMANHO_TEXTO,
         SCORE_QUALIDADE_EVIDENCIA
     FROM DRAGON_DB.munka_int.int_tarefa_evidencias_features
@@ -45,6 +51,12 @@ SELECT
     e.TEM_SQL,
     e.TEM_COMMIT,
     e.TEM_ANEXO,
+    e.FL_ENVOLVE_FRONTEND,
+    e.FL_ENVOLVE_BACKEND,
+    e.FL_ENVOLVE_DADOS,
+    e.FL_IS_BUGFIX,
+    e.QTD_BLOCOS_CODIGO,
+    e.FL_TEM_PULL_REQUEST,
     e.TAMANHO_TEXTO,
     e.SCORE_QUALIDADE_EVIDENCIA
 FROM tarefa t

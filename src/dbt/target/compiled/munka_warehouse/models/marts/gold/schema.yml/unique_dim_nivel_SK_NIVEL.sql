@@ -1,0 +1,14 @@
+
+    
+    
+
+select
+    SK_NIVEL as unique_field,
+    count(*) as n_records
+
+from DRAGON_DB.munka_gold.dim_nivel
+where SK_NIVEL is not null
+group by SK_NIVEL
+having count(*) > 1
+
+
