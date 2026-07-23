@@ -35,7 +35,21 @@ def plot_residuals(y_true, numpy_preds, sklearn_preds, save_path="residuals_comp
     plt.savefig(save_path)
     plt.close()
 
+class SklearnWrapper:
+    """Wrapper para satisfazer a validação do sklearn (precisa de fit e predict)."""
+    def __init__(self, model):
+        self.model = model
+        self.is_fitted_ = True
+    def fit(self, X, y):
+        return self
+    def predict(self, X):
+        return self.model.predict(X).ravel()
+
 def plot_feature_importance(model, X_test, y_test, feature_names, title, save_path):
+    # Envolve o modelo NumPy se não for um estimador do scikit-learn
+    if not hasattr(model, 'fit'):
+        model = SklearnWrapper(model)
+        
     result = permutation_importance(model, X_test, y_test, n_repeats=10, random_state=42, scoring='neg_mean_squared_error')
     sorted_idx = result.importances_mean.argsort()
 
