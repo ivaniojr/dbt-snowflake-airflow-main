@@ -11,23 +11,38 @@ def load_data():
     gera um dataset sintético baseado nas colunas reais para simular e testar o treinamento auditável.
     """
     try:
+        from cryptography.hazmat.backends import default_backend
+        from cryptography.hazmat.primitives.asymmetric import rsa
+        from cryptography.hazmat.primitives.asymmetric import dsa
+        from cryptography.hazmat.primitives import serialization
         import snowflake.connector
         
-        account = os.getenv("SNOWFLAKE_ACCOUNT")
-        user = os.getenv("SNOWFLAKE_USER")
-        password = os.getenv("SNOWFLAKE_PASSWORD")
+        # Caminho relativo para a chave rsa_key.p8 na raiz src/dbt
+        private_key_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key.p8"))
         
-        if not all([account, user, password]):
-            raise ValueError("Credenciais Snowflake não configuradas.")
-            
+        with open(private_key_file, "rb") as key:
+            p_key = serialization.load_pem_private_key(
+                key.read(),
+                password=None,
+                backend=default_backend()
+            )
+        
+        pkb = p_key.private_bytes(
+            encoding=serialization.Encoding.DER,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption()
+        )
+
         ctx = snowflake.connector.connect(
-            user=user,
-            password=password,
-            account=account,
+            user="DRAGON",
+            account="sfedu02-gfb24387",
+            private_key=pkb,
+            role="TRAINING_ROLE",
+            warehouse="DRAGON_WH",
             database="DRAGON_DB",
             schema="MUNKA_ML"
         )
-        query = "SELECT * FROM ML_TAREFA_FEATURES"
+        query = "SELECT * FROM DRAGON_DB.MUNKA_ML.ML_TAREFA_FEATURES"
         df = pd.read_sql(query, ctx)
         ctx.close()
         print("Dados carregados com sucesso do Snowflake!")
@@ -61,10 +76,11 @@ def generate_mock_data(n_samples=5000):
         'HORAS_EXECUTADAS': np.random.uniform(2, 50, n_samples)
     })
 
-def get_processed_dataset():
+def get_raw_dataset():
     """
-    Retorna X_train, X_test, y_train, y_test 
-    com Data Leakage evitado (StandardScaler ajustado APENAS no treino)
+    Retorna X, y brutos e a lista com o nome das features.
+    O particionamento (K-Fold/Holdout) e a Normalização deverão ser
+    feitos pelo script de orquestração para evitar Data Leakage.
     """
     df = load_data()
     
@@ -75,21 +91,8 @@ def get_processed_dataset():
     # Preencher nulos (boa prática)
     df = df.fillna(0)
     
-    X = df.drop(columns=['HORAS_EXECUTADAS'])
+    feature_names = [col for col in df.columns if col != 'HORAS_EXECUTADAS']
+    X = df.drop(columns=['HORAS_EXECUTADAS']).values
     y = df['HORAS_EXECUTADAS'].values.reshape(-1, 1)
     
-    # Split
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    
-    # Feature Scaling (Crucial para Redes Neurais!)
-    scaler_X = StandardScaler()
-    scaler_y = StandardScaler() # Opcional, mas ajuda MLPs a convergirem melhor
-    
-    # O fit ocorre APENAS no X_train para evitar Vazamento de Dados!
-    X_train_scaled = scaler_X.fit_transform(X_train)
-    X_test_scaled = scaler_X.transform(X_test)
-    
-    y_train_scaled = scaler_y.fit_transform(y_train)
-    y_test_scaled = scaler_y.transform(y_test)
-    
-    return X_train_scaled, X_test_scaled, y_train_scaled, y_test_scaled, scaler_y
+    return X, y, feature_names

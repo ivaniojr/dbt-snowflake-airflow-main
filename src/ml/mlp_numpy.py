@@ -21,6 +21,7 @@ class NumPyMLPRegressor:
         self.b3 = np.zeros((1, 1))
         
         self.loss_history = []
+        self.val_loss_history = []
         
     def relu(self, Z):
         return np.maximum(0, Z)
@@ -71,7 +72,7 @@ class NumPyMLPRegressor:
         self.W1 -= self.lr * dW1
         self.b1 -= self.lr * db1
         
-    def train(self, X, y, log_interval=100, mlflow_logger=None):
+    def train(self, X, y, X_val=None, y_val=None, log_interval=100, mlflow_logger=None):
         for epoch in range(self.epochs):
             predictions = self.forward(X)
             self.backward(X, y)
@@ -79,11 +80,22 @@ class NumPyMLPRegressor:
             mse = np.mean((predictions - y) ** 2)
             self.loss_history.append(mse)
             
+            val_mse = None
+            if X_val is not None and y_val is not None:
+                val_preds = self.forward(X_val)
+                val_mse = np.mean((val_preds - y_val) ** 2)
+                self.val_loss_history.append(val_mse)
+            
             if epoch % log_interval == 0:
-                print(f"NumPy MLP - Epoch {epoch}/{self.epochs} - MSE Loss: {mse:.4f}")
+                msg = f"NumPy MLP - Epoch {epoch}/{self.epochs} - Train MSE: {mse:.4f}"
+                if val_mse is not None:
+                    msg += f" - Val MSE: {val_mse:.4f}"
+                print(msg)
+                
                 if mlflow_logger:
-                    # Registra a métrica de Loss ao longo do tempo no MLflow
                     mlflow_logger("numpy_train_loss", mse, step=epoch)
+                    if val_mse is not None:
+                        mlflow_logger("numpy_val_loss", val_mse, step=epoch)
                     
     def predict(self, X):
         return self.forward(X)

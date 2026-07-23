@@ -15,7 +15,9 @@ def train_sklearn_mlp(X_train, y_train, hidden_sizes=(32, 16), learning_rate=0.0
         random_state=42,
         batch_size=min(200, X_train.shape[0]), # Batch GD behavior similar to our implementation or SGD
         momentum=0.0, # Sem momentum para ficar idêntico ao nosso NumPy simples
-        n_iter_no_change=epochs # Força treinar até o fim
+        early_stopping=True, # Ativa a separação de Validação Interna
+        validation_fraction=0.2, # 20% para validação do loss
+        n_iter_no_change=epochs # Força treinar até o fim para termos a curva completa
     )
     
     # Scikit-learn espera vetor 1D para o y
