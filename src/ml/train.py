@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn.model_selection import KFold, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.inspection import permutation_importance
+from sklearn.base import BaseEstimator, RegressorMixin
 from dataset import get_raw_dataset
 from mlp_numpy import NumPyMLPRegressor
 from mlp_sklearn import train_sklearn_mlp
@@ -35,13 +36,15 @@ def plot_residuals(y_true, numpy_preds, sklearn_preds, save_path="residuals_comp
     plt.savefig(save_path)
     plt.close()
 
-class SklearnWrapper:
+class SklearnWrapper(BaseEstimator, RegressorMixin):
     """Wrapper para satisfazer a validação do sklearn (precisa de fit e predict)."""
     def __init__(self, model):
         self.model = model
-        self.is_fitted_ = True
+        
     def fit(self, X, y):
+        self.is_fitted_ = True
         return self
+        
     def predict(self, X):
         return self.model.predict(X).ravel()
 
@@ -56,9 +59,9 @@ def plot_feature_importance(model, X_test, y_test, feature_names, title, save_pa
     plt.figure(figsize=(10, 6))
     plt.boxplot(
         result.importances[sorted_idx].T,
-        vert=False,
-        labels=np.array(feature_names)[sorted_idx],
+        vert=False
     )
+    plt.yticks(range(1, len(feature_names) + 1), np.array(feature_names)[sorted_idx])
     plt.title(f"Permutation Feature Importance - {title}")
     plt.tight_layout()
     plt.savefig(save_path)
