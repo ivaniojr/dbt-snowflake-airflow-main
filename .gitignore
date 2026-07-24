@@ -6,3 +6,16 @@ __pycache__/
 src/dbt/seeds/tarefa.csv
 rsa_key.p8
 src/dbt/rsa_key.p8
+
+# MLflow e artefatos de ML gerados localmente
+src/ml/mlflow.db
+src/ml/*.png
+mlruns/
+
+# Logs do dbt (gerados automaticamente)
+src/dbt/logs/
+src/dbt/target/
+
+# Arquivos de raiz gerados acidentalmente
+/*.png
+/mlflow.db
