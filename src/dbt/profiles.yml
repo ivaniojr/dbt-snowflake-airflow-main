@@ -14,7 +14,7 @@ munka_warehouse:
     prod:
       account: "{{ env_var('DBT_SNOWFLAKE_ACCOUNT') }}"
       database: "{{ env_var('DBT_SNOWFLAKE_DATABASE') }}"
-      private_key_path: "rsa_key.p8"
+      private_key_path: "rsa_key_giraffe.p8"
       role: "{{ env_var('DBT_SNOWFLAKE_ROLE') }}"
       schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA') }}"
       threads: 4
