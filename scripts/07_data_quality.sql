@@ -1,4 +1,4 @@
-USE DATABASE DRAGON_DB;
+USE DATABASE GIRAFFE_DB;
 USE SCHEMA MUNKA_RAW;
 
 -- ============================================================================

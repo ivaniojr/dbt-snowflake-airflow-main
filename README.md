@@ -57,7 +57,7 @@ O projeto requer os seguintes elementos:
 * Docker
 * Python >=3
 * Uma conta Snowflake.
-* Um usuário Snowflake com permissões necessárias, incluindo a capacidade de criar objetos no banco de dados DRAGON_DB.
+* Um usuário Snowflake com permissões necessárias, incluindo a capacidade de criar objetos no banco de dados GIRAFFE_DB.
 
 ### Como criar um conta no Snowflake?
 https://www.snowflake.com/en/emea/

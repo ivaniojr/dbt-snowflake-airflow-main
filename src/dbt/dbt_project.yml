@@ -17,7 +17,7 @@ clean-targets:
   - "dbt_packages"
 
 vars:
-  raw_database: "DRAGON_DB"
+  raw_database: "GIRAFFE_DB"
   raw_schema: "MUNKA_RAW"
 
 models:
