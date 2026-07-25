@@ -1,4 +1,4 @@
-import os
+﻿import os
 import json
 import mlflow
 import optuna
@@ -18,7 +18,7 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 def get_hpo_data():
     X, y, _ = get_raw_dataset()
-    # Holdout de 80/20 para a otimização
+    # Holdout de 80/20 para a otimizacao
     X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
     
     scaler = StandardScaler()
@@ -29,7 +29,7 @@ def get_hpo_data():
 
 def objective_sklearn(trial, X_train, X_val, y_train, y_val):
     
-    # Espaço de busca (Search Space)
+    # Espaco de busca (Search Space)
     lr = trial.suggest_float("learning_rate", 1e-4, 1e-1, log=True)
     n_layers = trial.suggest_int("n_layers", 1, 3)
     
@@ -39,13 +39,13 @@ def objective_sklearn(trial, X_train, X_val, y_train, y_val):
         layers.append(n_units)
     hidden_sizes = tuple(layers)
     
-    # Parâmetro extra de regularização para o Sklearn
+    # Parametro extra de regularizacao para o Sklearn
     alpha = trial.suggest_float("alpha", 1e-5, 1e-1, log=True)
     
     with mlflow.start_run(nested=True, run_name=f"Trial_{trial.number}"):
         mlflow.log_params(trial.params)
         
-        # O HPO roda rápido com 200 épocas e early stopping no Sklearn
+        # Ambos os modelos rodam com 300 epocas para comparacao justa
         model = train_sklearn_mlp(X_train, y_train, hidden_sizes=hidden_sizes, learning_rate=lr, epochs=300)
         
         preds = model.predict(X_val).reshape(-1, 1)
@@ -60,7 +60,7 @@ def objective_numpy(trial, X_train, X_val, y_train, y_val):
     lr = trial.suggest_float("learning_rate", 1e-4, 1e-1, log=True)
     
     # A nossa rede NumPy tem arquitetura hardcoded para 2 ou 3 camadas no mlp_numpy.py
-    # Para não quebrar a lógica matemática original (onde W1, W2, W3 estão cravados), 
+    # Para nao quebrar a logica matematica original (onde W1, W2, W3 estao cravados),
     # vamos ajustar apenas o tamanho dessas camadas exatas.
     size_l1 = trial.suggest_categorical("n_units_l1", [16, 32, 64])
     size_l2 = trial.suggest_categorical("n_units_l2", [8, 16, 32])
@@ -69,8 +69,9 @@ def objective_numpy(trial, X_train, X_val, y_train, y_val):
     with mlflow.start_run(nested=True, run_name=f"Trial_NumPy_{trial.number}"):
         mlflow.log_params(trial.params)
         
-        model = NumPyMLPRegressor(input_size=X_train.shape[1], hidden_sizes=hidden_sizes, learning_rate=lr, epochs=200)
-        # log_interval altíssimo para não poluir terminal
+        # Ambos os modelos rodam com 300 epocas para comparacao justa
+        model = NumPyMLPRegressor(input_size=X_train.shape[1], hidden_sizes=hidden_sizes, learning_rate=lr, epochs=300)
+        # log_interval altissimo para nao poluir terminal
         model.train(X_train, y_train, log_interval=1000)
         
         preds = model.predict(X_val)
@@ -81,10 +82,11 @@ def objective_numpy(trial, X_train, X_val, y_train, y_val):
     return mse
 
 def save_results(study_sklearn, study_numpy, output_path="hpo_results.json"):
-    """Exporta um sumário auditável dos melhores hiperparâmetros para o repositório."""
+    """Exporta um sumario auditavel dos melhores hiperparametros para o repositorio."""
     results = {
         "generated_at": datetime.now().isoformat(),
         "mlflow_experiment": "Auditoria_MLP_HPO",
+        "epochs_per_trial": 300,
         "baseline": {
             "description": "Resultados do treinamento baseline sem HPO (5-Fold CV com dados reais do Snowflake)",
             "sklearn_r2": 0.7528,
@@ -113,10 +115,10 @@ def save_results(study_sklearn, study_numpy, output_path="hpo_results.json"):
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    print(f"\n✅ Resultados exportados para: {output_path}")
+    print(f"\n Resultados exportados para: {output_path}")
 
-    # Imprime sumário no terminal
-    print("\n========== SUMÁRIO HPO ==========")
+    # Imprime sumario no terminal
+    print("\n========== SUMARIO HPO ==========")
     print(f"Sklearn  | Melhor MSE: {results['sklearn']['best_val_mse']:.4f} | Melhoria vs baseline: {results['sklearn']['improvement_vs_baseline_pct']:+.1f}%")
     print(f"NumPy    | Melhor MSE: {results['numpy']['best_val_mse']:.4f} | Melhoria vs baseline: {results['numpy']['improvement_vs_baseline_pct']:+.1f}%")
     print(f"Params Sklearn: {results['sklearn']['best_params']}")
@@ -127,31 +129,31 @@ def main():
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("Auditoria_MLP_HPO")
     
-    print("Baixando dados do Snowflake uma única vez para o cache do HPO...")
+    print("Baixando dados do Snowflake uma unica vez para o cache do HPO...")
     X_train, X_val, y_train, y_val = get_hpo_data()
-    print("Iniciando Otimização de Hiperparâmetros (Optuna)...")
+    print("Iniciando Otimizacao de Hiperparametros (Optuna)...")
     
     # 1. HPO para Scikit-Learn
-    print("\n--- Otimizando Modelo Scikit-Learn (15 trials) ---")
+    print("\n--- Otimizando Modelo Scikit-Learn (15 trials | 300 epocas) ---")
     with mlflow.start_run(run_name="Sklearn_HPO_Study"):
         study_sklearn = optuna.create_study(direction="minimize", study_name="Sklearn_MLP_Optimization")
         study_sklearn.optimize(lambda trial: objective_sklearn(trial, X_train, X_val, y_train, y_val), n_trials=15)
         
-        print("\nMelhores Parâmetros Sklearn:")
+        print("\nMelhores Parametros Sklearn:")
         print(study_sklearn.best_params)
         print(f"Melhor MSE: {study_sklearn.best_value:.4f}")
         
-    # 2. HPO para NumPy (Reduzido para não travar CPU)
-    print("\n--- Otimizando Modelo NumPy Matemático (10 trials) ---")
+    # 2. HPO para NumPy (ambos com 300 epocas para comparacao justa)
+    print("\n--- Otimizando Modelo NumPy Matematico (10 trials | 300 epocas) ---")
     with mlflow.start_run(run_name="NumPy_HPO_Study"):
         study_numpy = optuna.create_study(direction="minimize", study_name="NumPy_MLP_Optimization")
         study_numpy.optimize(lambda trial: objective_numpy(trial, X_train, X_val, y_train, y_val), n_trials=10)
         
-        print("\nMelhores Parâmetros NumPy:")
+        print("\nMelhores Parametros NumPy:")
         print(study_numpy.best_params)
         print(f"Melhor MSE: {study_numpy.best_value:.4f}")
 
-    # 3. Exporta resultados para o repositório (hpo_results.json)
+    # 3. Exporta resultados para o repositorio (hpo_results.json)
     save_results(study_sklearn, study_numpy, output_path="hpo_results.json")
 
 if __name__ == "__main__":
