@@ -1,7 +1,9 @@
 import os
+import json
 import mlflow
 import optuna
 import numpy as np
+from datetime import datetime
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error
@@ -78,6 +80,49 @@ def objective_numpy(trial, X_train, X_val, y_train, y_val):
         
     return mse
 
+def save_results(study_sklearn, study_numpy, output_path="hpo_results.json"):
+    """Exporta um sumário auditável dos melhores hiperparâmetros para o repositório."""
+    results = {
+        "generated_at": datetime.now().isoformat(),
+        "mlflow_experiment": "Auditoria_MLP_HPO",
+        "baseline": {
+            "description": "Resultados do treinamento baseline sem HPO (5-Fold CV com dados reais do Snowflake)",
+            "sklearn_r2": 0.7528,
+            "sklearn_mse": 4.5521,
+            "numpy_r2": 0.6717,
+            "numpy_mse": 6.0377,
+        },
+        "sklearn": {
+            "n_trials": len(study_sklearn.trials),
+            "best_val_mse": round(study_sklearn.best_value, 6),
+            "best_params": study_sklearn.best_params,
+            "improvement_vs_baseline_pct": round(
+                (4.5521 - study_sklearn.best_value) / 4.5521 * 100, 2
+            ),
+        },
+        "numpy": {
+            "n_trials": len(study_numpy.trials),
+            "best_val_mse": round(study_numpy.best_value, 6),
+            "best_params": study_numpy.best_params,
+            "improvement_vs_baseline_pct": round(
+                (6.0377 - study_numpy.best_value) / 6.0377 * 100, 2
+            ),
+        },
+    }
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+
+    print(f"\n✅ Resultados exportados para: {output_path}")
+
+    # Imprime sumário no terminal
+    print("\n========== SUMÁRIO HPO ==========")
+    print(f"Sklearn  | Melhor MSE: {results['sklearn']['best_val_mse']:.4f} | Melhoria vs baseline: {results['sklearn']['improvement_vs_baseline_pct']:+.1f}%")
+    print(f"NumPy    | Melhor MSE: {results['numpy']['best_val_mse']:.4f} | Melhoria vs baseline: {results['numpy']['improvement_vs_baseline_pct']:+.1f}%")
+    print(f"Params Sklearn: {results['sklearn']['best_params']}")
+    print(f"Params NumPy  : {results['numpy']['best_params']}")
+    print("=================================")
+
 def main():
     mlflow.set_tracking_uri("sqlite:///mlflow.db")
     mlflow.set_experiment("Auditoria_MLP_HPO")
@@ -87,24 +132,27 @@ def main():
     print("Iniciando Otimização de Hiperparâmetros (Optuna)...")
     
     # 1. HPO para Scikit-Learn
-    print("\n--- Otimizando Modelo Scikit-Learn ---")
+    print("\n--- Otimizando Modelo Scikit-Learn (15 trials) ---")
     with mlflow.start_run(run_name="Sklearn_HPO_Study"):
         study_sklearn = optuna.create_study(direction="minimize", study_name="Sklearn_MLP_Optimization")
         study_sklearn.optimize(lambda trial: objective_sklearn(trial, X_train, X_val, y_train, y_val), n_trials=15)
         
         print("\nMelhores Parâmetros Sklearn:")
         print(study_sklearn.best_params)
-        print(f"Melhor MSE: {study_sklearn.best_value}")
+        print(f"Melhor MSE: {study_sklearn.best_value:.4f}")
         
     # 2. HPO para NumPy (Reduzido para não travar CPU)
-    print("\n--- Otimizando Modelo NumPy Matemático ---")
+    print("\n--- Otimizando Modelo NumPy Matemático (10 trials) ---")
     with mlflow.start_run(run_name="NumPy_HPO_Study"):
         study_numpy = optuna.create_study(direction="minimize", study_name="NumPy_MLP_Optimization")
         study_numpy.optimize(lambda trial: objective_numpy(trial, X_train, X_val, y_train, y_val), n_trials=10)
         
         print("\nMelhores Parâmetros NumPy:")
         print(study_numpy.best_params)
-        print(f"Melhor MSE: {study_numpy.best_value}")
+        print(f"Melhor MSE: {study_numpy.best_value:.4f}")
+
+    # 3. Exporta resultados para o repositório (hpo_results.json)
+    save_results(study_sklearn, study_numpy, output_path="hpo_results.json")
 
 if __name__ == "__main__":
     main()
