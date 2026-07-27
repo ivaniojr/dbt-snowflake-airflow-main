@@ -174,6 +174,12 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
         print(f"  Modelo Sklearn salvo em: {sklearn_model_path}")
         print(f"  Para reutilizar: model = joblib.load('{sklearn_model_path}')")
 
+        # Salva o Scaler
+        scaler_path = "scaler.joblib"
+        joblib.dump(scaler_f, scaler_path)
+        mlflow.log_artifact(scaler_path)
+        print(f"  Scaler salvo em: {scaler_path}")
+
         # Loga o JSON de config como artefato
         mlflow.log_artifact(config_path)
 

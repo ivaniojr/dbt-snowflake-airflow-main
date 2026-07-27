@@ -1,18 +1,18 @@
 {
   "model": "sklearn",
-  "generated_at": "2026-07-27T12:12:27.455936",
+  "generated_at": "2026-07-27T18:11:58.765921",
   "mlflow_experiment": "Auditoria_MLP_HPO",
   "n_trials": 15,
   "epochs": 300,
-  "best_val_mse": 5.298201,
-  "improvement_vs_baseline_pct": -16.39,
+  "best_val_mse": 5.337341,
+  "improvement_vs_baseline_pct": -17.25,
   "hyperparameters": {
-    "learning_rate": 0.016974908290142768,
+    "learning_rate": 0.002229374078325396,
     "hidden_sizes": [
-      8,
+      64,
       128,
-      16
+      128
     ],
-    "alpha": 0.08833088990969261
+    "alpha": 3.143895435774833e-05
   }
 }
