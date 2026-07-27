@@ -1,4 +1,4 @@
-﻿"""
+"""
 DAG: passo5_ml_hpo_e_retreinamento
 Orquestra o pipeline completo de otimizacao de hiperparametros (HPO) +
 retreinamento dos modelos MLP com os melhores parametros encontrados.
@@ -28,8 +28,9 @@ DAG_ID = "passo5_ml_hpo_e_retreinamento"
 
 # Path absoluto do Python do venv do projeto
 # Ajuste conforme o ambiente de execucao (local vs container)
-PYTHON = "/opt/airflow/venv/bin/python"
-ML_DIR = "/opt/airflow/src/ml"
+PYTHON = "python"
+PROJECT_DIR = "/opt/airflow/project"
+ML_DIR = "/opt/airflow/project/src/ml"
 
 DEFAULT_ARGS = {
     "owner": "engenharia_dados",
@@ -62,8 +63,8 @@ with DAG(
         task_id="hpo_sklearn",
         bash_command=(
             f"set -euo pipefail; "
-            f"cd {ML_DIR} && "
-            f"{PYTHON} hpo.py --model sklearn --output-dir {ML_DIR}"
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/hpo.py --model sklearn --output-dir {ML_DIR}"
         ),
         doc_md="""
         ## HPO Sklearn
@@ -78,8 +79,8 @@ with DAG(
         task_id="hpo_numpy",
         bash_command=(
             f"set -euo pipefail; "
-            f"cd {ML_DIR} && "
-            f"{PYTHON} hpo.py --model numpy --output-dir {ML_DIR}"
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/hpo.py --model numpy --output-dir {ML_DIR}"
         ),
         doc_md="""
         ## HPO NumPy
@@ -94,8 +95,8 @@ with DAG(
         task_id="retreinar_sklearn",
         bash_command=(
             f"set -euo pipefail; "
-            f"cd {ML_DIR} && "
-            f"{PYTHON} train_best.py --model sklearn --config-dir {ML_DIR}"
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/train_best.py --model sklearn --config-dir {ML_DIR}"
         ),
         doc_md="""
         ## Retreinamento Sklearn
@@ -110,8 +111,8 @@ with DAG(
         task_id="retreinar_numpy",
         bash_command=(
             f"set -euo pipefail; "
-            f"cd {ML_DIR} && "
-            f"{PYTHON} train_best.py --model numpy --config-dir {ML_DIR}"
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/train_best.py --model numpy --config-dir {ML_DIR}"
         ),
         doc_md="""
         ## Retreinamento NumPy
@@ -126,7 +127,7 @@ with DAG(
         task_id="registrar_mlflow",
         bash_command=(
             f"set -euo pipefail; "
-            f"cd {ML_DIR} && "
+            f"cd {PROJECT_DIR} && "
             f"{PYTHON} -c \""
             f"import mlflow; "
             f"mlflow.set_tracking_uri('sqlite:///mlflow.db'); "
@@ -147,11 +148,9 @@ with DAG(
         """,
     )
 
-    # ── Dependencias (fluxo paralelo) ─────────────────────────────
+    # ── Dependencias (fluxo serializado) ─────────────────────────────
     #
-    #   hpo_sklearn --> retreinar_sklearn --+
-    #                                       +--> registrar_mlflow
-    #   hpo_numpy   --> retreinar_numpy   --+
+    # Para evitar locks no SQLite do MLflow ou gargalo de CPU, o fluxo
+    # deve ser estritamente sequencial.
     #
-    hpo_sklearn >> retreinar_sklearn >> registrar_mlflow
-    hpo_numpy   >> retreinar_numpy   >> registrar_mlflow
+    hpo_sklearn >> retreinar_sklearn >> hpo_numpy >> retreinar_numpy >> registrar_mlflow
