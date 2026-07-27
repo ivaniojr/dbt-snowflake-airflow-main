@@ -46,7 +46,7 @@ DEFAULT_ARGS = {
 with DAG(
     dag_id=DAG_ID,
     description=(
-        "HPO com Optuna para Sklearn e NumPy MLP (paralelo), "
+        "HPO com Optuna para Sklearn e NumPy MLP (sequencial), "
         "seguido de retreinamento com os melhores hiperparametros. "
         "Gera sklearn_best_params.json e numpy_best_params.json."
     ),
