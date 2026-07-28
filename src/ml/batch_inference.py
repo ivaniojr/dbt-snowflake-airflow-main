@@ -87,9 +87,10 @@ def run_batch_inference():
     print(f" INFERÊNCIA EM LOTE (BATCH) - PASSO 6")
     print(f"{'='*55}")
     
+    OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
     # Arquivos salvos no Passo 5
-    model_path = "sklearn_best_model.joblib"
-    scaler_path = "scaler.joblib"
+    model_path = os.path.join(OUTPUT_DIR, "sklearn_best_model.joblib")
+    scaler_path = os.path.join(OUTPUT_DIR, "scaler.joblib")
     
     if not os.path.exists(model_path) or not os.path.exists(scaler_path):
         raise FileNotFoundError(
@@ -142,7 +143,7 @@ def run_batch_inference():
     df_results['HORAS_ESTIMADAS'] = df_results['HORAS_ESTIMADAS'].apply(lambda x: max(0.5, x))
     
     # Salvar CSV
-    output_csv = "novas_previsoes.csv"
+    output_csv = os.path.join(OUTPUT_DIR, "novas_previsoes.csv")
     df_results.to_csv(output_csv, index=False)
     
     print(f"{'='*55}")

@@ -29,6 +29,8 @@ import warnings
 from sklearn.exceptions import ConvergenceWarning
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
+OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # ──────────────────────────────────────────────
 # Utilidades de graficos
 # ──────────────────────────────────────────────
@@ -159,23 +161,23 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
             final_model.loss_curve_,
             None,
             "Scikit-Learn",
-            "sklearn_best_loss_curve.png"
+            os.path.join(OUTPUT_DIR, "sklearn_best_loss_curve.png")
         )
-        mlflow.log_artifact("sklearn_best_loss_curve.png")
+        mlflow.log_artifact(os.path.join(OUTPUT_DIR, "sklearn_best_loss_curve.png"))
 
         # Residuais
-        plot_residuals(y_test_f, final_preds, "Scikit-Learn", "sklearn_best_residuals.png")
-        mlflow.log_artifact("sklearn_best_residuals.png")
+        plot_residuals(y_test_f, final_preds, "Scikit-Learn", os.path.join(OUTPUT_DIR, "sklearn_best_residuals.png"))
+        mlflow.log_artifact(os.path.join(OUTPUT_DIR, "sklearn_best_residuals.png"))
 
         # Salva o modelo treinado com joblib para reutilizacao futura
-        sklearn_model_path = "sklearn_best_model.joblib"
+        sklearn_model_path = os.path.join(OUTPUT_DIR, "sklearn_best_model.joblib")
         joblib.dump(final_model, sklearn_model_path)
         mlflow.log_artifact(sklearn_model_path)
         print(f"  Modelo Sklearn salvo em: {sklearn_model_path}")
         print(f"  Para reutilizar: model = joblib.load('{sklearn_model_path}')")
 
         # Salva o Scaler
-        scaler_path = "scaler.joblib"
+        scaler_path = os.path.join(OUTPUT_DIR, "scaler.joblib")
         joblib.dump(scaler_f, scaler_path)
         mlflow.log_artifact(scaler_path)
         print(f"  Scaler salvo em: {scaler_path}")
@@ -283,16 +285,16 @@ def retrain_numpy(config_path="numpy_best_params.json"):
             final_model.loss_history,
             final_model.val_loss_history,
             "NumPy MLP",
-            "numpy_best_loss_curve.png"
+            os.path.join(OUTPUT_DIR, "numpy_best_loss_curve.png")
         )
-        mlflow.log_artifact("numpy_best_loss_curve.png")
+        mlflow.log_artifact(os.path.join(OUTPUT_DIR, "numpy_best_loss_curve.png"))
 
         # Residuais
-        plot_residuals(y_test_f, final_preds, "NumPy MLP", "numpy_best_residuals.png")
-        mlflow.log_artifact("numpy_best_residuals.png")
+        plot_residuals(y_test_f, final_preds, "NumPy MLP", os.path.join(OUTPUT_DIR, "numpy_best_residuals.png"))
+        mlflow.log_artifact(os.path.join(OUTPUT_DIR, "numpy_best_residuals.png"))
 
         # Salva os pesos do modelo NumPy para reutilizacao futura
-        numpy_weights_path = "numpy_best_model.npz"
+        numpy_weights_path = os.path.join(OUTPUT_DIR, "numpy_best_model.npz")
         final_model.save_weights(numpy_weights_path)
         mlflow.log_artifact(numpy_weights_path)
         print(f"  Para reutilizar: model = NumPyMLPRegressor.from_weights('{numpy_weights_path}')")
