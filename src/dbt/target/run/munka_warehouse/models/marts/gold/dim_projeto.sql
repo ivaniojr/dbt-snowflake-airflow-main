@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.dim_projeto
+        create or replace transient table GIRAFFE_DB.munka_gold.dim_projeto
          as
         (SELECT
     HASH('PROJETO', P.ID)                                      AS SK_PROJETO,
@@ -34,11 +34,11 @@
     P.PROGRESSO,
     P.OBS_PROGRESSO,
     P.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_projeto P
-LEFT JOIN DRAGON_DB.munka_stg.stg_produto PR ON PR.ID = P.PRODUTO_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_status S ON S.ID = P.STATUS_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = P.UNIDADE_ADM_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm_superior US ON US.ID = P.UNIDADE_SUPERIOR_ID
+FROM GIRAFFE_DB.munka_stg.stg_projeto P
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_produto PR ON PR.ID = P.PRODUTO_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_status S ON S.ID = P.STATUS_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = P.UNIDADE_ADM_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm_superior US ON US.ID = P.UNIDADE_SUPERIOR_ID
         );
       
   

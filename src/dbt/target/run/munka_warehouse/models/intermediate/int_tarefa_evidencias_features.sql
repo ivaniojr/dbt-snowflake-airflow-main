@@ -1,5 +1,5 @@
 
-  create or replace   view DRAGON_DB.munka_int.int_tarefa_evidencias_features
+  create or replace   view GIRAFFE_DB.munka_int.int_tarefa_evidencias_features
   
     
     
@@ -44,7 +44,7 @@
         EVIDENCIAS,
         EVIDENCIA_COMMIT_SHA,
         EVIDENCIA_ANEXO
-    FROM DRAGON_DB.munka_stg.stg_tarefa
+    FROM GIRAFFE_DB.munka_stg.stg_tarefa
 ),
 parsed AS (
     SELECT

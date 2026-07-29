@@ -6,5 +6,5 @@ SELECT
     U.NOME_UNIDADE,
     T.ID_TECNOLOGIA_OLD,
     T.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_tecnologia T
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = T.UNIDADE_ADM_ID
+FROM GIRAFFE_DB.munka_stg.stg_tecnologia T
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = T.UNIDADE_ADM_ID

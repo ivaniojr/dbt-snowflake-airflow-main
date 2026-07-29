@@ -21,7 +21,7 @@ SELECT
         100.0 * COALESCE(T.TOTAL_UST_EXECUTADA, 0)
         / (COALESCE(C.UST_CONTRATADAS, 0) + COALESCE(C.UST_ADITIVADAS, 0))) AS PERCENTUAL_UST_CONSUMIDA,
     C.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_contrato C
+FROM GIRAFFE_DB.munka_stg.stg_contrato C
 LEFT JOIN (
     SELECT
         S.CONTRATO_ID,
@@ -29,13 +29,13 @@ LEFT JOIN (
         SUM(COALESCE(T.TOTAL_UST, 0))                           AS TOTAL_UST_EXECUTADA,
         SUM(COALESCE(T.VALOR_FATURADO, 0))                      AS TOTAL_VALOR_FATURADO,
         SUM(COALESCE(T.HORAS_EXECUTADAS, 0))                    AS TOTAL_HORAS_EXECUTADAS
-    FROM DRAGON_DB.munka_stg.stg_servico S
-    LEFT JOIN DRAGON_DB.munka_stg.stg_regra R ON R.SERVICO_ID = S.ID
-    LEFT JOIN DRAGON_DB.munka_stg.stg_tarefa T ON T.REGRA_ID = R.ID
+    FROM GIRAFFE_DB.munka_stg.stg_servico S
+    LEFT JOIN GIRAFFE_DB.munka_stg.stg_regra R ON R.SERVICO_ID = S.ID
+    LEFT JOIN GIRAFFE_DB.munka_stg.stg_tarefa T ON T.REGRA_ID = R.ID
     GROUP BY S.CONTRATO_ID
 ) T ON T.CONTRATO_ID = C.ID
 LEFT JOIN (
     SELECT CONTRATO_ID, COUNT(*) AS QUANTIDADE_FATURAS
-    FROM DRAGON_DB.munka_stg.stg_fatura
+    FROM GIRAFFE_DB.munka_stg.stg_fatura
     GROUP BY CONTRATO_ID
 ) F ON F.CONTRATO_ID = C.ID

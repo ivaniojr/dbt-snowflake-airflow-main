@@ -11,4 +11,4 @@ SELECT
     REGEXP_COUNT(TRIM(C.CONTEUDO), '\\S+')                   AS QUANTIDADE_PALAVRAS,
     C.ID_COMENTARIO_OLD,
     C.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_comentario C
+FROM GIRAFFE_DB.munka_stg.stg_comentario C

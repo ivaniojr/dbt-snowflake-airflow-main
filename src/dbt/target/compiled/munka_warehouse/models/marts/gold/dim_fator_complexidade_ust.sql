@@ -11,7 +11,7 @@ SELECT
     CT.NOME                                                    AS CONTRATO,
     F.ID_FATOR_OLD,
     F.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_fator_complexidade_ust F
-LEFT JOIN DRAGON_DB.munka_stg.stg_cargo C ON C.ID = F.CARGO_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_nivel N ON N.ID = F.NIVEL_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_contrato CT ON CT.ID = F.CONTRATO_ID
+FROM GIRAFFE_DB.munka_stg.stg_fator_complexidade_ust F
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_cargo C ON C.ID = F.CARGO_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_nivel N ON N.ID = F.NIVEL_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_contrato CT ON CT.ID = F.CONTRATO_ID

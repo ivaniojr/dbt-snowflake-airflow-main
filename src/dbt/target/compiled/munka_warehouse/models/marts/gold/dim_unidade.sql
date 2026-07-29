@@ -11,5 +11,5 @@ SELECT
     S.NOME_UNIDADE                                             AS NOME_UNIDADE_SUPERIOR,
     S.SIGLA                                                    AS SIGLA_UNIDADE_SUPERIOR,
     U.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_unidade_adm U
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm_superior S ON S.ID = U.UNIDADE_SUPERIOR_ID
+FROM GIRAFFE_DB.munka_stg.stg_unidade_adm U
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm_superior S ON S.ID = U.UNIDADE_SUPERIOR_ID

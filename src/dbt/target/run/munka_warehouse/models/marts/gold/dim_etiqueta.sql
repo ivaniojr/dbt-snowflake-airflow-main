@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.dim_etiqueta
+        create or replace transient table GIRAFFE_DB.munka_gold.dim_etiqueta
          as
         (SELECT
     HASH('ETIQUETA', E.ID)                                     AS SK_ETIQUETA,
@@ -12,8 +12,8 @@
     HASH('UNIDADE', E.UNIDADE_ADM_ID)                          AS SK_UNIDADE,
     U.NOME_UNIDADE,
     E.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_etiqueta E
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = E.UNIDADE_ADM_ID
+FROM GIRAFFE_DB.munka_stg.stg_etiqueta E
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = E.UNIDADE_ADM_ID
         );
       
   

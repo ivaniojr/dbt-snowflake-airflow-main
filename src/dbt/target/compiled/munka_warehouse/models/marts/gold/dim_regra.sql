@@ -14,8 +14,8 @@ SELECT
     R.FATOR_AJUSTE,
     R.ID_REGRA_OLD,
     R.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_regra R
-LEFT JOIN DRAGON_DB.munka_stg.stg_servico S ON S.ID = R.SERVICO_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_complexidade C ON C.ID = R.COMPLEXIDADE_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_cargo CA ON CA.ID = R.CARGO_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_nivel N ON N.ID = R.NIVEL_ID
+FROM GIRAFFE_DB.munka_stg.stg_regra R
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_servico S ON S.ID = R.SERVICO_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_complexidade C ON C.ID = R.COMPLEXIDADE_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_cargo CA ON CA.ID = R.CARGO_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_nivel N ON N.ID = R.NIVEL_ID
