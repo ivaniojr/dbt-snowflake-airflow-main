@@ -99,3 +99,67 @@ class NumPyMLPRegressor:
                     
     def predict(self, X):
         return self.forward(X)
+
+    # ──────────────────────────────────────────────
+    # Persistencia de Pesos
+    # ──────────────────────────────────────────────
+    def save_weights(self, path="numpy_model_weights.npz"):
+        """
+        Salva todos os pesos, biases e hiperparametros em um arquivo .npz.
+
+        Uso:
+            model.save_weights("numpy_model_weights.npz")
+        """
+        np.savez(
+            path,
+            W1=self.W1, b1=self.b1,
+            W2=self.W2, b2=self.b2,
+            W3=self.W3, b3=self.b3,
+            lr=np.array([self.lr]),
+            epochs=np.array([self.epochs]),
+            hidden_sizes=np.array([self.W1.shape[1], self.W2.shape[1]]),
+        )
+        print(f"Pesos NumPy salvos em: {path}")
+
+    def load_weights(self, path="numpy_model_weights.npz"):
+        """
+        Carrega pesos de um .npz salvo por save_weights().
+        Nao e necessario retreinar - basta chamar predict() depois.
+
+        Uso:
+            model = NumPyMLPRegressor(input_size=10, hidden_sizes=(64, 32))
+            model.load_weights("numpy_model_weights.npz")
+            preds = model.predict(X_novo)
+        """
+        data = np.load(path)
+        self.W1, self.b1 = data["W1"], data["b1"]
+        self.W2, self.b2 = data["W2"], data["b2"]
+        self.W3, self.b3 = data["W3"], data["b3"]
+        self.lr     = float(data["lr"][0])
+        self.epochs = int(data["epochs"][0])
+        print(f"Pesos NumPy carregados de: {path}")
+
+    @classmethod
+    def from_weights(cls, path="numpy_model_weights.npz"):
+        """
+        Factory method: reconstroi o modelo completo a partir de um .npz.
+        Nao e necessario informar input_size ou hidden_sizes manualmente.
+
+        Uso:
+            model = NumPyMLPRegressor.from_weights("numpy_model_weights.npz")
+            preds = model.predict(X_novo)
+        """
+        data = np.load(path)
+        input_size   = int(data["W1"].shape[0])
+        hidden_sizes = tuple(int(x) for x in data["hidden_sizes"])
+        lr           = float(data["lr"][0])
+        epochs       = int(data["epochs"][0])
+
+        instance = cls(input_size=input_size, hidden_sizes=hidden_sizes,
+                       learning_rate=lr, epochs=epochs)
+        instance.W1, instance.b1 = data["W1"], data["b1"]
+        instance.W2, instance.b2 = data["W2"], data["b2"]
+        instance.W3, instance.b3 = data["W3"], data["b3"]
+        print(f"Modelo NumPy reconstituido de: {path}")
+        print(f"  input_size={input_size}  hidden={hidden_sizes}  lr={lr}  epochs={epochs}")
+        return instance

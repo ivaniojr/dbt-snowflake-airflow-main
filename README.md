@@ -53,27 +53,114 @@ O Optuna é uma biblioteca de **otimização automática de hiperparâmetros** (
 
 ## Requisitos Prévios
 
-O projeto requer os seguintes elementos:
-* Docker
-* Python >=3
-* Uma conta Snowflake.
-* Um usuário Snowflake com permissões necessárias, incluindo a capacidade de criar objetos no banco de dados GIRAFFE_DB.
+O projeto requer os seguintes elementos para funcionar end-to-end:
 
-### Como criar um conta no Snowflake?
+| Requisito | Versão / Detalhe | Obrigatório |
+|-----------|-----------------|-------------|
+| Docker Desktop | >= 20.x | ✅ Sim |
+| Python | >= 3.9 | ✅ Sim |
+| Conta Snowflake | Trial ou paga, região `us-east-1` recomendada | ✅ Sim |
+| Usuário Snowflake | Com role `SYSADMIN` ou permissões equivalentes | ✅ Sim |
+| Conta AWS | Com acesso ao Console IAM e S3 | ✅ Sim |
+| Bucket AWS S3 | Bucket dedicado para os CSVs do sistema legado | ✅ Sim |
+| Usuário IAM AWS | Com permissões de leitura no bucket S3 | ✅ Sim |
+| Git | >= 2.x | ✅ Sim |
+
+### Como criar uma conta no Snowflake?
 https://www.snowflake.com/en/emea/
 
 ### Como criar o user com permissões no Snowflake?
 Entre na pasta `scripts` e use o arquivo `00_setup_controle.sql` como base.
 
-### Como configurar a conexão com AWS S3?
-A ingestão de dados brutos (`passo2_s3_to_snowflake_munka_raw`) copia os arquivos `.csv` de um bucket S3 para o Snowflake. Para que funcione:
-1. Suba os arquivos CSV gerados do sistema legado para o seu bucket S3 (ex: `munka-dev-070980587239-us-east-2`). O nome dos arquivos deve estar em minúsculo (ex: `ab_user.csv`).
-2. Vá até a interface do Airflow: **Admin** -> **Connections**.
-3. Edite ou crie a conexão com `Conn Id: aws_default`.
-4. Defina o tipo de conexão (`Conn Type`) como **Amazon Web Services**.
-5. Em **Login**, insira o seu `AWS Access Key ID`.
-6. Em **Password**, insira o seu `AWS Secret Access Key`.
+### Como configurar o AWS S3 como repositório de dados brutos
+
+A DAG `passo2_s3_to_snowflake_munka_raw` usa o AWS S3 como **fonte primária dos arquivos CSV** exportados do sistema legado MUNKA. O fluxo é:
+
+```
+Sistema Legado (MUNKA) → Exporta CSVs → Upload no S3 → Airflow (COPY INTO) → Snowflake RAW
+```
+
+#### Passo 1 — Criar o bucket S3 no Console AWS
+
+1. Acesse o [Console AWS S3](https://s3.console.aws.amazon.com/)
+2. Clique em **Create bucket**
+3. Defina o nome do bucket (ex: `munka-dev-<seu-account-id>-us-east-2`)
+4. Selecione a região (recomendado: `us-east-2` ou a mais próxima do seu Snowflake)
+5. Mantenha o **Block Public Access** ativado — o acesso será feito via credenciais IAM
+6. Clique em **Create bucket**
+
+#### Passo 2 — Estrutura de arquivos esperada no bucket
+
+Os arquivos `.csv` devem ser carregados na raiz do bucket **com nomes em minúsculo**, seguindo o padrão de tabelas do sistema legado:
+
+```
+s3://munka-dev-<account-id>-us-east-2/
+├── ab_user.csv
+├── ab_project.csv
+├── ab_task.csv
+├── ab_task_log.csv
+├── ab_sprint.csv
+└── ... (demais tabelas exportadas)
+```
+
+> ⚠️ **Atenção:** O nome dos arquivos deve estar **exatamente em minúsculo**. O comando `COPY INTO` do Snowflake é case-sensitive no mapeamento de arquivos.
+
+#### Passo 3 — Criar usuário IAM com permissões mínimas
+
+No [Console IAM da AWS](https://console.aws.amazon.com/iam/), crie um usuário dedicado para o Airflow com a seguinte política inline (substitua `<NOME-DO-SEU-BUCKET>`):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:ListBucket",
+        "s3:GetBucketLocation"
+      ],
+      "Resource": [
+        "arn:aws:s3:::<NOME-DO-SEU-BUCKET>",
+        "arn:aws:s3:::<NOME-DO-SEU-BUCKET>/*"
+      ]
+    }
+  ]
+}
+```
+
+Após criar o usuário, gere um **Access Key** (tipo: *Application and AWS CLI*) e guarde o `Access Key ID` e o `Secret Access Key`.
+
+#### Passo 4 — Configurar a conexão no Airflow
+
+1. Acesse a interface do Airflow em `localhost:8081`
+2. Vá em **Admin** → **Connections**
+3. Clique em **+** para criar ou edite a existente com `Conn Id: aws_default`
+4. Preencha os campos:
+
+| Campo | Valor |
+|-------|-------|
+| **Connection Id** | `aws_default` |
+| **Connection Type** | `Amazon Web Services` |
+| **Login** | Seu `AWS Access Key ID` |
+| **Password** | Seu `AWS Secret Access Key` |
+| **Extra** | `{"region_name": "us-east-2"}` |
+
+5. Clique em **Save**
+
 *O Airflow injetará essas credenciais automaticamente no comando `COPY INTO` disparado no Snowflake.*
+
+#### Passo 5 — Validação da configuração
+
+Antes de executar a DAG, valide os seguintes pontos:
+
+- [ ] Bucket S3 criado e acessível
+- [ ] Arquivos CSV carregados no bucket com nomes em minúsculo
+- [ ] Usuário IAM criado com política de leitura no bucket
+- [ ] Access Key ID e Secret Access Key gerados e salvos
+- [ ] Conexão `aws_default` configurada no Airflow
+- [ ] Conexão Snowflake configurada no Airflow (`snowflake_default`)
+- [ ] DAG `passo2_s3_to_snowflake_munka_raw` visível e ativa no Airflow
 
 ## Como utilizar o projeto?
 Faça clone com o comando:

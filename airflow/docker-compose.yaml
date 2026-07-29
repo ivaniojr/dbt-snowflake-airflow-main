@@ -84,7 +84,7 @@ x-airflow-common:
     # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
     # for other purpose (development, test and especially production usage) build/extend Airflow image.
     # Dependências são instaladas durante o build no Dockerfile.dbt.
-    _PIP_ADDITIONAL_REQUIREMENTS: ''
+    _PIP_ADDITIONAL_REQUIREMENTS: 'mlflow>=2.0.0 optuna scikit-learn pandas numpy matplotlib snowflake-connector-python'
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
@@ -94,6 +94,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     - ${AIRFLOW_PROJ_DIR:-.}/../src/dbt:/opt/airflow/dbt/munka_warehouse
+    - ${AIRFLOW_PROJ_DIR:-.}/..:/opt/airflow/project
   user: "${AIRFLOW_UID:-50000}:0"
   networks:
     - default

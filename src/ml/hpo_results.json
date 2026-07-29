@@ -1,0 +1,33 @@
+{
+  "generated_at": "2026-07-25T11:32:29.789102",
+  "mlflow_experiment": "Auditoria_MLP_HPO",
+  "epochs_per_trial": 300,
+  "baseline": {
+    "description": "Resultados do treinamento baseline sem HPO (5-Fold CV com dados reais do Snowflake)",
+    "sklearn_r2": 0.7528,
+    "sklearn_mse": 4.5521,
+    "numpy_r2": 0.6717,
+    "numpy_mse": 6.0377
+  },
+  "sklearn": {
+    "n_trials": 15,
+    "best_val_mse": 5.381607,
+    "best_params": {
+      "learning_rate": 0.02147662105236716,
+      "n_layers": 1,
+      "n_units_l0": 128,
+      "alpha": 0.0011884494144035103
+    },
+    "improvement_vs_baseline_pct": -18.22
+  },
+  "numpy": {
+    "n_trials": 10,
+    "best_val_mse": 7.063149,
+    "best_params": {
+      "learning_rate": 0.02949605672948791,
+      "n_units_l1": 16,
+      "n_units_l2": 16
+    },
+    "improvement_vs_baseline_pct": -16.98
+  }
+}
