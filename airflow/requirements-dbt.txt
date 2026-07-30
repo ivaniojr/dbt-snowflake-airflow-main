@@ -11,3 +11,7 @@ pandas
 numpy
 matplotlib
 snowflake-connector-python
+# Pin necessário: apache-airflow-providers-amazon traz gcloud-aio-auth, que exige
+# cryptography<42. Sem este pin, mlflow/snowflake-connector-python puxam uma
+# versão mais nova de cryptography e o "pip check" falha no build da imagem.
+cryptography<42,>=41.0.0

@@ -318,12 +318,40 @@ services:
       - default
       - network-bigdata
 
+  # Metabase — camada de visualização/BI (dashboards e relatórios) que consome
+  # diretamente os dados modelados no Snowflake (schemas MUNKA_GOLD/MUNKA_ML),
+  # conforme o diagrama C4 do projeto.
+  metabase:
+    image: metabase/metabase:latest
+    container_name: metabase
+    ports:
+      - "3000:3000"
+    volumes:
+      - metabase-data:/metabase-data
+      # Reaproveita a mesma chave RSA já usada pelo dbt/Airflow para autenticar no Snowflake.
+      - ${AIRFLOW_PROJ_DIR:-.}/../src/dbt/rsa_key_giraffe.p8:/metabase-data/rsa_key_giraffe.p8:ro
+    environment:
+      # Persiste o banco de aplicação (H2) em um volume, evitando perder
+      # dashboards/usuários ao recriar o container.
+      MB_DB_FILE: /metabase-data/metabase.db
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail -s http://localhost:3000/api/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    restart: unless-stopped
+    networks:
+      - default
+      - network-bigdata
+
 volumes:
   postgres-db-volume:
   redis:
   airflow-logs:
   airflow-sources:
   airflow-plugins:
+  metabase-data:
 
 networks:
   network-bigdata:

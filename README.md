@@ -296,6 +296,44 @@ python hpo.py
 
 ---
 
+## Metabase — Visualização e Dashboards
+
+### Objetivo
+Seguindo a arquitetura C4 do projeto, o **Metabase** é a ferramenta de BI/visualização que consome diretamente os dados já modelados no Snowflake (camadas `MUNKA_GOLD` e `MUNKA_ML`), permitindo montar dashboards e relatórios analíticos sem escrever código.
+
+### Como subir o Metabase
+O serviço já está definido no `docker-compose.yaml` da pasta `airflow/` e sobe junto com o restante da stack:
+```bash
+cd airflow
+docker compose up -d metabase
+```
+
+Acesse no navegador:
+```
+http://localhost:3000
+```
+Na primeira execução, o próprio Metabase guia a criação do usuário administrador (nome, e-mail e senha).
+
+### Como conectar o Metabase ao Snowflake
+Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do dbt (ver `src/dbt/profiles.yml` / `credentials_template.env`):
+
+| Campo | Valor |
+|-------|-------|
+| Database type | Snowflake |
+| Account or hostname | `sfedu02-gfb24387` |
+| Username | `GIRAFFE` |
+| RSA private key (PEM) | Local file path → `/metabase-data/rsa_key_giraffe.p8` (já montado no container) |
+| Role | `TRAINING_ROLE` |
+| Warehouse | `GIRAFFE_WH` |
+| Database name | `GIRAFFE_DB` |
+| Schemas | `MUNKA_GOLD,MUNKA_ML` (ou `All`, se preferir explorar todas as camadas) |
+
+> A chave privada `rsa_key_giraffe.p8` é a mesma já usada pelo dbt/Airflow — o container do Metabase a monta automaticamente em `/metabase-data/rsa_key_giraffe.p8` (somente leitura), sem precisar duplicar arquivos.
+
+Depois de salvar, o Metabase sincroniza o schema automaticamente e as tabelas de `MUNKA_GOLD` (fatos/dimensões) e `MUNKA_ML` (features de ML) ficam disponíveis para criar perguntas, gráficos e dashboards.
+
+---
+
 ## Conclusão
 Este projeto entrega uma solução end-to-end de Engenharia de Dados e Machine Learning: os dados fluem do S3 para a camada RAW no Snowflake, são limpos e enriquecidos pelo dbt nas camadas Staging e Gold, e finalmente alimentam modelos preditivos MLP rastreados pelo MLflow e otimizados pelo Optuna — com auditabilidade completa de ponta a ponta.
 
