@@ -1,5 +1,5 @@
 -- ============================================================================
--- DRAGON_DB.MUNKA - DATA WAREHOUSE COMPLETO
+-- GIRAFFE_DB.MUNKA - DATA WAREHOUSE COMPLETO
 -- Origem: PostgreSQL / schema munka
 -- Destino: Snowflake
 -- Camadas no mesmo schema, separadas por prefixo:
@@ -13,9 +13,9 @@
 --   DQ_      controles de qualidade
 -- ============================================================================
 
-CREATE DATABASE IF NOT EXISTS DRAGON_DB;
-CREATE SCHEMA IF NOT EXISTS DRAGON_DB.MUNKA_RAW;
-USE DATABASE DRAGON_DB;
+CREATE DATABASE IF NOT EXISTS GIRAFFE_DB;
+CREATE SCHEMA IF NOT EXISTS GIRAFFE_DB.MUNKA_RAW;
+USE DATABASE GIRAFFE_DB;
 USE SCHEMA MUNKA_RAW;
 
 -- ============================================================================

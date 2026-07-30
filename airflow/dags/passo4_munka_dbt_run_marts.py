@@ -43,7 +43,7 @@ DBT_ENV = {
     ),
     "DBT_SNOWFLAKE_DATABASE": (
         "{{ conn." + SNOWFLAKE_CONN_ID
-        + ".extra_dejson.get('database', 'DRAGON_DB') }}"
+        + ".extra_dejson.get('database', 'GIRAFFE_DB') }}"
     ),
     "DBT_SNOWFLAKE_SCHEMA": (
         "{{ conn." + SNOWFLAKE_CONN_ID + ".schema or 'MUNKA_RAW' }}"

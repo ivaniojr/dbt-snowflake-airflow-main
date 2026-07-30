@@ -63,6 +63,7 @@ with DAG(
     schedule_interval=None,
     start_date=datetime(2023, 1, 1),
     catchup=False,
+    max_active_tasks=5,
     tags=["snowflake", "s3", "munka", "raw", "load"],
 ) as dag:
 
@@ -70,8 +71,8 @@ with DAG(
         load_task = SnowflakeOperator(
             task_id=f"load_{table.lower()}",
             snowflake_conn_id=SNOWFLAKE_CONN_ID,
-            database="DRAGON_DB",
+            database="GIRAFFE_DB",
             schema="MUNKA_RAW",
             sql=get_copy_query(table),
-            execution_timeout=timedelta(minutes=5),
+            execution_timeout=timedelta(minutes=10),
         )

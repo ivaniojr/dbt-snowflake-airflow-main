@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.fct_fatura
+        create or replace transient table GIRAFFE_DB.munka_gold.fct_fatura
          as
         (SELECT
     HASH('FATURA', F.ID)                                       AS SK_FATURA,
@@ -24,7 +24,7 @@
     COALESCE(T.VALOR_FATURADO, 0)                              AS VALOR_FATURADO,
     F.ID_FATURA_OLD,
     F.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_fatura F
+FROM GIRAFFE_DB.munka_stg.stg_fatura F
 LEFT JOIN (
     SELECT
         FATURA_ID,
@@ -33,7 +33,7 @@ LEFT JOIN (
         SUM(COALESCE(HORAS_EXECUTADAS, 0))                      AS HORAS_EXECUTADAS,
         SUM(COALESCE(TOTAL_UST, 0))                             AS TOTAL_UST,
         SUM(COALESCE(VALOR_FATURADO, 0))                        AS VALOR_FATURADO
-    FROM DRAGON_DB.munka_stg.stg_tarefa
+    FROM GIRAFFE_DB.munka_stg.stg_tarefa
     WHERE FATURA_ID IS NOT NULL
     GROUP BY FATURA_ID
 ) T ON T.FATURA_ID = F.ID

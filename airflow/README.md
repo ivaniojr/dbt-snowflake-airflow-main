@@ -59,7 +59,7 @@ Extra:
 ```json
 {
   "account": "identificador_da_conta",
-  "database": "DRAGON_DB",
+  "database": "GIRAFFE_DB",
   "warehouse": "COMPUTE_WH",
   "role": "SYSADMIN"
 }

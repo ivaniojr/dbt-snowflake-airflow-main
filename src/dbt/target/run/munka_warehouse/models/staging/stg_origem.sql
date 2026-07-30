@@ -1,5 +1,5 @@
 
-  create or replace   view DRAGON_DB.munka_stg.stg_origem
+  create or replace   view GIRAFFE_DB.munka_stg.stg_origem
   
     
     
@@ -39,7 +39,7 @@
     DW_SOURCE_UPDATED_AT,
     DW_INGESTED_AT,
     DW_ROW_HASH
-FROM DRAGON_DB.MUNKA_RAW.RAW_ORIGEM
+FROM GIRAFFE_DB.MUNKA_RAW.RAW_ORIGEM
 QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
   );
 

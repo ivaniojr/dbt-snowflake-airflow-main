@@ -44,4 +44,4 @@ SELECT
     LENGTH(T.EVIDENCIAS)                                       AS TAMANHO_EVIDENCIA_TEXTO,
     T.ID_TAREFA_OLD,
     T.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_tarefa T
+FROM GIRAFFE_DB.munka_stg.stg_tarefa T

@@ -20,7 +20,7 @@ SELECT
     COALESCE(T.VALOR_FATURADO, 0)                              AS VALOR_FATURADO,
     COALESCE(T.PERCENTUAL_COM_EVIDENCIA, 0)                    AS PERCENTUAL_TAREFAS_COM_EVIDENCIA,
     P.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_projeto P
+FROM GIRAFFE_DB.munka_stg.stg_projeto P
 LEFT JOIN (
     SELECT
         PROJETO_ID,
@@ -34,7 +34,7 @@ LEFT JOIN (
                       OR NULLIF(TRIM(EVIDENCIA_COMMIT_SHA), '') IS NOT NULL
                       OR NULLIF(TRIM(EVIDENCIA_ANEXO), '') IS NOT NULL)
               / NULLIF(COUNT(*), 0)                             AS PERCENTUAL_COM_EVIDENCIA
-    FROM DRAGON_DB.munka_stg.stg_tarefa
+    FROM GIRAFFE_DB.munka_stg.stg_tarefa
     WHERE PROJETO_ID IS NOT NULL
     GROUP BY PROJETO_ID
 ) T ON T.PROJETO_ID = P.ID

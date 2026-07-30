@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.fct_movimento_contrato
+        create or replace transient table GIRAFFE_DB.munka_gold.fct_movimento_contrato
          as
         (SELECT
     HASH('MOV_CONTRATO', 'AJUSTE', A.ID)                       AS SK_MOVIMENTO_CONTRATO,
@@ -16,7 +16,7 @@
     A.UST_CONTRATADAS,
     NULL::FLOAT                                                AS UST_RENOVADAS,
     A.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_ajuste A
+FROM GIRAFFE_DB.munka_stg.stg_ajuste A
 UNION ALL
 SELECT
     HASH('MOV_CONTRATO', 'REAJUSTE', R.ID),
@@ -30,7 +30,7 @@ SELECT
     NULL,
     NULL,
     R.DW_INGESTED_AT
-FROM DRAGON_DB.munka_stg.stg_reajuste R
+FROM GIRAFFE_DB.munka_stg.stg_reajuste R
 UNION ALL
 SELECT
     HASH('MOV_CONTRATO', 'RENOVACAO', R.ID),
@@ -44,7 +44,7 @@ SELECT
     NULL,
     R.UST_CONTRATADAS,
     R.DW_INGESTED_AT
-FROM DRAGON_DB.munka_stg.stg_renovacao R
+FROM GIRAFFE_DB.munka_stg.stg_renovacao R
         );
       
   

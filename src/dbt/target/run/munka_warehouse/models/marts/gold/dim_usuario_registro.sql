@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.dim_usuario_registro
+        create or replace transient table GIRAFFE_DB.munka_gold.dim_usuario_registro
          as
         (SELECT
     HASH('USUARIO_REGISTRO', ID)                               AS SK_USUARIO_REGISTRO,
@@ -14,7 +14,7 @@
     SHA2(LOWER(TRIM(EMAIL)), 256)                              AS EMAIL_HASH,
     REGISTRATION_DATE,
     DW_INGESTED_AT                                             AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_ab_register_user
+FROM GIRAFFE_DB.munka_stg.stg_ab_register_user
         );
       
   

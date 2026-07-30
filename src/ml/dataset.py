@@ -17,8 +17,8 @@ def load_data():
         from cryptography.hazmat.primitives import serialization
         import snowflake.connector
         
-        # Caminho relativo para a chave rsa_key.p8 na raiz src/dbt
-        private_key_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key.p8"))
+        # Caminho relativo para a chave rsa_key_giraffe.p8 na raiz src/dbt
+        private_key_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key_giraffe.p8"))
         
         with open(private_key_file, "rb") as key:
             p_key = serialization.load_pem_private_key(
@@ -34,15 +34,15 @@ def load_data():
         )
 
         ctx = snowflake.connector.connect(
-            user="DRAGON",
+            user="GIRAFFE",
             account="sfedu02-gfb24387",
             private_key=pkb,
             role="TRAINING_ROLE",
-            warehouse="DRAGON_WH",
-            database="DRAGON_DB",
+            warehouse="GIRAFFE_WH",
+            database="GIRAFFE_DB",
             schema="MUNKA_ML"
         )
-        query = "SELECT * FROM DRAGON_DB.MUNKA_ML.ML_TAREFA_FEATURES"
+        query = "SELECT * FROM GIRAFFE_DB.MUNKA_ML.ML_TAREFA_FEATURES"
         df = pd.read_sql(query, ctx)
         ctx.close()
         print("Dados carregados com sucesso do Snowflake!")

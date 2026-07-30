@@ -15,7 +15,7 @@ SELECT
     HASH('UNIDADE_SUPERIOR', P.UNIDADE_SUPERIOR_ID)            AS SK_UNIDADE_SUPERIOR,
     US.NOME_UNIDADE                                            AS UNIDADE_SUPERIOR,
     P.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_produto P
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = P.UNIDADE_ADM_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm UE ON UE.ID = P.UNIDADE_EXECUTANTE_ID
-LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm_superior US ON US.ID = P.UNIDADE_SUPERIOR_ID
+FROM GIRAFFE_DB.munka_stg.stg_produto P
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = P.UNIDADE_ADM_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm UE ON UE.ID = P.UNIDADE_EXECUTANTE_ID
+LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm_superior US ON US.ID = P.UNIDADE_SUPERIOR_ID

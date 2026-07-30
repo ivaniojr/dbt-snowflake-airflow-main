@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table DRAGON_DB.munka_gold.fct_sprint
+        create or replace transient table GIRAFFE_DB.munka_gold.fct_sprint
          as
         (SELECT
     HASH('SPRINT', S.ID)                                       AS SK_SPRINT,
@@ -17,7 +17,7 @@
     COALESCE(T.HORAS_EXECUTADAS, 0)                            AS HORAS_EXECUTADAS,
     COALESCE(T.TOTAL_UST, 0)                                   AS TOTAL_UST,
     S.DW_INGESTED_AT                                           AS DT_CARGA
-FROM DRAGON_DB.munka_stg.stg_sprint S
+FROM GIRAFFE_DB.munka_stg.stg_sprint S
 LEFT JOIN (
     SELECT
         SPRINT_ID,
@@ -26,7 +26,7 @@ LEFT JOIN (
         COUNT_IF(APROVADA)                                      AS QTD_APROVADAS,
         SUM(COALESCE(HORAS_EXECUTADAS, 0))                      AS HORAS_EXECUTADAS,
         SUM(COALESCE(TOTAL_UST, 0))                             AS TOTAL_UST
-    FROM DRAGON_DB.munka_stg.stg_tarefa
+    FROM GIRAFFE_DB.munka_stg.stg_tarefa
     WHERE SPRINT_ID IS NOT NULL
     GROUP BY SPRINT_ID
 ) T ON T.SPRINT_ID = S.ID

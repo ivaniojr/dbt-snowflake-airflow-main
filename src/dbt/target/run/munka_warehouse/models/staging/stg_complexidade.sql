@@ -1,5 +1,5 @@
 
-  create or replace   view DRAGON_DB.munka_stg.stg_complexidade
+  create or replace   view GIRAFFE_DB.munka_stg.stg_complexidade
   
     
     
@@ -39,7 +39,7 @@
     DW_SOURCE_UPDATED_AT,
     DW_INGESTED_AT,
     DW_ROW_HASH
-FROM DRAGON_DB.MUNKA_RAW.RAW_COMPLEXIDADE
+FROM GIRAFFE_DB.MUNKA_RAW.RAW_COMPLEXIDADE
 QUALIFY ROW_NUMBER() OVER (PARTITION BY ID ORDER BY DW_INGESTED_AT DESC, DW_SOURCE_UPDATED_AT DESC NULLS LAST) = 1
   );
 
