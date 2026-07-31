@@ -6,10 +6,15 @@ recebe novas tarefas (mock ou do Snowflake) e prevê o esforço (HORAS_ESTIMADAS
 """
 
 import os
+import sys
 import joblib
 import pandas as pd
 import numpy as np
 from datetime import datetime
+
+# Adicionar o diretório atual ao path para poder importar mlp_numpy
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from mlp_numpy import NumPyMLPRegressor
 
 # ──────────────────────────────────────────────
 # 1. Obtenção de Dados Novos
@@ -52,32 +57,41 @@ def get_new_tasks():
         query = "SELECT * FROM DRAGON_DB.MUNKA_ML.ML_TAREFA_FEATURES WHERE HORAS_EXECUTADAS IS NULL LIMIT 100"
         df = pd.read_sql(query, ctx)
         ctx.close()
+        
+        if df.empty:
+            print(" [Aviso] Conexão com Snowflake obteve sucesso, mas a fila de tarefas sem HORAS_EXECUTADAS está vazia (0 registros).")
+            print(" [Aviso] Para demonstração da DAG, gerando 100 tarefas simuladas na fila (Mock Data)...")
+            return _generate_mock_tasks()
+
         print(" Novas tarefas carregadas do Snowflake!")
         return df
     except Exception as e:
         print(f" [Aviso] Falha ao conectar no Snowflake: {e}")
         print(" [Aviso] Gerando 100 tarefas simuladas na fila (Mock Data)...")
-        np.random.seed(datetime.now().microsecond)
-        n_samples = 100
+        return _generate_mock_tasks()
+
+def _generate_mock_tasks():
+    np.random.seed(datetime.now().microsecond)
+    n_samples = 100
         
-        return pd.DataFrame({
-            'TAREFA_ID': [f"TASK-{i}" for i in range(1000, 1000 + n_samples)],
-            'FATOR_AJUSTE': np.random.uniform(0.5, 2.0, n_samples),
-            'HET_MAX': np.random.randint(10, 100, n_samples),
-            'QTD_IMAGENS': np.random.poisson(2, n_samples),
-            'QTD_LINKS': np.random.poisson(1, n_samples),
-            'TEM_CODIGO': np.random.randint(0, 2, n_samples),
-            'TEM_SQL': np.random.randint(0, 2, n_samples),
-            'TEM_COMMIT': np.random.randint(0, 2, n_samples),
-            'TEM_ANEXO': np.random.randint(0, 2, n_samples),
-            'FL_ENVOLVE_FRONTEND': np.random.randint(0, 2, n_samples),
-            'FL_ENVOLVE_BACKEND': np.random.randint(0, 2, n_samples),
-            'FL_ENVOLVE_DADOS': np.random.randint(0, 2, n_samples),
-            'FL_IS_BUGFIX': np.random.randint(0, 2, n_samples),
-            'QTD_BLOCOS_CODIGO': np.random.poisson(1, n_samples),
-            'FL_TEM_PULL_REQUEST': np.random.randint(0, 2, n_samples),
-            'TAMANHO_TEXTO': np.random.randint(10, 2000, n_samples)
-        })
+    return pd.DataFrame({
+        'TAREFA_ID': [f"TASK-{i}" for i in range(1000, 1000 + n_samples)],
+        'FATOR_AJUSTE': np.random.uniform(0.5, 2.0, n_samples),
+        'HET_MAX': np.random.randint(10, 100, n_samples),
+        'QTD_IMAGENS': np.random.poisson(2, n_samples),
+        'QTD_LINKS': np.random.poisson(1, n_samples),
+        'TEM_CODIGO': np.random.randint(0, 2, n_samples),
+        'TEM_SQL': np.random.randint(0, 2, n_samples),
+        'TEM_COMMIT': np.random.randint(0, 2, n_samples),
+        'TEM_ANEXO': np.random.randint(0, 2, n_samples),
+        'FL_ENVOLVE_FRONTEND': np.random.randint(0, 2, n_samples),
+        'FL_ENVOLVE_BACKEND': np.random.randint(0, 2, n_samples),
+        'FL_ENVOLVE_DADOS': np.random.randint(0, 2, n_samples),
+        'FL_IS_BUGFIX': np.random.randint(0, 2, n_samples),
+        'QTD_BLOCOS_CODIGO': np.random.poisson(1, n_samples),
+        'FL_TEM_PULL_REQUEST': np.random.randint(0, 2, n_samples),
+        'TAMANHO_TEXTO': np.random.randint(10, 2000, n_samples)
+    })
 
 # ──────────────────────────────────────────────
 # 2. Pipeline de Inferência
@@ -89,22 +103,27 @@ def run_batch_inference():
     
     OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
     # Arquivos salvos no Passo 5
-    model_path = os.path.join(OUTPUT_DIR, "sklearn_best_model.joblib")
+    sklearn_model_path = os.path.join(OUTPUT_DIR, "sklearn_best_model.joblib")
+    numpy_model_path = os.path.join(OUTPUT_DIR, "numpy_best_model.npz")
     scaler_path = os.path.join(OUTPUT_DIR, "scaler.joblib")
     
-    if not os.path.exists(model_path) or not os.path.exists(scaler_path):
+    if not os.path.exists(sklearn_model_path) or not os.path.exists(scaler_path) or not os.path.exists(numpy_model_path):
         raise FileNotFoundError(
             f"Artefatos nao encontrados!\n"
             f"Certifique-se de que a DAG Passo 5 (Retreinamento) rodou com sucesso para gerar:\n"
-            f"- {model_path}\n"
+            f"- {sklearn_model_path}\n"
+            f"- {numpy_model_path}\n"
             f"- {scaler_path}"
         )
         
     print(f" Carregando Scaler: {scaler_path}")
     scaler = joblib.load(scaler_path)
     
-    print(f" Carregando Modelo Campeão: {model_path}")
-    model = joblib.load(model_path)
+    print(f" Carregando Modelo Campeão (Sklearn): {sklearn_model_path}")
+    sklearn_model = joblib.load(sklearn_model_path)
+    
+    print(f" Carregando Modelo Campeão (NumPy): {numpy_model_path}")
+    numpy_model = NumPyMLPRegressor.from_weights(numpy_model_path)
     
     df_new = get_new_tasks()
     
@@ -129,18 +148,27 @@ def run_batch_inference():
     # 1. Normalizar usando o MESMO scaler do treinamento
     X_scaled = scaler.transform(X_raw.values)
     
-    # 2. Predizer
-    print(" Processando inferência através da Rede Neural...")
-    predictions = model.predict(X_scaled)
+    # 2. Predizer Sklearn
+    print(" Processando inferência através do modelo Scikit-Learn...")
+    preds_sklearn = sklearn_model.predict(X_scaled)
+    
+    # 3. Predizer NumPy
+    print(" Processando inferência através do modelo NumPy Matemático...")
+    preds_numpy = numpy_model.predict(X_scaled)
     
     # Criar DataFrame de Resultados
     df_results = pd.DataFrame({
         'TAREFA_ID': task_ids,
-        'HORAS_ESTIMADAS': np.round(predictions, 2)
+        'HORAS_ESTIMADAS_SKLEARN': np.round(preds_sklearn.flatten(), 2),
+        'HORAS_ESTIMADAS_NUMPY': np.round(preds_numpy.flatten(), 2)
     })
     
-    # Garantir que não haja previsões negativas bizarras
-    df_results['HORAS_ESTIMADAS'] = df_results['HORAS_ESTIMADAS'].apply(lambda x: max(0.5, x))
+    # Garantir que não haja previsões negativas bizarras em nenhum modelo
+    df_results['HORAS_ESTIMADAS_SKLEARN'] = df_results['HORAS_ESTIMADAS_SKLEARN'].apply(lambda x: max(0.5, x))
+    df_results['HORAS_ESTIMADAS_NUMPY'] = df_results['HORAS_ESTIMADAS_NUMPY'].apply(lambda x: max(0.5, x))
+    
+    # Adicionar uma coluna de Diferença Absoluta para comparação
+    df_results['DIFERENCA_MODELOS'] = np.abs(df_results['HORAS_ESTIMADAS_SKLEARN'] - df_results['HORAS_ESTIMADAS_NUMPY']).round(2)
     
     # Salvar CSV
     output_csv = os.path.join(OUTPUT_DIR, "novas_previsoes.csv")
