@@ -33,19 +33,18 @@ TABLES = [
     'RAW_TIPO', 'RAW_TIPO_STATUS', 'RAW_UNIDADE_ADM', 'RAW_UNIDADE_ADM_SUPERIOR'
 ]
 
+STORAGE_INTEGRATION = "MUNKA_S3_INTEGRATION"
+
 def get_copy_query(table_name: str) -> str:
-    """Gera o comando COPY INTO com Jinja para injetar credenciais da AWS."""
+    """Gera o comando COPY INTO usando Storage Integration / IAM Role no Snowflake (sem credenciais em plaintext no SQL)."""
     # O nome do arquivo no S3
     file_name = table_name.replace("RAW_", "").lower() + ".csv"
     
-    # Monta a query usando Jinja template para as credenciais
+    # Monta a query utilizando STORAGE_INTEGRATION para autorizacao via IAM Role
     sql = f"""
     COPY INTO {table_name}
     FROM 's3://{S3_BUCKET}/{file_name}'
-    CREDENTIALS=(
-        AWS_KEY_ID='{{{{ conn.{AWS_CONN_ID}.login }}}}'
-        AWS_SECRET_KEY='{{{{ conn.{AWS_CONN_ID}.password }}}}'
-    )
+    STORAGE_INTEGRATION = {STORAGE_INTEGRATION}
     FILE_FORMAT=(
         TYPE='CSV'
         SKIP_HEADER=1

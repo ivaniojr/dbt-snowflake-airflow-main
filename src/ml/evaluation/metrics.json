@@ -1,0 +1,10 @@
+{
+  "model_name": "MLPRegressor (NumPy Hardcode vs Scikit-Learn Baseline)",
+  "test_samples": 150,
+  "MAE": 2.0449,
+  "RMSE": 2.5902,
+  "MSE": 6.7091,
+  "R2_Score": 0.9114,
+  "hpo_status": "Mantido modelo Baseline (HPO Nao superou a Baseline de referencia)",
+  "evaluation_timestamp": "2026-08-08T17:41:08.879214"
+}

@@ -89,4 +89,16 @@ with DAG(
         execution_timeout=timedelta(minutes=30),
     )
 
-    dbt_debug >> run_marts_models
+    test_dbt_models = BashOperator(
+        task_id="dbt_test",
+        bash_command=(
+            f"set -euo pipefail; dbt "
+            f"test {DBT_OPTIONS}"
+        ),
+        env=DBT_ENV,
+        append_env=True,
+        cwd=DBT_PROJECT_DIR,
+        execution_timeout=timedelta(minutes=15),
+    )
+
+    dbt_debug >> run_marts_models >> test_dbt_models

@@ -7,3 +7,5 @@ pandas
 numpy
 matplotlib
 snowflake-connector-python
+boto3
+optuna

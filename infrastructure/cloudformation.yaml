@@ -1,0 +1,115 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  Template de Infraestrutura como Código (IaC) em AWS CloudFormation para o Projeto MUNKA.
+  Provisiona o Bucket S3 (camadas de dados raw/processed/features/ml), IAM Roles de Integração com Snowflake/Airflow
+  e CloudWatch Log Group para auditoria de pipeline.
+
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: dev
+    Description: Nome do ambiente de implantacao (dev, staging, prod).
+
+  S3BucketName:
+    Type: String
+    Default: munka-dev-070980587239-us-east-2
+    Description: Nome globalmente unico para o Bucket S3 do Projeto MUNKA.
+
+Resources:
+  # ---------------------------------------------------------------------
+  # 1. ARMAZENAMENTO S3 (Camadas de Dados Organizadas)
+  # ---------------------------------------------------------------------
+  MunkaDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref S3BucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      VersioningConfiguration:
+        Status: Enabled
+      Tags:
+        - Key: Project
+          Value: MUNKA-IFG
+        - Key: Environment
+          Value: !Ref EnvironmentName
+        - Key: ManagedBy
+          Value: CloudFormation
+
+  # ---------------------------------------------------------------------
+  # 2. SEGURANÇA E ACESSO IAM (Role para Integração Snowflake / S3)
+  # ---------------------------------------------------------------------
+  SnowflakeS3Role:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub "MunkaSnowflakeS3IntegrationRole-${EnvironmentName}"
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: s3.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: MunkaS3AccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:GetObjectVersion
+                  - s3:PutObject
+                  - s3:DeleteObject
+                Resource: !Sub "${MunkaDataBucket.Arn}/*"
+              - Effect: Allow
+                Action:
+                  - s3:ListBucket
+                  - s3:GetBucketLocation
+                Resource: !GetAtt MunkaDataBucket.Arn
+      Tags:
+        - Key: Project
+          Value: MUNKA-IFG
+
+  # ---------------------------------------------------------------------
+  # 3. MONITORAMENTO E AUDITORIA (CloudWatch Log Group)
+  # ---------------------------------------------------------------------
+  MunkaPipelineLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/munka/${EnvironmentName}/pipeline-logs"
+      RetentionInDays: 30
+      Tags:
+        - Key: Project
+          Value: MUNKA-IFG
+
+Outputs:
+  MunkaBucketName:
+    Description: Nome do Bucket S3 de dados do MUNKA
+    Value: !Ref MunkaDataBucket
+    Export:
+      Name: !Sub "${AWS::StackName}-S3BucketName"
+
+  MunkaBucketArn:
+    Description: ARN do Bucket S3
+    Value: !GetAtt MunkaDataBucket.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-S3BucketArn"
+
+  SnowflakeRoleArn:
+    Description: ARN da Role IAM para integracao do Snowflake
+    Value: !GetAtt SnowflakeS3Role.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-SnowflakeRoleArn"
+
+  CloudWatchLogGroupArn:
+    Description: ARN do Log Group para o pipeline
+    Value: !GetAtt MunkaPipelineLogGroup.Arn
+    Export:
+      Name: !Sub "${AWS::StackName}-LogGroupArn"

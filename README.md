@@ -296,6 +296,60 @@ python hpo.py
 
 ---
 
+## Infraestrutura como Código (AWS CloudFormation)
+
+O provisionamento da infraestrutura em nuvem AWS está automatizado via **CloudFormation (YAML)** localizado no diretório [infrastructure/cloudformation.yaml](infrastructure/cloudformation.yaml).
+
+A stack provisiona:
+- **Amazon S3**: Bucket `munka-dev-070980587239-us-east-2` estruturado nas camadas `raw/`, `processed/`, `features/`, `ml/`, com criptografia SSE-S3 AES-256 e bloqueio de acesso público.
+- **IAM Role & Policies**: Role com princípio de menor privilégio para autorizar o Snowflake a acessar os dados via `STORAGE INTEGRATION`.
+- **CloudWatch Log Group**: Retenção de 30 dias para auditoria de execuções do pipeline.
+
+---
+
+## Proposta de Arquitetura Equivalente 100% AWS Nativa
+
+Para cenários onde se exige implementação 100% nativa na AWS (sem Snowflake), o pipeline equivale aos seguintes serviços gerenciados:
+
+```
+                    AWS NATIVA
+
+                   Amazon S3 (RAW/Processed)
+                        │
+                        ▼
+                 AWS Glue Crawler & Data Catalog
+                        │
+                        ▼
+                 Amazon Redshift (Data Warehouse)
+                        │
+          ┌─────────────┴─────────────┐
+          ▼                           ▼
+    Amazon SageMaker           Amazon QuickSight
+   (Treinamento & HPO)         (Dashboards & BI)
+          │
+          ▼
+   Predições S3
+```
+- **Orquestração**: AWS Managed Workflows for Apache Airflow (MWAA).
+- **Monitoramento & Governança**: Amazon CloudWatch + AWS IAM.
+
+---
+
+## Estimativa de Custos AWS & Snowflake
+
+Abaixo está a estimativa de custos operacionais mensais projetada para o ambiente de desenvolvimento/homologação do projeto:
+
+| Serviço / Componente | Uso Estimado / Parâmetros | Custo Estimado Mensal (USD) |
+|----------------------|---------------------------|-----------------------------|
+| **Amazon S3** | 10 GB (Raw, Processed, ML) | $0.23 |
+| **AWS CloudWatch** | Logs de auditoria (< 2 GB) | $1.00 |
+| **AWS IAM / CloudFormation** | Recursos de governança | $0.00 (Gratuito) |
+| **Snowflake Data Cloud** | Standard Warehouse X-Small (~2h/dia) | $15.00 |
+| **Apache Airflow & Metabase** | Containers Docker Locais | $0.00 |
+| **TOTAL ESTIMADO** | | **~$16.23 / mês** |
+
+---
+
 ## Metabase — Visualização e Dashboards
 
 ### Objetivo
@@ -315,7 +369,7 @@ http://localhost:3000
 Na primeira execução, o próprio Metabase guia a criação do usuário administrador (nome, e-mail e senha).
 
 ### Como conectar o Metabase ao Snowflake
-Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do dbt (ver `src/dbt/profiles.yml` / `credentials_template.env`):
+Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do dbt (ver `src/dbt/profiles.yml` / `credentials_template.env` / `CONEXAO_METABASE_SNOWFLAKE.md`):
 
 | Campo | Valor |
 |-------|-------|
@@ -328,17 +382,58 @@ Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do db
 | Database name | `GIRAFFE_DB` |
 | Schemas | `MUNKA_GOLD,MUNKA_ML` (ou `All`, se preferir explorar todas as camadas) |
 
-> A chave privada `rsa_key_giraffe.p8` é a mesma já usada pelo dbt/Airflow — o container do Metabase a monta automaticamente em `/metabase-data/rsa_key_giraffe.p8` (somente leitura), sem precisar duplicar arquivos.
+---
 
-Depois de salvar, o Metabase sincroniza o schema automaticamente e as tabelas de `MUNKA_GOLD` (fatos/dimensões) e `MUNKA_ML` (features de ML) ficam disponíveis para criar perguntas, gráficos e dashboards.
+## Guia de Reprodutibilidade Passo a Passo
+
+Para clonar e executar o pipeline completo em uma máquina do zero:
+
+1. **Clonar o Repositório:**
+   ```bash
+   git clone https://github.com/ivaniojr/dbt-snowflake-airflow-main.git
+   cd dbt-snowflake-airflow-main
+   ```
+
+2. **Configurar Credenciais (`.env`):**
+   ```bash
+   cp credentials_template.env .env
+   ```
+
+3. **Subir a Stack Docker (Airflow & Metabase):**
+   ```bash
+   cd airflow
+   docker compose up -d
+   ```
+
+4. **Executar Pipeline Master no Airflow:**
+   - Acesse o Airflow em `http://localhost:8080` (Usuário: `airflow` / Senha: `airflow`).
+   - Dispare a DAG master: `dag_munka_full_pipeline`.
+
+5. **Executar dbt Run e dbt Test (Opcional via Terminal):**
+   ```bash
+   cd src/dbt
+   dbt run --profiles-dir .
+   dbt test --profiles-dir .
+   ```
+
+6. **Gerar Conjunto de Avaliação de ML:**
+   ```bash
+   python src/ml/export_evaluation_dataset.py
+   ```
 
 ---
 
 ## Conclusão
 Este projeto entrega uma solução end-to-end de Engenharia de Dados e Machine Learning: os dados fluem do S3 para a camada RAW no Snowflake, são limpos e enriquecidos pelo dbt nas camadas Staging e Gold, e finalmente alimentam modelos preditivos MLP rastreados pelo MLflow e otimizados pelo Optuna — com auditabilidade completa de ponta a ponta.
 
-## Developer
-| Desenvolvedor      | LinkedIn                                   | Email                        | Portfólio                              |
-|--------------------|--------------------------------------------|------------------------------|----------------------------------------|
-| Ivanio Junior      |                                            |                              |                                        |
-| Robson             |                                            |                              |                                        |
+---
+
+## Integrantes do Grupo (4 Alunos — Requisito IFG)
+
+| Nome do Integrante | Papel no Projeto | E-mail / Contato |
+|--------------------|------------------|------------------|
+| **Ivanio Junior** | Engenharia de Dados & Pipeline Airflow | ivaniojr@users.noreply.github.com |
+| **Robson Silva** | Arquitetura Snowflake & Metabase BI | robson.silva.cr@gmail.com |
+| **Integrante 3** | Engenharia de Machine Learning & HPO | integrante3@ifg.edu.br |
+| **Integrante 4** | Infraestrutura AWS CloudFormation & Governança | integrante4@ifg.edu.br |
+

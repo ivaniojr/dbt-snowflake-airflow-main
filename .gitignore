@@ -8,6 +8,13 @@ rsa_key.p8
 src/dbt/rsa_key.p8
 rsa_key_giraffe.p8
 src/dbt/rsa_key_giraffe.p8
+*.p8
+*.pem
+*.key
+*.pub
+profiles.yml
+secrets/
+credentials/
 
 # MLflow e artefatos de ML gerados localmente
 src/ml/mlflow.db
