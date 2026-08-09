@@ -28,3 +28,4 @@ src/dbt/target/
 # Arquivos de raiz gerados acidentalmente
 /*.png
 /mlflow.db
+documentos_projeto_munka.zip
