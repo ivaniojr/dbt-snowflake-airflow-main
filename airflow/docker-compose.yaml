@@ -56,6 +56,8 @@ x-airflow-common:
       AIRFLOW_IMAGE_NAME: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.10.0}
       AIRFLOW_VERSION: ${AIRFLOW_VERSION:-2.10.0}
   image: ${AIRFLOW_CUSTOM_IMAGE_NAME:-airflow-dbt-snowflake:2.10.0}
+  env_file:
+    - .env
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
@@ -77,14 +79,29 @@ x-airflow-common:
     AIRFLOW__CORE__PARALLELISM: '8'
     AIRFLOW__CORE__MAX_ACTIVE_TASKS_PER_DAG: '5'
 
+    # Fonte Única de Verdade: Váriaveis de Ambiente herdadas de .env
+    DBT_SNOWFLAKE_ACCOUNT: ${DBT_SNOWFLAKE_ACCOUNT:-sfedu02-gfb24387}
+    DBT_SNOWFLAKE_USER: ${DBT_SNOWFLAKE_USER:-DRAGON}
+    DBT_SNOWFLAKE_DATABASE: ${DBT_SNOWFLAKE_DATABASE:-DRAGON_DB}
+    DBT_SNOWFLAKE_WAREHOUSE: ${DBT_SNOWFLAKE_WAREHOUSE:-DRAGON_WH}
+    DBT_SNOWFLAKE_ROLE: ${DBT_SNOWFLAKE_ROLE:-TRAINING_ROLE}
+    DBT_SNOWFLAKE_SCHEMA: ${DBT_SNOWFLAKE_SCHEMA:-MUNKA_RAW}
+    DBT_SNOWFLAKE_PRIVATE_KEY_PATH: ${DBT_SNOWFLAKE_PRIVATE_KEY_PATH:-/opt/airflow/dags/rsa_key.p8}
+
+    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:-AKIARBBWFZ3TQEWUD2IC}
+    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:-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}
+    AWS_DEFAULT_REGION: ${AWS_DEFAULT_REGION:-us-east-2}
+
+    # Conexões automáticas do Airflow via variáveis de ambiente (visíveis no UI)
+    AIRFLOW_CONN_SNOWFLAKE_MUNKA: 'snowflake://${DBT_SNOWFLAKE_USER:-DRAGON}@/${DBT_SNOWFLAKE_SCHEMA:-MUNKA_RAW}?account=${DBT_SNOWFLAKE_ACCOUNT:-sfedu02-gfb24387}&role=${DBT_SNOWFLAKE_ROLE:-TRAINING_ROLE}&warehouse=${DBT_SNOWFLAKE_WAREHOUSE:-DRAGON_WH}&database=${DBT_SNOWFLAKE_DATABASE:-DRAGON_DB}&private_key_file=${DBT_SNOWFLAKE_PRIVATE_KEY_PATH:-%2Fopt%2Fairflow%2Fdags%2Frsa_key.p8}'
+    AIRFLOW_CONN_AWS_DEFAULT: 'aws://${AWS_ACCESS_KEY_ID:-AKIARBBWFZ3TQEWUD2IC}:${AWS_SECRET_ACCESS_KEY:-VECXYd%2BVX8FiAWl7Mv2WnQKBhJFAUkLmIE9teAza}@/?region_name=${AWS_DEFAULT_REGION:-us-east-2}'
+
     # Diretórios usados pelo DAG que executa dbt Core.
     DBT_PROJECT_DIR: /opt/airflow/dbt/munka_warehouse
     DBT_PROFILES_DIR: /opt/airflow/dbt/munka_warehouse
     DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
-    # WARNING: Use _PIP_ADDITIONAL_REQUIREMENTS option ONLY for a quick checks
-    # for other purpose (development, test and especially production usage) build/extend Airflow image.
-    # Dependências são instaladas durante o build no Dockerfile.dbt.
-    _PIP_ADDITIONAL_REQUIREMENTS: 'mlflow>=2.0.0 optuna scikit-learn pandas numpy matplotlib snowflake-connector-python'
+    # Dependências pré-instaladas no Dockerfile.dbt
+    _PIP_ADDITIONAL_REQUIREMENTS: ''
     # The following line can be used to set a custom config file, stored in the local config folder
     # If you want to use it, outcomment it and replace airflow.cfg with the name of your config file
     # AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
@@ -329,7 +346,7 @@ services:
     volumes:
       - metabase-data:/metabase-data
       # Reaproveita a mesma chave RSA já usada pelo dbt/Airflow para autenticar no Snowflake.
-      - ${AIRFLOW_PROJ_DIR:-.}/../src/dbt/rsa_key_giraffe.p8:/metabase-data/rsa_key_giraffe.p8:ro
+      - ${AIRFLOW_PROJ_DIR:-.}/../src/dbt/rsa_key.p8:/metabase-data/rsa_key.p8:ro
     environment:
       # Persiste o banco de aplicação (H2) em um volume, evitando perder
       # dashboards/usuários ao recriar o container.

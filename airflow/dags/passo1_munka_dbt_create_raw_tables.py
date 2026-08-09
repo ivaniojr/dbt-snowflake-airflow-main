@@ -39,11 +39,11 @@ DBT_ENV = {
     ),
     "DBT_SNOWFLAKE_WAREHOUSE": (
         "{{ conn." + SNOWFLAKE_CONN_ID
-        + ".extra_dejson.get('warehouse', 'COMPUTE_WH') }}"
+        + ".extra_dejson.get('warehouse', 'DRAGON_WH') }}"
     ),
     "DBT_SNOWFLAKE_DATABASE": (
         "{{ conn." + SNOWFLAKE_CONN_ID
-        + ".extra_dejson.get('database', 'GIRAFFE_DB') }}"
+        + ".extra_dejson.get('database', 'DRAGON_DB') }}"
     ),
     "DBT_SNOWFLAKE_SCHEMA": (
         "{{ conn." + SNOWFLAKE_CONN_ID + ".schema or 'MUNKA_RAW' }}"
@@ -60,7 +60,7 @@ with DAG(
     dag_id=DAG_ID,
     description=(
         "Executa dbt Core para criar e validar as tabelas RAW do "
-        "GIRAFFE_DB.MUNKA_RAW no Snowflake."
+        "DRAGON_DB.MUNKA_RAW no Snowflake."
     ),
     default_args=DEFAULT_ARGS,
     start_date=pendulum.datetime(2026, 1, 1, tz="America/Sao_Paulo"),

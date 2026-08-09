@@ -1,5 +1,5 @@
 -- ============================================================================
--- GIRAFFE_DB.MUNKA - DATA WAREHOUSE COMPLETO
+-- DRAGON_DB.MUNKA - DATA WAREHOUSE COMPLETO
 -- Origem: PostgreSQL / schema munka
 -- Destino: Snowflake
 -- Camadas no mesmo schema, separadas por prefixo:
@@ -13,10 +13,10 @@
 --   DQ_      controles de qualidade
 -- ============================================================================
 
-CREATE DATABASE IF NOT EXISTS GIRAFFE_DB;
-CREATE SCHEMA IF NOT EXISTS GIRAFFE_DB.MUNKA_RAW;
-USE DATABASE GIRAFFE_DB;
-USE SCHEMA MUNKA_RAW;
+-- Contexto de Banco de Dados e Schema (gerenciado via .env / conexão)
+-- Opcionalmente pode ser ativado na sessão do Snowflake
+-- USE DATABASE IDENTIFIER($DBT_SNOWFLAKE_DATABASE);
+-- USE SCHEMA IDENTIFIER($DBT_SNOWFLAKE_SCHEMA);
 
 -- ============================================================================
 -- 1. CAMADA DE CONTROLE

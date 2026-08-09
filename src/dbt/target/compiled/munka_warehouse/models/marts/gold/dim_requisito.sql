@@ -5,5 +5,5 @@ SELECT
     HASH('UNIDADE', R.UNIDADE_ADM_ID)                          AS SK_UNIDADE,
     U.NOME_UNIDADE,
     R.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_requisito R
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = R.UNIDADE_ADM_ID
+FROM DRAGON_DB.munka_stg.stg_requisito R
+LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = R.UNIDADE_ADM_ID

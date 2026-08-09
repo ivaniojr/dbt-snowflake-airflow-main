@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_gold.fato_tarefa_evidencia
+        create or replace transient table DRAGON_DB.munka_gold.fato_tarefa_evidencia
          as
         (WITH tarefa AS (
     SELECT
@@ -17,7 +17,7 @@
         DATA_FIM,
         HORAS_EXECUTADAS,
         TOTAL_UST
-    FROM GIRAFFE_DB.munka_stg.stg_tarefa
+    FROM DRAGON_DB.munka_stg.stg_tarefa
 ),
 evidencias AS (
     SELECT
@@ -36,7 +36,7 @@ evidencias AS (
         FL_TEM_PULL_REQUEST,
         TAMANHO_TEXTO,
         SCORE_QUALIDADE_EVIDENCIA
-    FROM GIRAFFE_DB.munka_int.int_tarefa_evidencias_features
+    FROM DRAGON_DB.munka_int.int_tarefa_evidencias_features
 )
 
 SELECT

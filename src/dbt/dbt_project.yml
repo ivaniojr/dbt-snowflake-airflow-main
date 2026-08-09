@@ -17,8 +17,8 @@ clean-targets:
   - "dbt_packages"
 
 vars:
-  raw_database: "GIRAFFE_DB"
-  raw_schema: "MUNKA_RAW"
+  raw_database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'DRAGON_DB') }}"
+  raw_schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA', 'MUNKA_RAW') }}"
 
 models:
   munka_warehouse:

@@ -96,7 +96,8 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
 
     X, y, feature_names = get_raw_dataset()
 
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Best_Params")
 
     with mlflow.start_run(run_name="Sklearn_Best_Retrain"):
@@ -211,7 +212,8 @@ def retrain_numpy(config_path="numpy_best_params.json"):
 
     X, y, feature_names = get_raw_dataset()
 
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Best_Params")
 
     with mlflow.start_run(run_name="NumPy_Best_Retrain"):

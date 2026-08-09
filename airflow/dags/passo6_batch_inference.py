@@ -26,7 +26,7 @@ with DAG(
     dag_id="passo6_batch_inference",
     default_args=DEFAULT_ARGS,
     description="Inferência em Lote de Novas Tarefas do Jira usando modelo Sklearn Campeão",
-    schedule_interval="@daily",
+    schedule=None,
     start_date=datetime(2023, 1, 1),
     catchup=False,
     tags=["munka", "mlops", "inference"],

@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_gold.dim_data
+        create or replace transient table DRAGON_DB.munka_gold.dim_data
          as
         (SELECT
     TO_NUMBER(TO_CHAR(DT, 'YYYYMMDD'))                         AS SK_DATA,

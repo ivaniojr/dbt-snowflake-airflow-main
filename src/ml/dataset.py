@@ -17,10 +17,26 @@ def load_data():
         from cryptography.hazmat.primitives import serialization
         import snowflake.connector
         
-        # Caminho relativo para a chave rsa_key_giraffe.p8 na raiz src/dbt
-        private_key_file = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key_giraffe.p8"))
+        # Fonte Única de Verdade: Carregar variáveis de ambiente
+        try:
+            from dotenv import load_dotenv
+            dotenv_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".env"))
+            if os.path.exists(dotenv_path):
+                load_dotenv(dotenv_path)
+        except ImportError:
+            pass
+
+        user = os.getenv("DBT_SNOWFLAKE_USER", "DRAGON")
+        account = os.getenv("DBT_SNOWFLAKE_ACCOUNT", "sfedu02-gfb24387")
+        role = os.getenv("DBT_SNOWFLAKE_ROLE", "TRAINING_ROLE")
+        warehouse = os.getenv("DBT_SNOWFLAKE_WAREHOUSE", "DRAGON_WH")
+        database = os.getenv("DBT_SNOWFLAKE_DATABASE", "DRAGON_DB")
+        key_path = os.getenv("DBT_SNOWFLAKE_PRIVATE_KEY_PATH", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key.p8")))
         
-        with open(private_key_file, "rb") as key:
+        if not os.path.isabs(key_path) and not os.path.exists(key_path):
+            key_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", os.path.basename(key_path)))
+
+        with open(key_path, "rb") as key:
             p_key = serialization.load_pem_private_key(
                 key.read(),
                 password=None,
@@ -34,15 +50,15 @@ def load_data():
         )
 
         ctx = snowflake.connector.connect(
-            user="GIRAFFE",
-            account="sfedu02-gfb24387",
+            user=user,
+            account=account,
             private_key=pkb,
-            role="TRAINING_ROLE",
-            warehouse="GIRAFFE_WH",
-            database="GIRAFFE_DB",
+            role=role,
+            warehouse=warehouse,
+            database=database,
             schema="MUNKA_ML"
         )
-        query = "SELECT * FROM GIRAFFE_DB.MUNKA_ML.ML_TAREFA_FEATURES"
+        query = f"SELECT * FROM {database}.MUNKA_ML.ML_TAREFA_FEATURES"
         df = pd.read_sql(query, ctx)
         ctx.close()
         print("Dados carregados com sucesso do Snowflake!")

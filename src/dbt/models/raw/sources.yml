@@ -3,7 +3,7 @@ version: 2
 sources:
   - name: munka_raw
     description: "Camada bruta do sistema Munka no Snowflake."
-    database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'GIRAFFE_DB') }}"
+    database: "{{ env_var('DBT_SNOWFLAKE_DATABASE', 'DRAGON_DB') }}"
     schema: "{{ env_var('DBT_SNOWFLAKE_SCHEMA', 'MUNKA_RAW') }}"
     tables:
       - name: raw_ab_permission

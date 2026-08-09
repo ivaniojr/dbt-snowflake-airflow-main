@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_gold.fct_anexo_projeto
+        create or replace transient table DRAGON_DB.munka_gold.fct_anexo_projeto
          as
         (SELECT
     HASH('ANEXO', A.ID)                                        AS SK_ANEXO,
@@ -15,7 +15,7 @@
     IFF(REGEXP_LIKE(LOWER(A.ARQUIVO), '\\.(png|jpg|jpeg|gif|webp|bmp|svg)(\\?|$)'), TRUE, FALSE) AS FL_IMAGEM,
     A.HORARIO,
     A.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_anexos A
+FROM DRAGON_DB.munka_stg.stg_anexos A
         );
       
   

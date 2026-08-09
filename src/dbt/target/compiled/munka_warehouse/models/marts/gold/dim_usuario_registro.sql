@@ -8,4 +8,4 @@ SELECT
     SHA2(LOWER(TRIM(EMAIL)), 256)                              AS EMAIL_HASH,
     REGISTRATION_DATE,
     DW_INGESTED_AT                                             AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_ab_register_user
+FROM DRAGON_DB.munka_stg.stg_ab_register_user

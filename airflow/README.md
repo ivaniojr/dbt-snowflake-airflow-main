@@ -59,9 +59,9 @@ Extra:
 ```json
 {
   "account": "identificador_da_conta",
-  "database": "GIRAFFE_DB",
-  "warehouse": "COMPUTE_WH",
-  "role": "SYSADMIN"
+  "database": "DRAGON_DB",
+  "warehouse": "DRAGON_WH",
+  "role": "TRAINING_ROLE"
 }
 ```
 

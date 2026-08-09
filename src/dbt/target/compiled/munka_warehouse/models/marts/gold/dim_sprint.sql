@@ -9,5 +9,5 @@ SELECT
     C.NOME                                                     AS COORDENACAO,
     S.ID_SPRINT_OLD,
     S.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_sprint S
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_coordenacao C ON C.ID = S.COORDENACAO_ID
+FROM DRAGON_DB.munka_stg.stg_sprint S
+LEFT JOIN DRAGON_DB.munka_stg.stg_coordenacao C ON C.ID = S.COORDENACAO_ID

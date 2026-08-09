@@ -9,6 +9,6 @@ SELECT
     HASH('UNIDADE', R.UNIDADE_ADM_ID)                          AS SK_UNIDADE,
     U.NOME_UNIDADE,
     R.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_resultado_chave R
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_objetivo O ON O.ID = R.OBJETIVO_ID
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm U ON U.ID = R.UNIDADE_ADM_ID
+FROM DRAGON_DB.munka_stg.stg_resultado_chave R
+LEFT JOIN DRAGON_DB.munka_stg.stg_objetivo O ON O.ID = R.OBJETIVO_ID
+LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm U ON U.ID = R.UNIDADE_ADM_ID

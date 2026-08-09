@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_gold.fct_comentario
+        create or replace transient table DRAGON_DB.munka_gold.fct_comentario
          as
         (SELECT
     HASH('COMENTARIO', C.ID)                                   AS SK_COMENTARIO,
@@ -17,7 +17,7 @@
     REGEXP_COUNT(TRIM(C.CONTEUDO), '\\S+')                   AS QUANTIDADE_PALAVRAS,
     C.ID_COMENTARIO_OLD,
     C.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_comentario C
+FROM DRAGON_DB.munka_stg.stg_comentario C
         );
       
   

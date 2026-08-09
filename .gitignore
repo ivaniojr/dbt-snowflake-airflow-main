@@ -1,5 +1,8 @@
-venv/
 .env
+airflow/.env
+*.env
+!credentials_template.env
+venv/
 airflow/logs/
 __pycache__/
 *.pyc
@@ -13,11 +16,14 @@ src/dbt/rsa_key_giraffe.p8
 *.key
 *.pub
 profiles.yml
+src/dbt/profiles.yml
+src/dbt/.user.yml
 secrets/
 credentials/
 
 # MLflow e artefatos de ML gerados localmente
 src/ml/mlflow.db
+*.db-journal
 src/ml/*.png
 mlruns/
 

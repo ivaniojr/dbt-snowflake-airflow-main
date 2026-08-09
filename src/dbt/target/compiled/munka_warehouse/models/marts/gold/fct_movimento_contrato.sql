@@ -10,7 +10,7 @@ SELECT
     A.UST_CONTRATADAS,
     NULL::FLOAT                                                AS UST_RENOVADAS,
     A.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_ajuste A
+FROM DRAGON_DB.munka_stg.stg_ajuste A
 UNION ALL
 SELECT
     HASH('MOV_CONTRATO', 'REAJUSTE', R.ID),
@@ -24,7 +24,7 @@ SELECT
     NULL,
     NULL,
     R.DW_INGESTED_AT
-FROM GIRAFFE_DB.munka_stg.stg_reajuste R
+FROM DRAGON_DB.munka_stg.stg_reajuste R
 UNION ALL
 SELECT
     HASH('MOV_CONTRATO', 'RENOVACAO', R.ID),
@@ -38,4 +38,4 @@ SELECT
     NULL,
     R.UST_CONTRATADAS,
     R.DW_INGESTED_AT
-FROM GIRAFFE_DB.munka_stg.stg_renovacao R
+FROM DRAGON_DB.munka_stg.stg_renovacao R

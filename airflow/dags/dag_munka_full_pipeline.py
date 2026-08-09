@@ -39,6 +39,7 @@ with DAG(
     trigger_passo1 = TriggerDagRunOperator(
         task_id="passo1_criar_tabelas_raw",
         trigger_dag_id="passo1_munka_dbt_create_raw_tables",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )
@@ -46,6 +47,7 @@ with DAG(
     trigger_passo2 = TriggerDagRunOperator(
         task_id="passo2_carga_s3_snowflake",
         trigger_dag_id="passo2_s3_to_snowflake_munka_raw",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )
@@ -53,6 +55,7 @@ with DAG(
     trigger_passo3 = TriggerDagRunOperator(
         task_id="passo3_dbt_staging",
         trigger_dag_id="passo3_munka_dbt_create_stg",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )
@@ -60,6 +63,7 @@ with DAG(
     trigger_passo4 = TriggerDagRunOperator(
         task_id="passo4_dbt_marts_e_testes",
         trigger_dag_id="passo4_munka_dbt_run_marts",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )
@@ -67,6 +71,7 @@ with DAG(
     trigger_passo5 = TriggerDagRunOperator(
         task_id="passo5_ml_hpo_e_treinamento",
         trigger_dag_id="passo5_ml_hpo_e_retreinamento",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )
@@ -74,6 +79,7 @@ with DAG(
     trigger_passo6 = TriggerDagRunOperator(
         task_id="passo6_batch_inference",
         trigger_dag_id="passo6_batch_inference",
+        reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,
     )

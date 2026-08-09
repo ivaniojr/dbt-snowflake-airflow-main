@@ -4,7 +4,7 @@ WITH source AS (
         EVIDENCIAS,
         EVIDENCIA_COMMIT_SHA,
         EVIDENCIA_ANEXO
-    FROM GIRAFFE_DB.munka_stg.stg_tarefa
+    FROM DRAGON_DB.munka_stg.stg_tarefa
 ),
 parsed AS (
     SELECT

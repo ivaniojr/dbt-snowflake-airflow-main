@@ -141,7 +141,8 @@ def main():
         "hidden_sizes": (32, 16)
     }
 
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Tarefas")
 
     with mlflow.start_run(run_name="NumPy_vs_Sklearn_Advanced"):

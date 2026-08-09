@@ -1,6 +1,6 @@
-# GIRAFFE_DB.MUNKA — Data Warehouse
+# DRAGON_DB.MUNKA — Data Warehouse
 
-Destino: Snowflake. Todas as camadas ficam no schema `GIRAFFE_DB.MUNKA` e são separadas por prefixo.
+Destino: Snowflake. Todas as camadas ficam no schema `DRAGON_DB.MUNKA` e são separadas por prefixo.
 
 ## Ordem de execução
 

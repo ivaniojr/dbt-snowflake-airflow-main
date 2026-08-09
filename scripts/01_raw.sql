@@ -1,5 +1,6 @@
-USE DATABASE GIRAFFE_DB;
-USE SCHEMA MUNKA_RAW;
+-- Contexto de Banco de Dados e Schema (gerenciado via .env / conexão da sessão)
+-- USE DATABASE IDENTIFIER($DBT_SNOWFLAKE_DATABASE);
+-- USE SCHEMA IDENTIFIER($DBT_SNOWFLAKE_SCHEMA);
 
 -- ============================================================================
 -- 2. CAMADA RAW

@@ -375,11 +375,11 @@ Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do db
 |-------|-------|
 | Database type | Snowflake |
 | Account or hostname | `sfedu02-gfb24387` |
-| Username | `GIRAFFE` |
-| RSA private key (PEM) | Local file path → `/metabase-data/rsa_key_giraffe.p8` (já montado no container) |
+| Username | `DRAGON` |
+| RSA private key (PEM) | Local file path → `/metabase-data/rsa_key.p8` (já montado no container) |
 | Role | `TRAINING_ROLE` |
-| Warehouse | `GIRAFFE_WH` |
-| Database name | `GIRAFFE_DB` |
+| Warehouse | `DRAGON_WH` |
+| Database name | `DRAGON_DB` |
 | Schemas | `MUNKA_GOLD,MUNKA_ML` (ou `All`, se preferir explorar todas as camadas) |
 
 ---
@@ -406,7 +406,7 @@ Para clonar e executar o pipeline completo em uma máquina do zero:
    ```
 
 4. **Executar Pipeline Master no Airflow:**
-   - Acesse o Airflow em `http://localhost:8080` (Usuário: `airflow` / Senha: `airflow`).
+   - Acesse o Airflow em `http://localhost:8081` (Usuário: `airflow` / Senha: `airflow`).
    - Dispare a DAG master: `dag_munka_full_pipeline`.
 
 5. **Executar dbt Run e dbt Test (Opcional via Terminal):**

@@ -36,15 +36,16 @@ TABLES = [
 STORAGE_INTEGRATION = "MUNKA_S3_INTEGRATION"
 
 def get_copy_query(table_name: str) -> str:
-    """Gera o comando COPY INTO usando Storage Integration / IAM Role no Snowflake (sem credenciais em plaintext no SQL)."""
-    # O nome do arquivo no S3
+    """Gera o comando COPY INTO usando credenciais dinâmicas da conexão Airflow aws_default (sem segredos em plaintext no código)."""
     file_name = table_name.replace("RAW_", "").lower() + ".csv"
     
-    # Monta a query utilizando STORAGE_INTEGRATION para autorizacao via IAM Role
     sql = f"""
     COPY INTO {table_name}
     FROM 's3://{S3_BUCKET}/{file_name}'
-    STORAGE_INTEGRATION = {STORAGE_INTEGRATION}
+    CREDENTIALS=(
+        AWS_KEY_ID='{{{{ conn.{AWS_CONN_ID}.login }}}}'
+        AWS_SECRET_KEY='{{{{ conn.{AWS_CONN_ID}.password }}}}'
+    )
     FILE_FORMAT=(
         TYPE='CSV'
         SKIP_HEADER=1
@@ -70,7 +71,7 @@ with DAG(
         load_task = SnowflakeOperator(
             task_id=f"load_{table.lower()}",
             snowflake_conn_id=SNOWFLAKE_CONN_ID,
-            database="GIRAFFE_DB",
+            database="DRAGON_DB",
             schema="MUNKA_RAW",
             sql=get_copy_query(table),
             execution_timeout=timedelta(minutes=10),

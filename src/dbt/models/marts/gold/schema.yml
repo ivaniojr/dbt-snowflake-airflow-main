@@ -246,10 +246,9 @@ models:
     - unique
     - not_null
 - name: fato_tarefa_evidencia
-  description: Modelo dimensional fato_tarefa_evidencia criado automaticamente a partir
-    do legado.
+  description: Modelo dimensional fato_tarefa_evidencia criado automaticamente a partir do legado.
   columns:
-  - name: SK_PROJETO
+  - name: TAREFA_ID
     description: Chave primária da tabela.
     tests:
     - unique

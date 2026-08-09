@@ -2,19 +2,19 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_ml.ml_tarefa_features
+        create or replace transient table DRAGON_DB.munka_ml.ml_tarefa_features
          as
         (WITH fato AS (
-    SELECT * FROM GIRAFFE_DB.munka_gold.fato_tarefa_evidencia
+    SELECT * FROM DRAGON_DB.munka_gold.fato_tarefa_evidencia
 ),
 projeto AS (
-    SELECT SK_PROJETO, NOME AS NOME_PROJETO FROM GIRAFFE_DB.munka_gold.dim_projeto
+    SELECT SK_PROJETO, NOME AS NOME_PROJETO FROM DRAGON_DB.munka_gold.dim_projeto
 ),
 sprint AS (
-    SELECT SK_SPRINT, OBJETIVOS AS SPRINT_OBJETIVOS FROM GIRAFFE_DB.munka_gold.dim_sprint
+    SELECT SK_SPRINT, OBJETIVOS AS SPRINT_OBJETIVOS FROM DRAGON_DB.munka_gold.dim_sprint
 ),
 regra AS (
-    SELECT SK_REGRA, FATOR_AJUSTE, COMPLEXIDADE AS NOME_COMPLEXIDADE, HET_MAX FROM GIRAFFE_DB.munka_gold.dim_regra
+    SELECT SK_REGRA, FATOR_AJUSTE, COMPLEXIDADE AS NOME_COMPLEXIDADE, HET_MAX FROM DRAGON_DB.munka_gold.dim_regra
 )
 
 SELECT

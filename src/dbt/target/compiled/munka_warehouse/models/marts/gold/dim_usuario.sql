@@ -22,7 +22,7 @@ SELECT
     HASH('USUARIO', U.CREATED_BY_FK)                           AS SK_USUARIO_CRIADOR,
     HASH('USUARIO', U.CHANGED_BY_FK)                           AS SK_USUARIO_ALTERADOR,
     U.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_ab_user U
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_cargo C ON C.ID = U.CARGO_ID
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_nivel N ON N.ID = U.NIVEL_ID
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_coordenacao CO ON CO.ID = U.COORDENACAO_ID
+FROM DRAGON_DB.munka_stg.stg_ab_user U
+LEFT JOIN DRAGON_DB.munka_stg.stg_cargo C ON C.ID = U.CARGO_ID
+LEFT JOIN DRAGON_DB.munka_stg.stg_nivel N ON N.ID = U.NIVEL_ID
+LEFT JOIN DRAGON_DB.munka_stg.stg_coordenacao CO ON CO.ID = U.COORDENACAO_ID

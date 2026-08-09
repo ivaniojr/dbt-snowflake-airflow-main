@@ -4,4 +4,4 @@ SELECT
     TITULO,
     GUIA_ID,
     DW_INGESTED_AT                                             AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_ficha_indicador
+FROM DRAGON_DB.munka_stg.stg_ficha_indicador

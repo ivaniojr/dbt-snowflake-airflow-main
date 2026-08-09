@@ -2,7 +2,7 @@
   
     
 
-        create or replace transient table GIRAFFE_DB.munka_gold.dim_unidade
+        create or replace transient table DRAGON_DB.munka_gold.dim_unidade
          as
         (SELECT
     HASH('UNIDADE', U.ID)                                      AS SK_UNIDADE,
@@ -17,8 +17,8 @@
     S.NOME_UNIDADE                                             AS NOME_UNIDADE_SUPERIOR,
     S.SIGLA                                                    AS SIGLA_UNIDADE_SUPERIOR,
     U.DW_INGESTED_AT                                           AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_unidade_adm U
-LEFT JOIN GIRAFFE_DB.munka_stg.stg_unidade_adm_superior S ON S.ID = U.UNIDADE_SUPERIOR_ID
+FROM DRAGON_DB.munka_stg.stg_unidade_adm U
+LEFT JOIN DRAGON_DB.munka_stg.stg_unidade_adm_superior S ON S.ID = U.UNIDADE_SUPERIOR_ID
         );
       
   

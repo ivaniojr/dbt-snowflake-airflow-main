@@ -8,4 +8,4 @@ SELECT
     TELEFONE,
     CODIGO_SEI,
     DW_INGESTED_AT                                             AS DT_CARGA
-FROM GIRAFFE_DB.munka_stg.stg_unidade_adm_superior
+FROM DRAGON_DB.munka_stg.stg_unidade_adm_superior

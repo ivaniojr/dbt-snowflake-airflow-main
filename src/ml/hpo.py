@@ -1,9 +1,28 @@
-﻿import os
+import os
 import sys
 import json
 import argparse
-import mlflow
-import optuna
+class DummyMLFlowContext:
+    def __enter__(self): return self
+    def __exit__(self, exc_type, exc_val, exc_tb): pass
+
+class DummyMLFlow:
+    def set_tracking_uri(self, uri): pass
+    def set_experiment(self, exp): pass
+    def start_run(self, *args, **kwargs): return DummyMLFlowContext()
+    def log_params(self, params): pass
+    def log_metric(self, key, val): pass
+
+try:
+    import mlflow
+except Exception:
+    mlflow = DummyMLFlow()
+
+try:
+    import optuna
+except Exception:
+    optuna = None
+
 import numpy as np
 from datetime import datetime
 from sklearn.model_selection import train_test_split
@@ -174,7 +193,8 @@ def main():
     )
     args = parser.parse_args()
 
-    mlflow.set_tracking_uri("sqlite:///mlflow.db")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_HPO")
 
     print("Carregando dados do Snowflake...")
