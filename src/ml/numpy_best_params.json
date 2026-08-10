@@ -1,13 +1,13 @@
 {
   "model": "numpy",
-  "generated_at": "2026-08-09T20:31:04.446883",
+  "generated_at": "2026-08-10T18:51:38.249152",
   "mlflow_experiment": "Auditoria_MLP_HPO",
   "n_trials": 10,
   "epochs": 300,
-  "best_val_mse": 188.600638,
-  "improvement_vs_baseline_pct": -3023.72,
+  "best_val_mse": 192.588544,
+  "improvement_vs_baseline_pct": -3089.77,
   "hyperparameters": {
-    "learning_rate": 0.053572996407463686,
+    "learning_rate": 0.0045477883021823,
     "hidden_sizes": [
       16,
       8

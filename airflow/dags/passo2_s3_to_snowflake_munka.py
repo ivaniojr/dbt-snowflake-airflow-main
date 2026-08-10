@@ -1,4 +1,5 @@
 from __future__ import annotations
+import os
 from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.providers.snowflake.operators.snowflake import SnowflakeOperator
@@ -8,8 +9,8 @@ DAG_ID = "passo2_s3_to_snowflake_munka_raw"
 SNOWFLAKE_CONN_ID = "snowflake_munka"
 AWS_CONN_ID = "aws_default"
 
-S3_BUCKET = "munka-dev-070980587239-us-east-2"
-S3_REGION = "us-east-2"
+S3_BUCKET = os.getenv("S3_BUCKET_NAME", "munka-dev-070980587239-us-east-2")
+S3_REGION = os.getenv("AWS_DEFAULT_REGION", "us-east-2")
 
 DEFAULT_ARGS = {
     "owner": "engenharia_dados",
@@ -71,8 +72,8 @@ with DAG(
         load_task = SnowflakeOperator(
             task_id=f"load_{table.lower()}",
             snowflake_conn_id=SNOWFLAKE_CONN_ID,
-            database="DRAGON_DB",
-            schema="MUNKA_RAW",
+            database=os.getenv("DBT_SNOWFLAKE_DATABASE", "DRAGON_DB"),
+            schema=os.getenv("DBT_SNOWFLAKE_SCHEMA", "MUNKA_RAW"),
             sql=get_copy_query(table),
             execution_timeout=timedelta(minutes=10),
         )

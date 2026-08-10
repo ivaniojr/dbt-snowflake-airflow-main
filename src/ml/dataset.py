@@ -31,6 +31,7 @@ def load_data():
         role = os.getenv("DBT_SNOWFLAKE_ROLE", "TRAINING_ROLE")
         warehouse = os.getenv("DBT_SNOWFLAKE_WAREHOUSE", "DRAGON_WH")
         database = os.getenv("DBT_SNOWFLAKE_DATABASE", "DRAGON_DB")
+        schema = os.getenv("DBT_SNOWFLAKE_ML_SCHEMA", "MUNKA_ML")
         key_path = os.getenv("DBT_SNOWFLAKE_PRIVATE_KEY_PATH", os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "dbt", "rsa_key.p8")))
         
         if not os.path.isabs(key_path) and not os.path.exists(key_path):
@@ -56,9 +57,9 @@ def load_data():
             role=role,
             warehouse=warehouse,
             database=database,
-            schema="MUNKA_ML"
+            schema=schema
         )
-        query = f"SELECT * FROM {database}.MUNKA_ML.ML_TAREFA_FEATURES"
+        query = f"SELECT * FROM {database}.{schema}.ML_TAREFA_FEATURES"
         df = pd.read_sql(query, ctx)
         ctx.close()
         print("Dados carregados com sucesso do Snowflake!")
