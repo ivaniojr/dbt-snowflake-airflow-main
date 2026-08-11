@@ -156,22 +156,24 @@ def save_numpy_json(study, output_path="numpy_best_params.json"):
 # Runners por modelo
 # ──────────────────────────────────────────────
 def run_sklearn_hpo(X_train, X_val, y_train, y_val, output_path="sklearn_best_params.json"):
-    print(f"\n--- Otimizando Sklearn ({N_TRIALS_SKLEARN} trials | {EPOCHS} epocas) ---")
+    print(f"\n--- Otimizando Sklearn ({N_TRIALS_SKLEARN} trials | {EPOCHS} epocas | max 30m) ---")
     with mlflow.start_run(run_name="Sklearn_HPO_Study"):
         study = optuna.create_study(direction="minimize", study_name="Sklearn_MLP_Optimization")
         study.optimize(
             lambda trial: objective_sklearn(trial, X_train, X_val, y_train, y_val),
-            n_trials=N_TRIALS_SKLEARN
+            n_trials=N_TRIALS_SKLEARN,
+            timeout=1800
         )
     return save_sklearn_json(study, output_path)
 
 def run_numpy_hpo(X_train, X_val, y_train, y_val, output_path="numpy_best_params.json"):
-    print(f"\n--- Otimizando NumPy ({N_TRIALS_NUMPY} trials | {EPOCHS} epocas) ---")
+    print(f"\n--- Otimizando NumPy ({N_TRIALS_NUMPY} trials | {EPOCHS} epocas | max 30m) ---")
     with mlflow.start_run(run_name="NumPy_HPO_Study"):
         study = optuna.create_study(direction="minimize", study_name="NumPy_MLP_Optimization")
         study.optimize(
             lambda trial: objective_numpy(trial, X_train, X_val, y_train, y_val),
-            n_trials=N_TRIALS_NUMPY
+            n_trials=N_TRIALS_NUMPY,
+            timeout=1800
         )
     return save_numpy_json(study, output_path)
 
