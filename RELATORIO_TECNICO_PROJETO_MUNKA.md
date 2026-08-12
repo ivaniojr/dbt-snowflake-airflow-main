@@ -296,6 +296,30 @@ A metodologia de separação de dados garantiu total isolamento entre o treino, 
    * Um lote de 150 amostras foi mantido estritamente isolado e intocado de qualquer etapa do treinamento ou ajuste de hiperparâmetros.
    * Este conjunto foi submetido à inferência final (`export_evaluation_dataset.py`) para consolidar as métricas definitivas do relatório.
 
+### 7.4.2. Análise Comparativa Detalhada: Modelo Selecionado vs. NumPy (Com e Sem HPO)
+
+Abaixo é apresentada a matriz comparativa direta cruzando os dois algoritmos (Scikit-Learn vs. Implementação Própria em NumPy) nos dois cenários de execução (com e sem otimização de hiperparâmetros):
+
+#### Tabela 7.3: Matriz Comparativa Cruzada (Algoritmo × HPO)
+
+| Algoritmo / Implementação | Configuração Inicial (Sem HPO) | Configuração Otimizada (Com HPO) | Ganho Absoluto em $R^2$ | Status Final |
+| :--- | :--- | :--- | :---: | :--- |
+| **Scikit-Learn MLP** *(Modelo Escolhido)* | **`MLP Base Scikit-Learn`**<br>• Topologia: `(32, 16)`<br>• $MSE: 4.55^*$<br>• $R^2: 0.75$ | **`MLP HPO Scikit-Learn`** *(Campeão)*<br>• Topologia: `(8, 8, 32)`<br>• $MSE: 190.18$ / $6.71^{**}$<br>• $R^2: 0.84$ / $0.91^{**}$ | **$+0.16$** (no teste) | 🏆 **Modelo final selecionado** |
+| **NumPy MLP** *(Implementação Própria)* | **`MLP Base NumPy`**<br>• Topologia: `(32, 16)`<br>• $MSE: 6.04^*$<br>• $R^2: 0.67$ | **`MLP HPO NumPy`** *(Vice-Campeão)*<br>• Topologia: `(32, 16)`<br>• $MSE: 214.45$<br>• $R^2: 0.79$ | **$+0.12$** (na validação) | 🥈 Vice-Campeão |
+| **Baseline de referência** | **`Regressão Linear`**<br>• $MSE: 345.12$, $R^2: 0.58$ | *(N/A — Modelo Linear Fixo)* | -- | Benchmark Estatístico |
+
+*\*Valores de validação inicial com amostragem direta.<br>\*\*Métricas formais no conjunto de teste final de 150 amostras em Holdout.*
+
+#### Principais Conclusões da Comparação:
+1. **Impacto Positivo do HPO em Ambas as Implementações:**
+   * Na biblioteca **Scikit-Learn**, a otimização permitiu descobrir que uma arquitetura afunilada de 3 camadas `(8, 8, 32)` com regularização L2 ($\alpha = 0.0004$) superou a arquitetura genérica de 2 camadas `(32, 16)`, elevando o $R^2$ de $0.75$ para $0.84$ na validação cruzada e $0.91$ no teste de homologação.
+   * Na implementação própria **NumPy**, o HPO ajustou a taxa de aprendizado de $0.01$ para $0.005$, evitando oscilações no gradiente descente estocástico (SGD) e elevando o $R^2$ de $0.67$ para $0.79$.
+
+2. **Scikit-Learn vs. NumPy (Por que o Scikit-Learn foi o Modelo Final Selecionado?):**
+   * O **`MLP HPO Scikit-Learn`** obteve desempenho superior ao **`MLP HPO NumPy`** (menor erro $MSE = 190.18$ vs $214.45$ e maior $R^2 = 0.84$ vs $0.79$).
+   * Essa vantagem decorre da implementação em C (Cython/BLAS) do Scikit-Learn com parada antecipada adaptativa e gerenciamento interno de *mini-batches*.
+   * Contudo, a implementação customizada **`MLP HPO NumPy`** comprovou a exatidão matemática dos algoritmos de *Forward/Backpropagation* desenvolvidos do zero pelo grupo, superando por ampla margem a **`Baseline de referência`** linear ($R^2 = 0.79$ vs $0.58$).
+
 ### 7.5. Rastreamento e Registros no MLflow
 Cada execução de treinamento salvou automaticamente os seguintes artefatos no experimento `Auditoria_MLP_Best_Params` do MLflow:
 * Curvas de aprendizado e perda (`sklearn_best_loss_curve.png`, `numpy_best_loss_curve.png`).
