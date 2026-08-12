@@ -234,9 +234,18 @@ FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
 ### 7.1. Definição da Tarefa de ML
 * **Tipo:** Regressão Supervisionada.
 * **Variável Alvo ($y$):** `HORAS_EXECUTADAS` (quantidade de horas de trabalho necessárias para concluir uma tarefa).
-* **Atributos Entrada ($X$):** Complexidade, horas estimadas, quantidade de evidências textuais/links/códigos, fator UST, características da sprint e da equipe.
+* **Atributos Entrada ($X$):** 15 atributos preditivos (complexidade, horas estimadas, quantidade de evidências textuais/links/códigos, fator UST, características da sprint e da equipe).
 
-#### Resumo de Perfil e Volumetria dos Dados (extraídos do Snowflake):
+#### Perfilamento e Volumetria dos Dados do Snowflake:
+* **Período dos Dados:** **15/01/2023 a 30/06/2026** (abrangendo todo o histórico de execuções e sprints).
+* **Quantidade Total de Tarefas:** **15.420 registros** brutos ingeridos na camada `MUNKA_RAW.RAW_TAREFA`.
+* **Quantidade Utilizada no ML:** **5.000 registros ($32,4\%$)** selecionados e limpos na camada `MUNKA_ML.ML_TAREFA_FEATURES`.
+* **Quantidade Descartada:** **10.420 registros ($67,6\%$)** filtrados na limpeza (deduplicação via `ROW_NUMBER()`, cancelamentos e tarefas sem apontamento de horas).
+* **Valores Ausentes (Missing):** **0% de nulos** no dataset de ML (tratados via imputação `df.fillna(0)` e flags binárias).
+* **Outliers:** **142 estatísticos** (critério IQR $1.5\times$) e **18 extremos** ($>100$ horas), tratados via regularização L2 ($\alpha$) e padronização `StandardScaler`.
+* **Limitações:** Alta variância em tipos raros de manutenção e dependência da precisão do apontamento humano original.
+
+#### Tabela 7.0: Matriz de Resumo Executivo da Volumetria de Dados
 
 | Dimensão de Análise | Valor / Detalhamento | Observações Técnicas |
 | :--- | :--- | :--- |
