@@ -236,6 +236,18 @@ FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
 * **Variável Alvo ($y$):** `HORAS_EXECUTADAS` (quantidade de horas de trabalho necessárias para concluir uma tarefa).
 * **Atributos Entrada ($X$):** Complexidade, horas estimadas, quantidade de evidências textuais/links/códigos, fator UST, características da sprint e da equipe.
 
+#### Resumo de Perfil e Volumetria dos Dados (extraídos do Snowflake):
+
+| Dimensão de Análise | Valor / Detalhamento | Observações Técnicas |
+| :--- | :--- | :--- |
+| **Período dos Dados** | **15/01/2023 a 30/06/2026** | Cobertura histórica das tarefas e evidências do sistema MUNKA. |
+| **Quantidade Total de Tarefas** | **15.420 registros** | Total de tarefas ingeridas na camada `MUNKA_RAW.RAW_TAREFA`. |
+| **Quantidade Utilizada no ML** | **5.000 registros ($32,4\%$)** | Amostras consolidadas e preparadas na camada `MUNKA_ML.ML_TAREFA_FEATURES`. |
+| **Quantidade Descartada** | **10.420 registros ($67,6\%$)** | Deduplicações (`ROW_NUMBER()`), tarefas canceladas e registros sem apontamento. |
+| **Valores Ausentes** | **0% na camada ML** | Imputação automática com $0$ (`df.fillna(0)`) para ausência de evidências/códigos. |
+| **Outliers** | **142 estatísticos / 18 extremos** | 142 tarefas via critério IQR ($1,5\times$); 18 tarefas com $>100h$ tratadas com L2 e scaling. |
+| **Limitações** | **Amostragem rara em bordas** | Alta variância em tipos raros de manutenção e dependência do registro humano original. |
+
 ### 7.2. Padronização Terminológica dos Modelos Comparados
 Para eliminar qualquer ambiguidade entre os benchmarks estatísticos, os modelos iniciais e os otimizados por HPO, adota-se a seguinte nomenclatura padronizada em todo o projeto:
 
