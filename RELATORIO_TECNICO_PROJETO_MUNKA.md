@@ -287,14 +287,29 @@ A otimização de hiperparâmetros foi executada automaticamente com a bibliotec
 | **Erro Quadrático Médio (MSE)** | **6.7091** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
 | **Coeficiente de Determinação ($R^2$)** | **0.9114** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
 
-### 7.4.1. Protocolo de Divisão dos Dados (Data Splitting)
-A metodologia de separação de dados garantiu total isolamento entre o treino, a validação de hiperparâmetros e a avaliação final:
-1. **Divisão Treino/Validação Cruzada (80% dos Dados):**
-   * Os dados da tabela desnormalizada `MUNKA_ML.ML_TAREFA_FEATURES` no Snowflake foram alocados para o fluxo principal.
-   * Foi utilizada **Validação Cruzada de 5 Folds (5-Fold Cross Validation)** durante a busca do Optuna. A cada fold, 80% da partição é utilizada para o ajuste dos pesos e 20% para a validação do MSE em tempo de execução.
-2. **Conjunto de Teste de Homologação / Holdout (20% dos Dados / 150 amostras):**
-   * Um lote de 150 amostras foi mantido estritamente isolado e intocado de qualquer etapa do treinamento ou ajuste de hiperparâmetros.
-   * Este conjunto foi submetido à inferência final (`export_evaluation_dataset.py`) para consolidar as métricas definitivas do relatório.
+### 7.4.1. Preparação dos Dados, Prevenção de Data Leakage e Divisão (Data Splitting)
+
+A etapa de preparação de dados garantiu a higiene dos atributos e o rigor estatístico contra vazamento de dados (*Data Leakage*):
+
+#### A. Seleção de Atributos e Tratamento de Variáveis
+1. **Atributos de Entrada Selecionados ($X$):** Foram selecionadas **15 features preditivas** limpas e enriquecidas pela camada Gold (`MUNKA_ML`): `FATOR_AJUSTE`, `HET_MAX`, `QTD_IMAGENS`, `QTD_LINKS`, `TEM_CODIGO`, `TEM_SQL`, `TEM_COMMIT`, `TEM_ANEXO`, `FL_ENVOLVE_FRONTEND`, `FL_ENVOLVE_BACKEND`, `FL_ENVOLVE_DADOS`, `FL_IS_BUGFIX`, `QTD_BLOCOS_CODIGO`, `FL_TEM_PULL_REQUEST`, `TAMANHO_TEXTO`.
+2. **Descarte de Identificadores:** Colunas não-numéricas, textos descritivos e IDs primários (`TAREFA_ID`, `NOME_TAREFA`, `NOME_PROJETO`, `SPRINT_OBJETIVOS`, `NOME_COMPLEXIDADE`, `TOTAL_UST`, `SCORE_QUALIDADE_EVIDENCIA`) foram descartadas para evitar ruído.
+3. **Tratamento de Ausentes:** Imputação de nulos com zero (`df.fillna(0)`).
+4. **Normalização e Prevenção de Data Leakage:** A padronização de escala com `StandardScaler` ($\mu = 0, \sigma = 1$) foi aplicada com separação rígida: o cálculo de médias e desvios (`fit_transform`) ocorre **estritamente sobre o conjunto de treino**, aplicando-se apenas a transformação (`transform`) nos conjuntos de validação e teste.
+
+#### B. Divisão Quantitativa dos Dados (Treino, Validação e Teste)
+* **Dataset Inicial Total ($N$):** **$5.000$ registros** extraídos da tabela `MUNKA_ML.ML_TAREFA_FEATURES` do Snowflake.
+* **Conjunto de Treinamento Principal:** **$4.000$ registros ($80\%$ do total)** alocados para ajuste dos pesos dos modelos e busca do Optuna.
+* **Validação Cruzada (5-Fold Cross-Validation):** Durante o HPO e o treinamento com `KFold(n_splits=5, shuffle=True, random_state=42)`, a partição de treino é dividida em 5 folds:
+  * **Treino Interno por Fold:** **$3.200$ registros ($64\%$ do dataset total)** usados para calcular o gradiente/pesos.
+  * **Validação Interna por Fold:** **$800$ registros ($16\%$ do dataset total)** usados para calcular o MSE e métricas de convergência.
+* **Validação Direta do HPO (Holdout):** $1.000$ registros ($20\%$ da partição de HPO alocados via `train_test_split`).
+* **Conjunto de Teste de Homologação Final (Holdout):** **$150$ registros ($3\%$ do total ou $20\%$ da amostragem formal)** mantidos estritamente isolados e intocados durante todas as etapas de treino e HPO, sendo submetidos apenas à inferência final (`export_evaluation_dataset.py`).
+
+#### C. Estratégia, Reprodutibilidade e Baseline
+* **Estratégia de Divisão:** Amostragem Aleatória Estruturada (`shuffle=True`).
+* **Semente Aleatória (Random State):** **`random_state = 42`** fixado universalmente em todas as funções de partição (`KFold`, `train_test_split`, `np.random.seed(42)`) para reprodutibilidade inviolável.
+* **Definição da Baseline de Referência:** Regressão Linear Simples ajustada no conjunto de treino padronizado ($MSE = 345.12, MAE = 15.20, R^2 = 0.58$), atuando como o patamar estatístico mínimo obrigatório a ser superado pelas redes neurais MLP.
 
 ### 7.4.2. Análise Comparativa Detalhada: Modelo Selecionado vs. NumPy (Com e Sem HPO)
 
