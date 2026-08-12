@@ -271,6 +271,7 @@ python hpo.py
 | Modelo | Trials | Épocas/Trial | Hiperparâmetros Otimizados |
 |--------|--------|--------------|---------------------------|
 | Scikit-Learn MLP | 15 | 300 | `learning_rate`, `hidden_sizes` (1–3 camadas), `alpha` |
+| Sklearn Restrito | 10 | 300 | `learning_rate`, `n_units_l1`, `n_units_l2` (mesma arquitetura do NumPy) |
 | NumPy MLP (matemático) | 10 | 300 | `learning_rate`, `n_units_l1`, `n_units_l2` |
 
 **Saída ao final:** arquivo `src/ml/hpo_results.json` com o sumário dos melhores hiperparâmetros encontrados e a melhoria percentual vs. baseline, e todos os trials registrados no MLflow.
