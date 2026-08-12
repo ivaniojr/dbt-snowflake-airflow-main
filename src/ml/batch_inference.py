@@ -126,10 +126,11 @@ def run_batch_inference():
     OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
     # Arquivos salvos no Passo 5
     sklearn_model_path = os.path.join(OUTPUT_DIR, "sklearn_best_model.joblib")
+    sklearn_restricted_path = os.path.join(OUTPUT_DIR, "sklearn_restricted_best_model.joblib")
     numpy_model_path = os.path.join(OUTPUT_DIR, "numpy_best_model.npz")
     scaler_path = os.path.join(OUTPUT_DIR, "scaler.joblib")
     
-    if not os.path.exists(sklearn_model_path) or not os.path.exists(scaler_path) or not os.path.exists(numpy_model_path):
+    if not os.path.exists(sklearn_model_path) or not os.path.exists(scaler_path) or not os.path.exists(numpy_model_path) or not os.path.exists(sklearn_restricted_path):
         raise FileNotFoundError(
             f"Artefatos nao encontrados!\n"
             f"Certifique-se de que a DAG Passo 5 (Retreinamento) rodou com sucesso para gerar:\n"
@@ -143,6 +144,9 @@ def run_batch_inference():
     
     print(f" Carregando Modelo Campeão (Sklearn): {sklearn_model_path}")
     sklearn_model = joblib.load(sklearn_model_path)
+    
+    print(f" Carregando Modelo (Sklearn Restricted): {sklearn_restricted_path}")
+    sklearn_restricted_model = joblib.load(sklearn_restricted_path)
     
     print(f" Carregando Modelo Campeão (NumPy): {numpy_model_path}")
     numpy_model = NumPyMLPRegressor.from_weights(numpy_model_path)
@@ -174,6 +178,9 @@ def run_batch_inference():
     print(" Processando inferência através do modelo Scikit-Learn...")
     preds_sklearn = sklearn_model.predict(X_scaled)
     
+    print(" Processando inferência através do modelo Sklearn Restricted...")
+    preds_sklearn_restricted = sklearn_restricted_model.predict(X_scaled)
+    
     # 3. Predizer NumPy
     print(" Processando inferência através do modelo NumPy Matemático...")
     preds_numpy = numpy_model.predict(X_scaled)
@@ -182,15 +189,17 @@ def run_batch_inference():
     df_results = pd.DataFrame({
         'TAREFA_ID': task_ids,
         'HORAS_ESTIMADAS_SKLEARN': np.round(preds_sklearn.flatten(), 2),
+        'HORAS_ESTIMADAS_SKLEARN_RESTRICTED': np.round(preds_sklearn_restricted.flatten(), 2),
         'HORAS_ESTIMADAS_NUMPY': np.round(preds_numpy.flatten(), 2)
     })
     
     # Garantir que não haja previsões negativas bizarras em nenhum modelo
     df_results['HORAS_ESTIMADAS_SKLEARN'] = df_results['HORAS_ESTIMADAS_SKLEARN'].apply(lambda x: max(0.5, x))
+    df_results['HORAS_ESTIMADAS_SKLEARN_RESTRICTED'] = df_results['HORAS_ESTIMADAS_SKLEARN_RESTRICTED'].apply(lambda x: max(0.5, x))
     df_results['HORAS_ESTIMADAS_NUMPY'] = df_results['HORAS_ESTIMADAS_NUMPY'].apply(lambda x: max(0.5, x))
     
     # Adicionar uma coluna de Diferença Absoluta para comparação
-    df_results['DIFERENCA_MODELOS'] = np.abs(df_results['HORAS_ESTIMADAS_SKLEARN'] - df_results['HORAS_ESTIMADAS_NUMPY']).round(2)
+    df_results['DIFERENCA_SK_VS_NP'] = np.abs(df_results['HORAS_ESTIMADAS_SKLEARN_RESTRICTED'] - df_results['HORAS_ESTIMADAS_NUMPY']).round(2)
     
     # Salvar CSV
     output_csv = os.path.join(OUTPUT_DIR, "novas_previsoes.csv")

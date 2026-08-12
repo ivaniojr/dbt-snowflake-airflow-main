@@ -25,7 +25,7 @@ DEFAULT_ARGS = {
 with DAG(
     dag_id="passo6_batch_inference",
     default_args=DEFAULT_ARGS,
-    description="Inferência em Lote de Novas Tarefas do Jira usando modelo Sklearn Campeão",
+    description="Inferência em Lote de Novas Tarefas do Munka usando modelo Sklearn Campeão",
     schedule=None,
     start_date=datetime(2023, 1, 1),
     catchup=False,
@@ -39,6 +39,7 @@ with DAG(
             f"set -euo pipefail; "
             f"cd {ML_DIR} && "
             f"if [ ! -f sklearn_best_model.joblib ]; then echo 'Erro: sklearn_best_model.joblib nao encontrado!'; exit 1; fi; "
+            f"if [ ! -f sklearn_restricted_best_model.joblib ]; then echo 'Erro: sklearn_restricted_best_model.joblib nao encontrado!'; exit 1; fi; "
             f"if [ ! -f scaler.joblib ]; then echo 'Erro: scaler.joblib nao encontrado!'; exit 1; fi; "
             f"echo 'Artefatos encontrados com sucesso!';"
         ),
@@ -50,7 +51,23 @@ with DAG(
         """,
     )
 
-    # 2. Rodar o script de inferência
+    # 2. Avaliação Comparativa de Modelos
+    evaluate_models = BashOperator(
+        task_id="evaluate_models",
+        bash_command=(
+            f"set -euo pipefail; "
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/evaluate_batch.py"
+        ),
+        doc_md="""
+        ## Avaliação Comparativa
+        Carrega tarefas com `HORAS_EXECUTADAS` conhecidas e avalia ambos os modelos (NumPy e Sklearn).
+        Calcula MAE, MSE e a Taxa de Acertos (considerando tolerância de 10% de erro).
+        Salva o resultado em `evaluation/comparativo_modelos.csv`.
+        """,
+    )
+
+    # 3. Rodar o script de inferência
     run_inference = BashOperator(
         task_id="run_inference",
         bash_command=(
@@ -67,4 +84,4 @@ with DAG(
     )
 
     # Dependências
-    check_model_artifacts >> run_inference
+    check_model_artifacts >> evaluate_models >> run_inference
