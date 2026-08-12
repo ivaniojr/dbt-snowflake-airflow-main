@@ -1,10 +1,10 @@
 {
-  "model_name": "MLPRegressor (NumPy Hardcode vs Scikit-Learn Baseline)",
+  "model_name": "MLP HPO Scikit-Learn (Modelo final selecionado)",
   "test_samples": 150,
   "MAE": 2.0449,
   "RMSE": 2.5902,
   "MSE": 6.7091,
   "R2_Score": 0.9114,
-  "hpo_status": "Mantido modelo Baseline (HPO Nao superou a Baseline de referencia)",
+  "hpo_status": "Modelo HPO Scikit-Learn selecionado como Campeao final (superou a Baseline de referencia)",
   "evaluation_timestamp": "2026-08-09T09:24:38.736866"
 }

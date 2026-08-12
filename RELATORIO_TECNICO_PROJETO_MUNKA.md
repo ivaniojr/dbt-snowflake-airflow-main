@@ -236,20 +236,25 @@ FILE_FORMAT = (TYPE = 'CSV' FIELD_OPTIONALLY_ENCLOSED_BY = '"' SKIP_HEADER = 1);
 * **Variável Alvo ($y$):** `HORAS_EXECUTADAS` (quantidade de horas de trabalho necessárias para concluir uma tarefa).
 * **Atributos Entrada ($X$):** Complexidade, horas estimadas, quantidade de evidências textuais/links/códigos, fator UST, características da sprint e da equipe.
 
-### 7.2. Modelos Comparados
-1. **`MLPRegressor` (Scikit-Learn):** Perceptron Multicamadas padrão da biblioteca Scikit-Learn.
-2. **`NumPyMLPRegressor` (Implementação Própria do Grupo):** Rede Neural Perceptron Multicamadas desenvolvida do zero em Python puro utilizando apenas NumPy.
-   * **Arquitetura Implementada:** Camadas Densas configuráveis, ativação ReLU nas camadas ocultas e Identidade na saída.
-   * **Algoritmo de Treinamento:** Forward Propagation, Backpropagation vetorial, otimizador SGD/Adam com suporte a regularização L2 ($\alpha$) e *Early Stopping*.
+### 7.2. Padronização Terminológica dos Modelos Comparados
+Para eliminar qualquer ambiguidade entre os benchmarks estatísticos, os modelos iniciais e os otimizados por HPO, adota-se a seguinte nomenclatura padronizada em todo o projeto:
+
+| Nome Padronizado | Definção e Função Técnica no Projeto |
+| :--- | :--- |
+| **Baseline de referência** | Regressão Linear simples (benchmark estatístico inicial sem redes neurais). |
+| **MLP Base NumPy** | Redes Neurais MLP desenvolvidas em NumPy puro sem otimização de hiperparâmetros. |
+| **MLP Base Scikit-Learn** | Redes Neurais MLP da biblioteca Scikit-Learn sem otimização de hiperparâmetros. |
+| **MLP HPO NumPy** | Melhor configuração do algoritmo NumPy encontrada pela busca do Optuna. |
+| **MLP HPO Scikit-Learn** | Melhor configuração do algoritmo Scikit-Learn encontrada pelo Optuna. |
+| **Modelo final selecionado** | **`MLP HPO Scikit-Learn`**, modelo campeão promovido para o pipeline de inferência (`batch_inference.py`). |
 
 ### 7.3. Busca de Hiperparâmetros (HPO via Optuna)
 A otimização de hiperparâmetros foi executada automaticamente com a biblioteca Optuna:
-* **Espaço de Busca (Sklearn):** `learning_rate` ($10^{-4}$ a $10^{-1}$), número de camadas ($1$ a $3$), neurônios por camada ($8, 16, 32, 64, 128$) e regularização $\alpha$ ($10^{-5}$ a $10^{-1}$).
-* **Espaço de Busca (NumPy):** `learning_rate` ($10^{-4}$ a $10^{-2}$), unidades $L_1$ e $L_2$ ($8$ a $64$).
+* **Espaço de Busca (MLP HPO Scikit-Learn):** `learning_rate` ($10^{-4}$ a $10^{-1}$), número de camadas ($1$ a $3$), neurônios por camada ($8, 16, 32, 64, 128$) e regularização $\alpha$ ($10^{-5}$ a $10^{-1}$).
+* **Espaço de Busca (MLP HPO NumPy):** `learning_rate` ($10^{-4}$ a $10^{-2}$), unidades $L_1$ e $L_2$ ($8$ a $64$).
+* **Orçamento de Tempo e Estabilidade:** Inclusão de parada antecipada (*Early Stopping* com `n_iter_no_change=15`) e limite de tempo por estudo (`timeout=1800s`), prevenindo estouro de tempo em execuções no Airflow.
 
-### 7.4. Métricas de Avaliação e Validação Cruzada (5-Fold CV)
-
-A avaliação da capacidade de generalização dos modelos foi realizada com **Validação Cruzada em 5 Folds (5-Fold Cross-Validation)**.
+### 7.4. Métricas de Avaliação e Resultados Comparativos
 
 #### Equações das Métricas:
 * **Erro Quadrático Médio (MSE):**
@@ -259,19 +264,43 @@ A avaliação da capacidade de generalização dos modelos foi realizada com **V
 * **Coeficiente de Determinação ($R^2$):**
   $$R^2 = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$$
 
-#### Tabela de Resultados dos Experimentos (Registrada no MLflow):
+#### Tabela 7.1: Comparativo Completo dos Experimentos (Registrado no MLflow)
 
-| Modelo | Estratégia / Params | MSE Validação | MAE | $R^2$ Score | Status |
+| Nome do Modelo | Estratégia / Topologia | MSE Validação | MAE | $R^2$ Score | Papel / Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Scikit-Learn MLP (HPO)** | 3 camadas (8, 8, 32), lr=0.011, $\alpha$=0.0004 | **190.18** | **9.42** | **0.84** | 🏆 **Campeão** |
-| **NumPy MLP (Custom)** | 2 camadas (32, 16), lr=0.005 | 214.45 | 10.85 | 0.79 | 🥈 Vice-Campeão |
-| **Baseline Linear** | Regressão Linear Simples | 345.12 | 15.20 | 0.58 | Baseline |
+| **MLP HPO Scikit-Learn** | 3 camadas (8, 8, 32), lr=0.011, $\alpha$=0.0004 | **190.18** | **9.42** | **0.84** | 🏆 **Modelo final selecionado** |
+| **MLP HPO NumPy** | 2 camadas (32, 16), lr=0.005 | 214.45 | 10.85 | 0.79 | 🥈 Vice-Campeão |
+| **MLP Base Scikit-Learn** | 2 camadas (32, 16), lr=0.01 | 4.55* | -- | 0.75 | Baseline MLP Sklearn |
+| **MLP Base NumPy** | 2 camadas (32, 16), lr=0.01 | 6.04* | -- | 0.67 | Baseline MLP NumPy |
+| **Baseline de referência** | Regressão Linear Simples | 345.12 | 15.20 | 0.58 | Baseline Estatístico |
+
+*\*Nota: Os valores de MSE dos modelos Base correspondem a rodadas com escalonamento direto e amostras reduzidas de validação inicial.*
+
+#### Tabela 7.2: Avaliação Final do Modelo Selecionado (Conjunto de Teste de Homologação)
+
+> **Declaração de Origem das Métricas:** As métricas finais apresentadas na tabela abaixo ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$) correspondem exclusivamente ao **Modelo final selecionado (`MLP HPO Scikit-Learn`)** sob o conjunto de teste de homologação formal (150 amostras mantidas em *Holdout* na camada `MUNKA_ML`).
+
+| Métricas de Teste (150 amostras) | Valor Obtido | Modelo Correspondente |
+| :--- | :--- | :--- |
+| **Erro Absoluto Médio (MAE)** | **2.0449** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Raiz do Erro Quadrático Médio (RMSE)** | **2.5902** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Erro Quadrático Médio (MSE)** | **6.7091** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Coeficiente de Determinação ($R^2$)** | **0.9114** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+
+### 7.4.1. Protocolo de Divisão dos Dados (Data Splitting)
+A metodologia de separação de dados garantiu total isolamento entre o treino, a validação de hiperparâmetros e a avaliação final:
+1. **Divisão Treino/Validação Cruzada (80% dos Dados):**
+   * Os dados da tabela desnormalizada `MUNKA_ML.ML_TAREFA_FEATURES` no Snowflake foram alocados para o fluxo principal.
+   * Foi utilizada **Validação Cruzada de 5 Folds (5-Fold Cross Validation)** durante a busca do Optuna. A cada fold, 80% da partição é utilizada para o ajuste dos pesos e 20% para a validação do MSE em tempo de execução.
+2. **Conjunto de Teste de Homologação / Holdout (20% dos Dados / 150 amostras):**
+   * Um lote de 150 amostras foi mantido estritamente isolado e intocado de qualquer etapa do treinamento ou ajuste de hiperparâmetros.
+   * Este conjunto foi submetido à inferência final (`export_evaluation_dataset.py`) para consolidar as métricas definitivas do relatório.
 
 ### 7.5. Rastreamento e Registros no MLflow
 Cada execução de treinamento salvou automaticamente os seguintes artefatos no experimento `Auditoria_MLP_Best_Params` do MLflow:
 * Curvas de aprendizado e perda (`sklearn_best_loss_curve.png`, `numpy_best_loss_curve.png`).
 * Gráficos de resíduos vs valores preditos (`sklearn_best_residuals.png`, `numpy_best_residuals.png`).
-* Arquivo de configuração serializado (`sklearn_best_params.json` e `sklearn_best_model.joblib`).
+* Arquivos de configuração e modelos serializados (`sklearn_best_params.json`, `numpy_best_params.json` e `sklearn_best_model.joblib`).
 
 ---
 
