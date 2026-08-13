@@ -148,9 +148,24 @@ with DAG(
         """,
     )
 
+    # ── Exportação Final da Homologação Auditável ─────────────────────
+    exportar_homologacao = BashOperator(
+        task_id="exportar_homologacao",
+        bash_command=(
+            f"set -euo pipefail; "
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/export_evaluation_dataset.py"
+        ),
+        doc_md="""
+        ## Exportar Homologacao Real
+        Executa a inferência real do modelo final sobre a amostragem do conjunto de teste Holdout isolado,
+        exportando metrics.json, predictions.csv, X_test.csv, y_test.csv e analise_qualitativa_erros.csv.
+        """,
+    )
+
     # ── Dependencias (fluxo serializado) ─────────────────────────────
     #
     # Para evitar locks no SQLite do MLflow ou gargalo de CPU, o fluxo
     # deve ser estritamente sequencial.
     #
-    hpo_sklearn >> retreinar_sklearn >> hpo_numpy >> retreinar_numpy >> registrar_mlflow
+    hpo_sklearn >> retreinar_sklearn >> hpo_numpy >> retreinar_numpy >> registrar_mlflow >> exportar_homologacao
