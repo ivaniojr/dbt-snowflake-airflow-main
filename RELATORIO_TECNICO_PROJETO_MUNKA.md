@@ -371,9 +371,9 @@ Abaixo é apresentada a matriz comparativa cruzando as diferentes estratégias d
 
 | Algoritmo / Implementação | Configuração Inicial (Sem HPO) | Configuração Otimizada (Com HPO) | Status Final |
 | :--- | :--- | :--- | :--- |
-| **Scikit-Learn MLP** *(Modelo Escolhido)* | **`MLP Base Scikit-Learn`**<br>• Topologia: `(32, 16)`<br>• $MSE: 4.55^*$<br>• $R^2: 0.75$ | **`MLP HPO Scikit-Learn`** *(Campeão)*<br>• Topologia Livre: `(64, 128)`<br>• $MSE: 5.46$<br>• Teste Final: $MAE: 0.67$<br>• Teste Final: $R^2: 0.75$ | 🏆 **Modelo final selecionado** |
-| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | *(N/A — Usado apenas no HPO)* | **`MLP HPO Sklearn Restrito`**<br>• Topologia Fixa (2 cam.): `(64, 32)`<br>• $MSE: 5.49$ | 🧪 Grupo de Controle Científico |
-| **NumPy MLP** *(Implementação Própria)* | **`MLP Base NumPy`**<br>• Topologia: `(32, 16)`<br>• $MSE: 6.04^*$<br>• $R^2: 0.67$ | **`MLP HPO NumPy`** *(Vice-Campeão)*<br>• Topologia Fixa (2 cam.): `(16, 32)`<br>• $MSE: 6.90$ | 🥈 Vice-Campeão Matemático |
+| **Scikit-Learn MLP** *(Modelo Escolhido)* | **`MLP Base Scikit-Learn`**<br>• Topologia: `(32, 16)`<br>• $MSE: 4.55^*$<br>• $R^2: 0.75$ | **`MLP HPO Scikit-Learn`** *(Campeão)*<br>• Topologia Livre: `(64, 128)`<br>• $MSE: 5.46$<br>• Teste Final: $MAE: 0.67$<br>• Teste Final: $R^2: 0.75$ | **Modelo final selecionado** |
+| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | *(N/A — Usado apenas no HPO)* | **`MLP HPO Sklearn Restrito`**<br>• Topologia Fixa (2 cam.): `(64, 32)`<br>• $MSE: 5.49$ | Grupo de Controle Científico |
+| **NumPy MLP** *(Implementação Própria)* | **`MLP Base NumPy`**<br>• Topologia: `(32, 16)`<br>• $MSE: 6.04^*$<br>• $R^2: 0.67$ | **`MLP HPO NumPy`** *(Vice-Campeão)*<br>• Topologia Fixa (2 cam.): `(16, 32)`<br>• $MSE: 6.90$ | Vice-Campeão Matemático |
 | **Baseline de referência** | **`Regressão Linear`**<br>• $MSE: 345.12$<br>• $R^2: 0.58$ | *(N/A — Modelo Linear Fixo)* | Benchmark Estatístico |
 
 *\*Nota: Os valores Base referem-se a testes preliminares de código antes do HPO final.*
