@@ -324,18 +324,30 @@ Os valores ausentes remanescentes foram tratados por meio de imputação com val
 #### B. Prevenção Rígida de Data Leakage
 Um cuidado específico foi adotado para impedir a ocorrência de *Data Leakage* durante essa padronização. Os parâmetros estatísticos utilizados pelo `StandardScaler`, especialmente média e desvio-padrão, foram calculados exclusivamente a partir dos dados de treinamento. Dessa forma, a operação `fit_transform` foi executada somente sobre o conjunto de treino, enquanto os conjuntos destinados à validação e ao teste receberam apenas a operação `transform`. Esse procedimento impede que informações estatísticas provenientes de observações futuras ou destinadas à avaliação influenciem o processo de aprendizagem dos modelos.
 
-#### C. Divisão Quantitativa e Harmonização Matemática das Amostras
-O dataset total utilizado nessa etapa é constituído por **5.000 registros** ($100\%$), extraídos da tabela `MUNKA_ML.ML_TAREFA_FEATURES`, armazenada no Snowflake. A distribuição matemática das amostras foi estritamente harmonizada conforme a seguinte divisão:
+#### C. Particionamento Hierárquico dos Dados e Origem das Amostras
+Para eliminar qualquer ambiguidades ou sobreposição metodológica, a origem e o destino de cada amostra do dataset de **5.000 registros** ($100\%$) extraídos da tabela `MUNKA_ML.ML_TAREFA_FEATURES` no Snowflake são estritamente mapeados pelo código fonte ([dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/dataset.py), [train.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/train.py) e [export_evaluation_dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/export_evaluation_dataset.py)) em duas partições primárias via `train_test_split(X, y, test_size=0.2, random_state=42)`:
 
-* **Conjunto de Treinamento e Otimização HPO ($80\%$ / $4.000$ registros):**
-  Desse conjunto total, **4.000 registros** foram destinados à etapa principal de treinamento e otimização dos hiperparâmetros (HPO via Optuna).
-  * **Validação Cruzada (5-Fold Cross-Validation):** Durante o treinamento e HPO via `KFold(n_splits=5, shuffle=True, random_state=42)`, a partição de 4.000 registros foi reorganizada em 5 subconjuntos. A cada fold, **3.200 registros** ($64\%$ do dataset total) foram utilizados para ajuste de pesos e **800 registros** ($16\%$ do dataset total) constituíram a validação interna utilizada para mensuração do Erro Quadrático Médio (MSE).
-  * **Holdout de Otimização via `train_test_split`:** Utilizado para avaliação direta das configurações encontradas pelo Optuna fora das subdivisões do K-Fold.
+```
+                          [ DATASET TOTAL: 5.000 registros (100%) ]
+                                        │
+           ┌────────────────────────────┴────────────────────────────┐
+           ▼                                                         ▼
+[ TREINAMENTO & HPO: 4.000 (80%) ]                        [ HOLDOUT TESTE: 1.000 (20%) ]
+           │                                                         │
+   ┌───────┴───────┐                                         ┌───────┴───────┐
+   ▼               ▼                                         ▼               ▼
+3.200 (64%)     800 (16%)                                 150 (3%)        850 (17%)
+(Treino Fold) (Val. Fold)                               (Homologação)   (Inferência Batch)
+```
 
-* **Conjunto de Teste Holdout Geral ($20\%$ / $1.000$ registros):**
-  A parcela restante de **1.000 registros** ($20\%$ do total) foi mantida isolada das etapas de treinamento.
-  * **Sub-amostra Formal de Homologação Final ($150$ registros):** Do total de 1.000 registros de teste Holdout, um subconjunto padronizado de **150 registros** foi selecionado e mantido estritamente intocado para a auditoria formal de erro e exportação de métricas por meio do script `export_evaluation_dataset.py` ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$).
-  * **Fila para Inferência em Lote ($850$ registros):** Os **850 registros** remanescentes da partição de teste constituem a massa de tarefas para predições continuadas no pipeline de inferência em lote (`batch_inference.py`).
+1. **Partição de Treinamento e HPO ($80\%$ / $4.000$ registros):**
+   * Destinada ao ajuste dos pesos das redes neurais e à busca do Optuna.
+   * **Validação Cruzada (5-Fold Cross-Validation):** Configurada com `KFold(n_splits=5, shuffle=True, random_state=42)`, subdividindo os 4.000 registros a cada iteração em **3.200 registros** ($64\%$ do total) para treino interno e **800 registros** ($16\%$ do total) para validação do MSE.
+
+2. **Partição de Teste Holdout Geral ($20\%$ / $1.000$ registros):**
+   * Mantida totalmente isolada das etapas de ajuste de pesos e de cálculo de parâmetros do `StandardScaler`.
+   * **Lote Formal de Homologação Auditável ($150$ registros / $3\%$ do dataset total ou $15\%$ do Holdout):** Extraído da partição Holdout com semente fixa (`np.random.seed(42)` e `n_samples = 150`) pelo script [export_evaluation_dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/export_evaluation_dataset.py) para gerar os artefatos auditáveis de teste (`X_test.csv`, `y_test.csv`, `predictions.csv` e `metrics.json`), fornecendo a medição isolada de homologação ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$).
+   * **Massa para Inferência Continuada em Lote ($850$ registros / $17\%$ do dataset total ou $85\%$ do Holdout):** Os 850 registros remanescentes da partição Holdout constituem o lote reservado para as rotinas automatizadas de predição em lote (`batch_inference.py`).
 
 #### D. Estratégia de Particionamento, Reprodutibilidade e Baseline
 A estratégia de particionamento empregou amostragem aleatória com embaralhamento (`shuffle=True`). Para assegurar a reprodutibilidade inviolável dos experimentos, foi adotada de forma consistente a semente pseudoaleatória **`random_state = 42`**, utilizada nas operações de particionamento e validação (`KFold`, `train_test_split` e `np.random.seed(42)`).
