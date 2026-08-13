@@ -9,15 +9,14 @@ def train_sklearn_mlp(X_train, y_train, hidden_sizes=(32, 16), learning_rate=0.0
     model = MLPRegressor(
         hidden_layer_sizes=hidden_sizes,
         activation='relu',
-        solver='sgd',
+        solver='adam',
         learning_rate_init=learning_rate,
         max_iter=epochs,
         random_state=42,
-        batch_size=min(200, X_train.shape[0]), # Batch GD behavior similar to our implementation or SGD
-        momentum=0.0, # Sem momentum para ficar idêntico ao nosso NumPy simples
-        early_stopping=True, # Ativa a separação de Validação Interna
-        validation_fraction=0.2, # 20% para validação do loss
-        n_iter_no_change=n_iter_no_change # Early stopping quando o loss estagnar
+        batch_size=min(200, X_train.shape[0]),
+        early_stopping=True,
+        validation_fraction=0.2,
+        n_iter_no_change=10
     )
     
     # Scikit-learn espera vetor 1D para o y

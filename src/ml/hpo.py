@@ -39,9 +39,9 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 # ──────────────────────────────────────────────
 # Configuracoes globais
 # ──────────────────────────────────────────────
-EPOCHS = 300
-N_TRIALS_SKLEARN = 15
-N_TRIALS_NUMPY = 10
+EPOCHS = 150
+N_TRIALS_SKLEARN = 10
+N_TRIALS_NUMPY = 8
 
 BASELINE_SKLEARN_MSE = 4.5521
 BASELINE_NUMPY_MSE = 6.0377
