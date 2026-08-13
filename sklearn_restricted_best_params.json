@@ -1,0 +1,17 @@
+{
+  "model": "sklearn_restricted",
+  "generated_at": "2026-08-13T14:14:53.088638",
+  "mlflow_experiment": "Auditoria_MLP_HPO",
+  "n_trials": 10,
+  "epochs": 150,
+  "best_val_mse": 206.289915,
+  "improvement_vs_baseline_pct": -4431.75,
+  "hyperparameters": {
+    "learning_rate": 0.00035439458305521864,
+    "hidden_sizes": [
+      64,
+      16
+    ],
+    "alpha": 0.0001
+  }
+}
