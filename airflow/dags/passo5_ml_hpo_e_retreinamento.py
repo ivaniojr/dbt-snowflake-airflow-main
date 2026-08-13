@@ -90,6 +90,22 @@ with DAG(
         """,
     )
 
+    # ── HPO Sklearn Restrito (10 trials | 150 epocas) ─────────────
+    hpo_sklearn_restricted = BashOperator(
+        task_id="hpo_sklearn_restricted",
+        bash_command=(
+            f"set -euo pipefail; "
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/hpo.py --model sklearn_restricted --output-dir {ML_DIR}"
+        ),
+        doc_md="""
+        ## HPO Sklearn Restrito
+        Roda o Optuna com 10 trials e 150 epocas para o MLPRegressor do Scikit-Learn.
+        Mesmas restricoes topologicas do modelo NumPy (exatamente 2 camadas) e alpha=0.0001.
+        **Saida:** `sklearn_restricted_best_params.json`
+        """,
+    )
+
     # ── Retreinamento Sklearn com melhores params ─────────────────
     retreinar_sklearn = BashOperator(
         task_id="retreinar_sklearn",
@@ -122,6 +138,22 @@ with DAG(
         """,
     )
 
+    # ── Retreinamento Sklearn Restrito com melhores params ────────
+    retreinar_sklearn_restricted = BashOperator(
+        task_id="retreinar_sklearn_restricted",
+        bash_command=(
+            f"set -euo pipefail; "
+            f"cd {PROJECT_DIR} && "
+            f"{PYTHON} src/ml/train_best.py --model sklearn_restricted --config-dir {ML_DIR}"
+        ),
+        doc_md="""
+        ## Retreinamento Sklearn Restrito
+        Le `sklearn_restricted_best_params.json` e retreina o modelo restrito.
+        Loga metricas e artefatos no MLflow (experimento: Auditoria_MLP_Best_Params).
+        **Artefatos:** `sklearn_restricted_best_loss_curve.png`, `sklearn_restricted_best_residuals.png`
+        """,
+    )
+
     # ── Validacao final no MLflow ─────────────────────────────────
     registrar_mlflow = BashOperator(
         task_id="registrar_mlflow",
@@ -133,18 +165,18 @@ with DAG(
             f"mlflow.set_tracking_uri(os.getenv('MLFLOW_TRACKING_URI', 'sqlite:////tmp/mlflow.db')); "
             f"client = mlflow.tracking.MlflowClient(); "
             f"exp = client.get_experiment_by_name('Auditoria_MLP_Best_Params'); "
-            f"runs = client.search_runs(exp.experiment_id, order_by=['start_time DESC'], max_results=2); "
+            f"runs = client.search_runs(exp.experiment_id, order_by=['start_time DESC'], max_results=3); "
             f"print(f'Runs registradas: {{len(runs)}}'); "
             f"[print(f'  - {{r.info.run_name}}: MSE={{r.data.metrics.get(\\\"kfold_mse\\\", \\\"n/a\\\"):.4f}}') for r in runs]; "
-            f"assert len(runs) >= 2, 'ERRO: menos de 2 runs registradas no MLflow!'; "
-            f"print('MLflow OK — ambos os modelos registrados com sucesso.'); "
+            f"assert len(runs) >= 3, 'ERRO: menos de 3 runs registradas no MLflow!'; "
+            f"print('MLflow OK — os 3 modelos foram registrados com sucesso.'); "
             f"\""
         ),
         doc_md="""
         ## Validacao MLflow
-        Verifica que ambos os retreinamentos (Sklearn + NumPy) foram registrados
+        Verifica que os 3 retreinamentos (Sklearn, NumPy e Sklearn Restrito) foram registrados
         corretamente no experimento `Auditoria_MLP_Best_Params` do MLflow.
-        Falha a DAG se menos de 2 runs forem encontradas.
+        Falha a DAG se menos de 3 runs forem encontradas.
         """,
     )
 
@@ -168,4 +200,4 @@ with DAG(
     # Para evitar locks no SQLite do MLflow ou gargalo de CPU, o fluxo
     # deve ser estritamente sequencial.
     #
-    hpo_sklearn >> retreinar_sklearn >> hpo_numpy >> retreinar_numpy >> registrar_mlflow >> exportar_homologacao
+    hpo_sklearn >> retreinar_sklearn >> hpo_numpy >> retreinar_numpy >> hpo_sklearn_restricted >> retreinar_sklearn_restricted >> registrar_mlflow >> exportar_homologacao

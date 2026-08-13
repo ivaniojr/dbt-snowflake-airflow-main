@@ -99,6 +99,22 @@ def objective_numpy(trial, X_train, X_val, y_train, y_val):
         mlflow.log_metric("val_mse", mse)
     return mse
 
+def objective_sklearn_restricted(trial, X_train, X_val, y_train, y_val):
+    lr = trial.suggest_float("learning_rate", 1e-4, 1e-1, log=True)
+    size_l1 = trial.suggest_categorical("n_units_l1", [16, 32, 64])
+    size_l2 = trial.suggest_categorical("n_units_l2", [8, 16, 32])
+    hidden_sizes = (size_l1, size_l2)
+    # alpha is fixed to default 0.0001 to match numpy constraint
+
+    with mlflow.start_run(nested=True, run_name=f"Trial_SK_Restricted_{trial.number}"):
+        mlflow.log_params(trial.params)
+        model = train_sklearn_mlp(X_train, y_train, hidden_sizes=hidden_sizes,
+                                  learning_rate=lr, epochs=EPOCHS)
+        preds = model.predict(X_val).reshape(-1, 1)
+        mse = mean_squared_error(y_val, preds)
+        mlflow.log_metric("val_mse", mse)
+    return mse
+
 # ──────────────────────────────────────────────
 # Exportadores de JSON por modelo
 # ──────────────────────────────────────────────
@@ -155,6 +171,32 @@ def save_numpy_json(study, output_path="numpy_best_params.json"):
     print(f"  params={config['hyperparameters']}")
     return config
 
+def save_sklearn_restricted_json(study, output_path="sklearn_restricted_best_params.json"):
+    best = study.best_params
+    hidden_sizes = [best["n_units_l1"], best["n_units_l2"]]
+    improvement = round((BASELINE_SKLEARN_MSE - study.best_value) / BASELINE_SKLEARN_MSE * 100, 2)
+
+    config = {
+        "model": "sklearn_restricted",
+        "generated_at": datetime.now().isoformat(),
+        "mlflow_experiment": "Auditoria_MLP_HPO",
+        "n_trials": len(study.trials),
+        "epochs": EPOCHS,
+        "best_val_mse": round(study.best_value, 6),
+        "improvement_vs_baseline_pct": improvement,
+        "hyperparameters": {
+            "learning_rate": best["learning_rate"],
+            "hidden_sizes": hidden_sizes,
+            "alpha": 0.0001
+        }
+    }
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
+    print(f"\nSklearn Restricted config salva em: {output_path}")
+    print(f"  best_val_mse={config['best_val_mse']:.4f}  melhoria={improvement:+.1f}%")
+    print(f"  params={config['hyperparameters']}")
+    return config
+
 # ──────────────────────────────────────────────
 # Runners por modelo
 # ──────────────────────────────────────────────
@@ -180,6 +222,17 @@ def run_numpy_hpo(X_train, X_val, y_train, y_val, output_path="numpy_best_params
         )
     return save_numpy_json(study, output_path)
 
+def run_sklearn_restricted_hpo(X_train, X_val, y_train, y_val, output_path="sklearn_restricted_best_params.json"):
+    print(f"\n--- Otimizando Sklearn Restricted ({N_TRIALS_NUMPY} trials | {EPOCHS} epocas | max 30m) ---")
+    with mlflow.start_run(run_name="Sklearn_Restricted_HPO_Study"):
+        study = optuna.create_study(direction="minimize", study_name="Sklearn_Restricted_Optimization")
+        study.optimize(
+            lambda trial: objective_sklearn_restricted(trial, X_train, X_val, y_train, y_val),
+            n_trials=N_TRIALS_NUMPY,
+            timeout=1800
+        )
+    return save_sklearn_restricted_json(study, output_path)
+
 # ──────────────────────────────────────────────
 # Main
 # ──────────────────────────────────────────────
@@ -187,9 +240,9 @@ def main():
     parser = argparse.ArgumentParser(description="HPO com Optuna para modelos MLP")
     parser.add_argument(
         "--model",
-        choices=["sklearn", "numpy", "all"],
+        choices=["sklearn", "numpy", "sklearn_restricted", "all"],
         default="all",
-        help="Qual modelo otimizar: sklearn | numpy | all (padrao: all)"
+        help="Qual modelo otimizar: sklearn | numpy | sklearn_restricted | all (padrao: all)"
     )
     parser.add_argument(
         "--output-dir",
@@ -208,18 +261,24 @@ def main():
 
     sk_path = os.path.join(args.output_dir, "sklearn_best_params.json")
     np_path = os.path.join(args.output_dir, "numpy_best_params.json")
+    sk_rest_path = os.path.join(args.output_dir, "sklearn_restricted_best_params.json")
 
     if args.model in ("sklearn", "all"):
         run_sklearn_hpo(X_train, X_val, y_train, y_val, sk_path)
 
     if args.model in ("numpy", "all"):
         run_numpy_hpo(X_train, X_val, y_train, y_val, np_path)
+        
+    if args.model in ("sklearn_restricted", "all"):
+        run_sklearn_restricted_hpo(X_train, X_val, y_train, y_val, sk_rest_path)
 
     print("\n========== HPO CONCLUIDO ==========")
     if args.model in ("sklearn", "all"):
         print(f"Sklearn config: {sk_path}")
     if args.model in ("numpy", "all"):
         print(f"NumPy   config: {np_path}")
+    if args.model in ("sklearn_restricted", "all"):
+        print(f"Sklearn Restricted config: {sk_rest_path}")
     print("====================================")
 
 if __name__ == "__main__":
