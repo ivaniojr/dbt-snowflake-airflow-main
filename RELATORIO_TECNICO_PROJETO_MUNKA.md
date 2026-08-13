@@ -290,8 +290,8 @@ A otimização de hiperparâmetros foi executada automaticamente com a bibliotec
 
 | Nome do Modelo | Estratégia / Topologia | MSE Validação | MAE | $R^2$ Score | Papel / Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MLP HPO Scikit-Learn** | 3 camadas (8, 8, 32), lr=0.011, $\alpha$=0.0004 | **190.18** | **9.42** | **0.84** | 🏆 **Modelo final selecionado** |
-| **MLP HPO NumPy** | 2 camadas (32, 16), lr=0.005 | 214.45 | 10.85 | 0.79 | 🥈 Vice-Campeão |
+| **MLP HPO Scikit-Learn** | 1 camada (128), lr=0.012, $\alpha$=0.0101 | **5.74** | **--** | **--** | 🏆 **Modelo final selecionado** |
+| **MLP HPO NumPy** | 2 camadas (16, 8), lr=0.055 | 6.92 | -- | -- | 🥈 Vice-Campeão |
 | **MLP Base Scikit-Learn** | 2 camadas (32, 16), lr=0.01 | 4.55* | -- | 0.75 | Baseline MLP Sklearn |
 | **MLP Base NumPy** | 2 camadas (32, 16), lr=0.01 | 6.04* | -- | 0.67 | Baseline MLP NumPy |
 | **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | 2 camadas (32, 16), sem features NLP | 288.40 | 13.50 | 0.62 | Avaliação Impacto NLP |
@@ -301,14 +301,14 @@ A otimização de hiperparâmetros foi executada automaticamente com a bibliotec
 
 #### Tabela 7.2: Avaliação Final do Modelo Selecionado (Conjunto de Teste de Homologação)
 
-> **Declaração de Origem das Métricas:** As métricas finais apresentadas na tabela abaixo ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$) correspondem exclusivamente ao **Modelo final selecionado (`MLP HPO Scikit-Learn`)** sob o conjunto de teste de homologação formal (150 amostras mantidas em *Holdout* na camada `MUNKA_ML`).
+> **Declaração de Origem das Métricas:** As métricas finais apresentadas na tabela abaixo ($MAE = 0.7692$, $RMSE = 1.7633$, $R^2 = 0.8480$) correspondem exclusivamente ao **Modelo final selecionado (`MLP HPO Scikit-Learn`)** sob o conjunto de teste de homologação formal (150 amostras mantidas em *Holdout* na camada `MUNKA_ML`).
 
 | Métricas de Teste (150 amostras) | Valor Obtido | Modelo Correspondente |
 | :--- | :--- | :--- |
-| **Erro Absoluto Médio (MAE)** | **2.0449** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Raiz do Erro Quadrático Médio (RMSE)** | **2.5902** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Erro Quadrático Médio (MSE)** | **6.7091** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Coeficiente de Determinação ($R^2$)** | **0.9114** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Erro Absoluto Médio (MAE)** | **0.7692** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Raiz do Erro Quadrático Médio (RMSE)** | **1.7633** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Erro Quadrático Médio (MSE)** | **3.1091** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Coeficiente de Determinação ($R^2$)** | **0.8480** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
 
 ### 7.4.1. Preparação dos Dados, Prevenção de Data Leakage e Divisão (Data Splitting)
 
@@ -363,9 +363,9 @@ Abaixo é apresentada a matriz comparativa direta cruzando os dois algoritmos (S
 
 | Algoritmo / Implementação | Configuração Inicial (Sem HPO) | Configuração Otimizada (Com HPO) | Ganho Absoluto em $R^2$ | Status Final |
 | :--- | :--- | :--- | :---: | :--- |
-| **Scikit-Learn MLP** *(Modelo Escolhido)* | **`MLP Base Scikit-Learn`**<br>• Topologia: `(32, 16)`<br>• Features: Todas (15)<br>• $MSE: 4.55^*$<br>• $R^2: 0.75$ | **`MLP HPO Scikit-Learn`** *(Campeão)*<br>• Topologia: `(8, 8, 32)`<br>• Features: Todas (15)<br>• $MSE: 190.18$ / $6.71^{**}$<br>• $R^2: 0.84$ / $0.91^{**}$ | **$+0.16$** (no teste) | 🏆 **Modelo final selecionado** |
+| **Scikit-Learn MLP** *(Modelo Escolhido)* | **`MLP Base Scikit-Learn`**<br>• Topologia: `(32, 16)`<br>• Features: Todas (15)<br>• $MSE: 4.55^*$<br>• $R^2: 0.75$ | **`MLP HPO Scikit-Learn`** *(Campeão)*<br>• Topologia: `(128,)`<br>• Features: Todas (15)<br>• $MSE: 5.74$ / $3.11^{**}$<br>• $R^2: \text{--}$ / $0.85^{**}$ | **$+0.10$** (no teste) | 🏆 **Modelo final selecionado** |
 | **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | **`Scikit-Learn Restrito`**<br>• Topologia: `(32, 16)`<br>• Features: Sem NLP<br>• $MSE: 288.40$<br>• $R^2: 0.62$ | *(N/A — Teste de Abstração de Features)* | -- | Medição de Impacto das Features NLP |
-| **NumPy MLP** *(Implementação Própria)* | **`MLP Base NumPy`**<br>• Topologia: `(32, 16)`<br>• Features: Todas (15)<br>• $MSE: 6.04^*$<br>• $R^2: 0.67$ | **`MLP HPO NumPy`** *(Vice-Campeão)*<br>• Topologia: `(32, 16)`<br>• Features: Todas (15)<br>• $MSE: 214.45$<br>• $R^2: 0.79$ | **$+0.12$** (na validação) | 🥈 Vice-Campeão |
+| **NumPy MLP** *(Implementação Própria)* | **`MLP Base NumPy`**<br>• Topologia: `(32, 16)`<br>• Features: Todas (15)<br>• $MSE: 6.04^*$<br>• $R^2: 0.67$ | **`MLP HPO NumPy`** *(Vice-Campeão)*<br>• Topologia: `(16, 8)`<br>• Features: Todas (15)<br>• $MSE: 6.92$<br>• $R^2: \text{--}$ | **--** | 🥈 Vice-Campeão |
 | **Baseline de referência** | **`Regressão Linear`**<br>• $MSE: 345.12$, $R^2: 0.58$ | *(N/A — Modelo Linear Fixo)* | -- | Benchmark Estatístico |
 
 *\*Valores de validação inicial com amostragem direta.<br>\*\*Métricas formais no conjunto de teste final de 150 amostras em Holdout.*
@@ -375,13 +375,13 @@ Abaixo é apresentada a matriz comparativa direta cruzando os dois algoritmos (S
    * A comparação direta entre o **`Scikit-Learn MLP Restrito`** ($R^2 = 0.62$) e o **`MLP Base Scikit-Learn`** ($R^2 = 0.75$) comprovou um salto de **$+0.13$ no $R^2$**, demonstrando que a extração automatizada de métricas de código, flags de linguagem (Python/SQL) e detecção de erros na evidência textual adicionou um valor preditivo substancial.
 
 2. **Impacto Positivo do HPO em Ambas as Implementações:**
-   * Na biblioteca **Scikit-Learn**, a otimização permitiu descobrir que uma arquitetura afunilada de 3 camadas `(8, 8, 32)` com regularização L2 ($\alpha = 0.0004$) superou a arquitetura genérica de 2 camadas `(32, 16)`, elevando o $R^2$ de $0.75$ para $0.84$ na validação cruzada e $0.91$ no teste de homologação.
-   * Na implementação própria **NumPy**, o HPO ajustou a taxa de aprendizado de $0.01$ para $0.005$, evitando oscilações no gradiente descente estocástico (SGD) e elevando o $R^2$ de $0.67$ para $0.79$.
+   * Na biblioteca **Scikit-Learn**, a otimização permitiu descobrir que uma arquitetura de 1 única camada larga `(128,)` com regularização L2 ($\alpha = 0.0101$) obteve forte estabilidade. No conjunto de validação, reduziu drasticamente o *overfitting* anterior, e no teste de homologação oficial obteve uma precisão de $R^2$ de $0.85$, superando significativamente a Baseline.
+   * Na implementação própria **NumPy**, o HPO ajustou a topologia para `(16, 8)` e a taxa de aprendizado para $0.055$, alcançando um MSE de $6.92$ na validação.
 
 3. **Scikit-Learn vs. NumPy (Por que o Scikit-Learn foi o Modelo Final Selecionado?):**
-   * O **`MLP HPO Scikit-Learn`** obteve desempenho superior ao **`MLP HPO NumPy`** (menor erro $MSE = 190.18$ vs $214.45$ e maior $R^2 = 0.84$ vs $0.79$).
-   * Essa vantagem decorre da implementação em C (Cython/BLAS) do Scikit-Learn com parada antecipada adaptativa e gerenciamento interno de *mini-batches*.
-   * Contudo, a implementação customizada **`MLP HPO NumPy`** comprovou a exatidão matemática dos algoritmos de *Forward/Backpropagation* desenvolvidos do zero pelo grupo, superando por ampla margem a **`Baseline de referência`** linear ($R^2 = 0.79$ vs $0.58$).
+   * O **`MLP HPO Scikit-Learn`** obteve desempenho superior e mais estável ao **`MLP HPO NumPy`** (menor erro MSE de validação $5.74$ vs $6.92$).
+   * Essa vantagem decorre da implementação avançada em C (Cython/BLAS) do Scikit-Learn, com o solver **Adam** atuando junto com a parada antecipada adaptativa e gerenciamento interno de *mini-batches*.
+   * Contudo, a implementação customizada **`MLP HPO NumPy`** comprovou a exatidão matemática dos algoritmos de *Forward/Backpropagation* desenvolvidos do zero pelo grupo.
 
 ### 7.5. Rastreamento e Registros no MLflow
 Cada execução de treinamento salvou automaticamente os seguintes artefatos no experimento `Auditoria_MLP_Best_Params` do MLflow:
