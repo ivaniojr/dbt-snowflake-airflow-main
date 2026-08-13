@@ -271,10 +271,11 @@ Para eliminar qualquer ambiguidade entre os benchmarks estatísticos, os modelos
 | **Modelo final selecionado** | **`MLP HPO Scikit-Learn`**, modelo campeão promovido para o pipeline de inferência (`batch_inference.py`). |
 
 ### 7.3. Busca de Hiperparâmetros (HPO via Optuna)
-A otimização de hiperparâmetros foi executada automaticamente com a biblioteca Optuna:
-* **Espaço de Busca (MLP HPO Scikit-Learn):** `learning_rate` ($10^{-4}$ a $10^{-1}$), número de camadas ($1$ a $3$), neurônios por camada ($8, 16, 32, 64, 128$) e regularização $\alpha$ ($10^{-5}$ a $10^{-1}$).
-* **Espaço de Busca (MLP HPO NumPy):** `learning_rate` ($10^{-4}$ a $10^{-2}$), unidades $L_1$ e $L_2$ ($8$ a $64$).
-* **Orçamento de Tempo e Estabilidade:** Inclusão de parada antecipada (*Early Stopping* com `n_iter_no_change=15`) e limite de tempo por estudo (`timeout=1800s`), prevenindo estouro de tempo em execuções no Airflow.
+A otimização de hiperparâmetros foi executada automaticamente com a biblioteca Optuna. Para viabilizar a execução fluida dentro do *scheduler* do Apache Airflow, foi estabelecido um limite máximo de **10 trials** (tentativas) por algoritmo, com cada rede neural treinando por exatamente **150 épocas**.
+
+* **Espaço de Busca (MLP HPO Scikit-Learn):** Otimizado utilizando o poderoso solver *Adam*, explorou `learning_rate` ($10^{-4}$ a $10^{-1}$ logarítmico), número de camadas ($1$ a $3$), neurônios por camada ($8, 16, 32, 64, 128$) e fator de regularização $\alpha$ ($10^{-5}$ a $10^{-1}$).
+* **Espaço de Busca (MLP HPO NumPy):** Otimizado via Gradiente Descendente Estocástico (SGD), explorou `learning_rate` amplo ($10^{-4}$ a $10^{-1}$ logarítmico) e variadas topologias fixas de 2 camadas ($L_1 \in \{16, 32, 64\}$ e $L_2 \in \{8, 16, 32\}$).
+* **Orçamento de Tempo e Estabilidade:** Além do teto de épocas e trials, foi implementada a técnica de parada antecipada (*Early Stopping* com `n_iter_no_change=15`) e limite de tempo por estudo (`timeout=1800s`), blindando a DAG contra *timeouts*.
 
 ### 7.4. Métricas de Avaliação e Resultados Comparativos
 
