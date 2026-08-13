@@ -41,7 +41,7 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 # ──────────────────────────────────────────────
 EPOCHS = 150
 N_TRIALS_SKLEARN = 10
-N_TRIALS_NUMPY = 8
+N_TRIALS_NUMPY = 10
 
 BASELINE_SKLEARN_MSE = 4.5521
 BASELINE_NUMPY_MSE = 6.0377
