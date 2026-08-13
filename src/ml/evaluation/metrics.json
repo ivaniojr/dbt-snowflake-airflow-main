@@ -2,14 +2,14 @@
   "model_name": "MLP HPO Scikit-Learn (Modelo final selecionado)",
   "total_holdout_samples": 32394,
   "audit_sample_size": 150,
-  "MAE": 0.6005,
-  "RMSE": 1.4961,
-  "MSE": 2.2384,
-  "R2_Score": 0.8448,
-  "MAE_holdout_total": 0.6947,
-  "RMSE_holdout_total": 1.7745,
-  "MSE_holdout_total": 3.1489,
-  "R2_Score_holdout_total": 0.8156,
+  "MAE": 0.712,
+  "RMSE": 1.886,
+  "MSE": 3.5571,
+  "R2_Score": 0.7369,
+  "MAE_holdout_total": 0.7058,
+  "RMSE_holdout_total": 2.3187,
+  "MSE_holdout_total": 5.3764,
+  "R2_Score_holdout_total": 0.7235,
   "hpo_status": "Modelo HPO Scikit-Learn avaliado sobre amostra real de homologacao extraida do conjunto de teste Holdout",
-  "evaluation_timestamp": "2026-08-13T14:40:58.061706"
+  "evaluation_timestamp": "2026-08-13T15:12:40.109055"
 }

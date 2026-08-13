@@ -1,11 +1,11 @@
 y_real,y_predito,erro_absoluto,erro_percentual,categoria,causa_provavel
-1.0,0.9971551286056204,0.002844871394379611,0.2844871394379611,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
-1.0,0.9964366551027093,0.00356334489729071,0.356334489729071,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
-4.0,4.007418021443958,0.007418021443958089,0.18545053609895223,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
-1.0,0.9920932008532093,0.00790679914679071,0.7906799146790711,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
-2.0,2.016109486389864,0.01610948638986409,0.8054743194932046,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
-18.0,14.62229222136727,3.3777077786327308,18.76504321462628,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
-18.0,14.053874105685226,3.9461258943147737,21.922921635082076,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
-26.0,21.887764045191332,4.112235954808668,15.816292133879491,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
-10.5,18.088296290297002,7.588296290297002,72.26948847901907,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
-8.0,20.86872038906921,12.86872038906921,160.85900486336513,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
+2.0,2.0032964025004563,0.0032964025004562636,0.16482012502281318,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
+1.0,0.9878112691502785,0.012188730849721496,1.2188730849721496,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
+4.0,4.013173619713707,0.013173619713707119,0.32934049284267797,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
+4.0,3.977538045720512,0.02246195427948816,0.561548856987204,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
+4.0,3.97653119040592,0.023468809594080042,0.5867202398520011,Acerto Relevante,Padrao claro de evidencias e tamanho de texto consistente
+10.0,15.0888851827713,5.0888851827713,50.888851827713,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
+1.0,6.0921985763549,5.0921985763549,509.21985763549,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
+22.0,16.180246136128734,5.8197538638712665,26.453426653960303,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
+16.0,9.403471761157912,6.5965282388420885,41.22830149276305,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
+0.0,17.086262910414792,17.086262910414792,170862629.1041479,Erro Relevante,Variabilidade alta de escopo ou outlier em Horas Executadas
