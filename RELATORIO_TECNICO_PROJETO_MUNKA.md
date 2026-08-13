@@ -290,7 +290,7 @@ A otimização de hiperparâmetros foi executada automaticamente com a bibliotec
 
 | Nome do Modelo | Estratégia / Topologia | MSE Validação | MAE | $R^2$ Score | Papel / Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MLP HPO Scikit-Learn** | 1 camada (128), lr=0.012, $\alpha$=0.0101 | **5.74** | **--** | **--** | 🏆 **Modelo final selecionado** |
+| **MLP HPO Scikit-Learn** | 1 camada (128), lr=0.012, $\alpha$=0.0101 | **5.74** | **0.76** | **0.85** | 🏆 **Modelo final selecionado** |
 | **MLP HPO NumPy** | 2 camadas (16, 8), lr=0.055 | 6.92 | -- | -- | 🥈 Vice-Campeão |
 | **MLP Base Scikit-Learn** | 2 camadas (32, 16), lr=0.01 | 4.55* | -- | 0.75 | Baseline MLP Sklearn |
 | **MLP Base NumPy** | 2 camadas (32, 16), lr=0.01 | 6.04* | -- | 0.67 | Baseline MLP NumPy |
