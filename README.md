@@ -222,6 +222,25 @@ A camada de Machine Learning deste projeto vai além da Engenharia de Dados: ela
 
 O **MLflow** garante rastreabilidade total de cada experimento. O **Optuna** automatiza a busca pelos melhores hiperparâmetros, eliminando o empirismo manual.
 
+### A Estratégia de Avaliação dos Modelos (Benchmarking)
+
+Para provar a eficácia da solução de forma científica, o pipeline de Machine Learning orquestrado no Airflow executa e avalia **três modelos distintos**, cada um com um papel específico:
+
+#### 1. Modelo NumPy (A Prova de Fundamentos Matemáticos)
+* **O que é:** Uma Rede Neural construída absolutamente do zero, utilizando apenas matemática pura e matrizes (`numpy`). Sem uso de frameworks de ML.
+* **Restrições:** Possui limitações arquiteturais projetadas no código: opera exclusivamente com **2 camadas ocultas**, usa o Gradiente Descendente Estocástico (SGD) clássico e não possui otimização dinâmica de regularização.
+* **Por que usamos:** Serve para atestar o domínio técnico sobre o algoritmo de *backpropagation* e os fundamentos matemáticos por trás do aprendizado profundo.
+
+#### 2. Scikit-Learn MLP Completo (O Caçador de Performance)
+* **O que é:** O modelo oficial da biblioteca de mercado `scikit-learn` (`MLPRegressor`), que roda otimizado em linguagem C (Cython) e utiliza o moderno otimizador de gradientes **Adam**. 
+* **Restrições:** **Nenhuma.** Durante a Busca de Hiperparâmetros (HPO) com o Optuna, damos total liberdade para ele escolher entre 1 a 3 camadas, centenas de neurônios, e afinar sua regularização (`alpha`) livremente. 
+* **Por que usamos:** O objetivo deste modelo é corporativo: encontrar a rede neural mais precisa possível para ser implantada em produção e entregar valor ao negócio.
+
+#### 3. Scikit-Learn MLP Restrito (O Grupo de Controle Científico)
+* **O que é:** É o mesmo modelo avançado do Scikit-Learn, porém com as "mãos amarradas" de propósito durante o HPO.
+* **Restrições (A Regra do *Apples-to-Apples*):** Limitamos o espaço de busca deste modelo para ser **matematicamente idêntico** ao modelo NumPy. Ele é forçado a procurar arquiteturas de exatamente **2 camadas**, usando a mesma quantidade limitada de neurônios e com a regularização (`alpha`) travada no padrão.
+* **Por que usamos:** Atua como um controle de laboratório. Ao colocar o NumPy e o Scikit-Learn para competirem na mesma "categoria de peso", isolamos a variável de sucesso. Se o Scikit-Learn Restrito vencer o NumPy, provamos estatisticamente que a vantagem vem da sua implementação do otimizador *Adam* em C. Se o NumPy empatar, provamos que nossa matemática feita do zero tem o mesmo poder de fogo de uma biblioteca global!
+
 ### Como ativar o servidor MLflow (UI de Experimentos)
 
 O MLflow armazena todos os experimentos localmente em `src/ml/mlflow.db` (SQLite). Para visualizar os gráficos e comparar runs:

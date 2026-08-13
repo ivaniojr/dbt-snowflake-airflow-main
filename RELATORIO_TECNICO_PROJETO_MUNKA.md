@@ -263,12 +263,19 @@ Para eliminar qualquer ambiguidade entre os benchmarks estatísticos, os modelos
 | Nome Padronizado | Definção e Função Técnica no Projeto |
 | :--- | :--- |
 | **Baseline de referência** | Regressão Linear simples (benchmark estatístico inicial sem redes neurais). |
-| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | Modelo `MLPRegressor` treinado com o conjunto restrito de atributos tradicionais (sem as novas features de NLP/evidências do dbt), utilizado para mensurar o ganho trazido pelo Feature Engineering. |
+| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | O Grupo de Controle. Modelo `MLPRegressor` treinado com as **mesmas restrições topológicas** do modelo NumPy (exatamente 2 camadas) e regularização estática, para permitir uma comparação científica justa (*apples-to-apples*). |
 | **MLP Base NumPy** | Redes Neurais MLP desenvolvidas em NumPy puro sem otimização de hiperparâmetros (com todas as 15 features). |
 | **MLP Base Scikit-Learn** | Redes Neurais MLP da biblioteca Scikit-Learn sem otimização de hiperparâmetros (com todas as 15 features). |
 | **MLP HPO NumPy** | Melhor configuração do algoritmo NumPy encontrada pela busca do Optuna. |
 | **MLP HPO Scikit-Learn** | Melhor configuração do algoritmo Scikit-Learn encontrada pelo Optuna. |
 | **Modelo final selecionado** | **`MLP HPO Scikit-Learn`**, modelo campeão promovido para o pipeline de inferência (`batch_inference.py`). |
+
+### 7.2.1. A Estratégia de Benchmarking (Por que 3 modelos?)
+Para provar a eficácia da solução de forma científica, o pipeline executa e avalia **três modelos distintos**:
+
+1. **Modelo NumPy (A Prova de Fundamentos Matemáticos):** Construída do zero utilizando apenas matemática pura. Possui limitações arquiteturais projetadas no código (exatamente 2 camadas e uso do clássico SGD). Serve para atestar o domínio técnico profundo sobre os fundamentos matemáticos por trás do aprendizado profundo (*backpropagation*).
+2. **Scikit-Learn MLP Completo (O Caçador de Performance):** O modelo oficial (`MLPRegressor`), que roda otimizado em Cython e utiliza o moderno otimizador *Adam*. Durante a Busca de Hiperparâmetros (HPO) com o Optuna, damos total liberdade para ele escolher sua topologia (1 a 3 camadas, centenas de neurônios, fator de regularização). Seu objetivo é corporativo: ser o mais preciso possível para produção.
+3. **Scikit-Learn MLP Restrito (O Controle Científico):** É o mesmo modelo avançado do Scikit-Learn, porém com o espaço de busca amarrado para ser **matematicamente idêntico** ao modelo NumPy. Ele é forçado a procurar arquiteturas na mesma exata proporção restrita (apenas 2 camadas predefinidas). Se ele vencer o NumPy, prova-se estatisticamente que a vantagem vem da implementação do otimizador *Adam* em linguagem C; se empatarem, o modelo NumPy matemático se consagra tão poderoso quanto a biblioteca comercial.
 
 ### 7.3. Busca de Hiperparâmetros (HPO via Optuna)
 A otimização de hiperparâmetros foi executada automaticamente com a biblioteca Optuna. Para viabilizar a execução fluida dentro do *scheduler* do Apache Airflow, foi estabelecido um limite máximo de **10 trials** (tentativas) por algoritmo, com cada rede neural treinando por exatamente **150 épocas**.
