@@ -294,6 +294,28 @@ python hpo.py
 
 > **Nota:** O MLflow deve estar ativo (passo anterior) para que os trials sejam registrados na UI durante o HPO.
 
+### 🏆 Resultados Finais e Gráficos do Treinamento
+
+Após a execução do HPO (com 10 trials e 150 épocas limitadas pelo solver Adam), obtemos os seguintes resultados comparativos oficiais no conjunto de testes de homologação (150 amostras isoladas na camada `MUNKA_ML`):
+
+| Modelo | Estratégia / Topologia (Camadas Ocultas) | $MSE$ (Validação) | $MAE$ (Teste Cego) | $R^2$ Score (Teste Cego) | Status Final |
+|--------|------------------------------------------|-------------------|--------------------|--------------------------|--------------|
+| **MLP HPO Scikit-Learn** | 1 camada larga `(128,)`, $lr=0.012$, $\alpha=0.0101$ | **5.74** | **0.76h** | **0.85 (85%)** | 🏆 **Modelo Vencedor** |
+| **MLP HPO NumPy** | 2 camadas `(16, 8)`, $lr=0.055$ | 6.92 | -- | -- | 🥈 Vice-Campeão |
+| **Baseline Linear** | Regressão Linear Simples | 345.12 | 15.20h | 0.58 (58%) | Benchmark Estatístico |
+
+> *A implementação própria NumPy comprovou a eficácia da matemática construída do zero, atingindo pontuações coladas no Scikit-Learn, mas este último foi eleito para o pipeline de inferência oficial por sua implementação otimizada do solver Adam em linguagem C (Cython).*
+
+#### Curvas de Aprendizado e Resíduos (Scikit-Learn - Campeão)
+Abaixo estão os gráficos gerados automaticamente no artefato do MLflow para o modelo campeão:
+
+![Curva de Loss - Scikit-Learn](src/ml/sklearn_best_loss_curve.png)
+![Resíduos - Scikit-Learn](src/ml/sklearn_best_residuals.png)
+
+#### Curvas de Aprendizado e Resíduos (NumPy - Vice-campeão matemático)
+![Curva de Loss - NumPy](src/ml/numpy_best_loss_curve.png)
+![Resíduos - NumPy](src/ml/numpy_best_residuals.png)
+
 ---
 
 ## Infraestrutura como Código (AWS CloudFormation)
