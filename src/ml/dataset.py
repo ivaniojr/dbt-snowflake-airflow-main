@@ -105,8 +105,9 @@ def get_raw_dataset():
     cols_to_drop = ['TAREFA_ID', 'NOME_TAREFA', 'NOME_PROJETO', 'SPRINT_OBJETIVOS', 'NOME_COMPLEXIDADE', 'TOTAL_UST', 'SCORE_QUALIDADE_EVIDENCIA']
     df = df.drop(columns=[col for col in cols_to_drop if col in df.columns])
     
-    # Preencher nulos (boa prática)
-    df = df.fillna(0)
+    feature_names = [col for col in df.columns if col != 'HORAS_EXECUTADAS']
+    X = df.drop(columns=['HORAS_EXECUTADAS']).values
+    y = df['HORAS_EXECUTADAS'].values.reshape(-1, 1)
     
     return X, y, feature_names
 
