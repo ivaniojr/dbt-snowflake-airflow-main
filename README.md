@@ -270,8 +270,8 @@ python hpo.py
 **O que o HPO faz:**
 | Modelo | Trials | Épocas/Trial | Hiperparâmetros Otimizados |
 |--------|--------|--------------|---------------------------|
-| Scikit-Learn MLP | 15 | 300 | `learning_rate`, `hidden_sizes` (1–3 camadas), `alpha` |
-| NumPy MLP (matemático) | 10 | 300 | `learning_rate`, `n_units_l1`, `n_units_l2` |
+| Scikit-Learn MLP | 10 | 150 | `learning_rate`, `hidden_sizes` (1–3 camadas), `alpha` |
+| NumPy MLP (matemático) | 10 | 150 | `learning_rate`, `n_units_l1`, `n_units_l2` |
 
 **Saída ao final:** arquivo `src/ml/hpo_results.json` com o sumário dos melhores hiperparâmetros encontrados e a melhoria percentual vs. baseline, e todos os trials registrados no MLflow.
 
