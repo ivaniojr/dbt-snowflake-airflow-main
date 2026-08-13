@@ -319,8 +319,9 @@ Após a execução do HPO (com 10 trials e 150 épocas limitadas pelo solver Ada
 
 | Modelo | Estratégia / Topologia (Camadas Ocultas) | $MSE$ (Validação) | $MAE$ (Teste Cego) | $R^2$ Score (Teste Cego) | Status Final |
 |--------|------------------------------------------|-------------------|--------------------|--------------------------|--------------|
-| **MLP HPO Scikit-Learn** | 1 camada larga `(128,)`, $lr=0.012$, $\alpha=0.0101$ | **5.74** | **0.76h** | **0.85 (85%)** | 🏆 **Modelo Vencedor** |
-| **MLP HPO NumPy** | 2 camadas `(16, 8)`, $lr=0.055$ | 6.92 | -- | -- | 🥈 Vice-Campeão |
+| **MLP HPO Scikit-Learn** | 2 camadas `(64, 128)`, $lr=0.0033$, $\alpha=0.000025$ | **5.46** | **0.67h** | **0.75 (75%)** | 🏆 **Modelo Vencedor** |
+| **MLP HPO Sklearn Restrito** | 2 camadas `(64, 32)`, $lr=0.0027$, $\alpha=0.0001$ | 5.49 | -- | -- | 🧪 Controle (Apples-to-Apples) |
+| **MLP HPO NumPy** | 2 camadas `(16, 32)`, $lr=0.0375$ | 6.90 | -- | -- | 🥈 Vice-Campeão Matemático |
 | **Baseline Linear** | Regressão Linear Simples | 345.12 | 15.20h | 0.58 (58%) | Benchmark Estatístico |
 
 > *A implementação própria NumPy comprovou a eficácia da matemática construída do zero, atingindo pontuações coladas no Scikit-Learn, mas este último foi eleito para o pipeline de inferência oficial por sua implementação otimizada do solver Adam em linguagem C (Cython).*

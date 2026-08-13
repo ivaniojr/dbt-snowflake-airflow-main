@@ -298,25 +298,25 @@ A otimização de hiperparâmetros foi executada automaticamente com a bibliotec
 
 | Nome do Modelo | Estratégia / Topologia | MSE Validação | MAE | $R^2$ Score | Papel / Status |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **MLP HPO Scikit-Learn** | 1 camada (128), lr=0.012, $\alpha$=0.0101 | **5.74** | **0.76** | **0.85** | 🏆 **Modelo final selecionado** |
-| **MLP HPO NumPy** | 2 camadas (16, 8), lr=0.055 | 6.92 | -- | -- | 🥈 Vice-Campeão |
+| **MLP HPO Scikit-Learn** | 2 camadas (64, 128), lr=0.0033, $\alpha$=0.000025 | **5.46** | **0.67** | **0.75** | 🏆 **Modelo final selecionado** |
+| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | 2 camadas (64, 32), lr=0.0027, $\alpha$=0.0001 | 5.49 | -- | -- | 🧪 Controle (Apples-to-Apples) |
+| **MLP HPO NumPy** | 2 camadas (16, 32), lr=0.0375 | 6.90 | -- | -- | 🥈 Vice-Campeão |
 | **MLP Base Scikit-Learn** | 2 camadas (32, 16), lr=0.01 | 4.55* | -- | 0.75 | Baseline MLP Sklearn |
 | **MLP Base NumPy** | 2 camadas (32, 16), lr=0.01 | 6.04* | -- | 0.67 | Baseline MLP NumPy |
-| **Scikit-Learn MLP Restrito** (`sklearn_restricted`) | 2 camadas (32, 16), sem features NLP | 288.40 | 13.50 | 0.62 | Avaliação Impacto NLP |
 | **Baseline de referência** | Regressão Linear Simples | 345.12 | 15.20 | 0.58 | Baseline Estatístico |
 
 *\*Nota: Os valores de MSE dos modelos Base correspondem a rodadas com escalonamento direto e amostras reduzidas de validação inicial.*
 
 #### Tabela 7.2: Avaliação Final do Modelo Selecionado (Conjunto de Teste de Homologação)
 
-> **Declaração de Origem das Métricas:** As métricas finais apresentadas na tabela abaixo ($MAE = 0.7692$, $RMSE = 1.7633$, $R^2 = 0.8480$) correspondem exclusivamente ao **Modelo final selecionado (`MLP HPO Scikit-Learn`)** sob o conjunto de teste de homologação formal (150 amostras mantidas em *Holdout* na camada `MUNKA_ML`).
+> **Declaração de Origem das Métricas:** As métricas finais apresentadas na tabela abaixo ($MAE = 0.6672$, $RMSE = 2.1300$, $R^2 = 0.7506$) correspondem exclusivamente ao **Modelo final selecionado (`MLP HPO Scikit-Learn`)** sob o conjunto de teste de homologação formal (mantidas em *Holdout* na camada `MUNKA_ML`).
 
-| Métricas de Teste (150 amostras) | Valor Obtido | Modelo Correspondente |
+| Métricas de Teste | Valor Obtido | Modelo Correspondente |
 | :--- | :--- | :--- |
-| **Erro Absoluto Médio (MAE)** | **0.7692** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Raiz do Erro Quadrático Médio (RMSE)** | **1.7633** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Erro Quadrático Médio (MSE)** | **3.1091** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
-| **Coeficiente de Determinação ($R^2$)** | **0.8480** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Erro Absoluto Médio (MAE)** | **0.6672** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Raiz do Erro Quadrático Médio (RMSE)** | **2.1300** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Erro Quadrático Médio (MSE)** | **4.5368** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
+| **Coeficiente de Determinação ($R^2$)** | **0.7506** | **MLP HPO Scikit-Learn (Modelo final selecionado)** |
 
 ### 7.4.1. Preparação dos Dados, Prevenção de Data Leakage e Divisão (Data Splitting)
 
