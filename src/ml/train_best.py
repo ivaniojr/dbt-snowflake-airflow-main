@@ -292,7 +292,7 @@ def retrain_numpy(config_path="numpy_best_params.json"):
         mlflow.log_artifact(os.path.join(OUTPUT_DIR, "numpy_best_loss_curve.png"))
 
         # Residuais
-        plot_residuals(y_test_f, final_preds, "NumPy MLP", os.path.join(OUTPUT_DIR, "numpy_best_residuals.png"))
+        plot_residuals(y_test, final_preds, "NumPy MLP", os.path.join(OUTPUT_DIR, "numpy_best_residuals.png"))
         mlflow.log_artifact(os.path.join(OUTPUT_DIR, "numpy_best_residuals.png"))
 
         # Salva os pesos do modelo NumPy para reutilizacao futura
