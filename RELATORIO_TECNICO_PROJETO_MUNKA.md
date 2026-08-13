@@ -325,7 +325,7 @@ Os valores ausentes remanescentes foram tratados por meio de imputação com val
 Um cuidado específico foi adotado para impedir a ocorrência de *Data Leakage* durante essa padronização. Os parâmetros estatísticos utilizados pelo `StandardScaler`, especialmente média e desvio-padrão, foram calculados exclusivamente a partir dos dados de treinamento. Dessa forma, a operação `fit_transform` foi executada somente sobre o conjunto de treino, enquanto os conjuntos destinados à validação e ao teste receberam apenas a operação `transform`. Esse procedimento impede que informações estatísticas provenientes de observações futuras ou destinadas à avaliação influenciem o processo de aprendizagem dos modelos.
 
 #### C. Particionamento Hierárquico dos Dados e Origem das Amostras
-Para eliminar qualquer ambiguidades ou sobreposição metodológica, a origem e o destino de cada amostra do dataset de **5.000 registros** ($100\%$) extraídos da tabela `MUNKA_ML.ML_TAREFA_FEATURES` no Snowflake são estritamente mapeados pelo código fonte ([dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/dataset.py), [train.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/train.py) e [export_evaluation_dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/export_evaluation_dataset.py)) em duas partições primárias via `train_test_split(X, y, test_size=0.2, random_state=42)`:
+Para eliminar qualquer ambiguidade ou sobreposição metodológica, a origem e o destino de cada amostra do dataset de **5.000 registros** ($100\%$) extraídos da tabela `MUNKA_ML.ML_TAREFA_FEATURES` no Snowflake são estritamente mapeados no código fonte pelos scripts [src/ml/dataset.py](src/ml/dataset.py), [src/ml/train.py](src/ml/train.py), [src/ml/hpo.py](src/ml/hpo.py) e [src/ml/export_evaluation_dataset.py](src/ml/export_evaluation_dataset.py). A divisão primária ocorre via `train_test_split(X, y, test_size=0.2, random_state=42)`:
 
 ```
                           [ DATASET TOTAL: 5.000 registros (100%) ]
@@ -337,17 +337,18 @@ Para eliminar qualquer ambiguidades ou sobreposição metodológica, a origem e 
    ┌───────┴───────┐                                         ┌───────┴───────┐
    ▼               ▼                                         ▼               ▼
 3.200 (64%)     800 (16%)                                 150 (3%)        850 (17%)
-(Treino Fold) (Val. Fold)                               (Homologação)   (Inferência Batch)
+(Treino Fold) (Val. Fold)                               (Homologação)   (Reserva Teste)
 ```
 
 1. **Partição de Treinamento e HPO ($80\%$ / $4.000$ registros):**
-   * Destinada ao ajuste dos pesos das redes neurais e à busca do Optuna.
-   * **Validação Cruzada (5-Fold Cross-Validation):** Configurada com `KFold(n_splits=5, shuffle=True, random_state=42)`, subdividindo os 4.000 registros a cada iteração em **3.200 registros** ($64\%$ do total) para treino interno e **800 registros** ($16\%$ do total) para validação do MSE.
+   * Destinada estritamente ao ajuste dos pesos das redes neurais e à busca do Optuna ([src/ml/hpo.py](src/ml/hpo.py)).
+   * **Validação Cruzada (5-Fold Cross-Validation):** Executada exclusivamente sobre os 4.000 registros via `KFold(n_splits=5, shuffle=True, random_state=42)` em [src/ml/train.py](src/ml/train.py), subdividindo a partição de treino a cada iteração em **3.200 registros** ($64\%$ do dataset total) para treino interno e **800 registros** ($16\%$ do dataset total) para validação do MSE.
 
 2. **Partição de Teste Holdout Geral ($20\%$ / $1.000$ registros):**
-   * Mantida totalmente isolada das etapas de ajuste de pesos e de cálculo de parâmetros do `StandardScaler`.
-   * **Lote Formal de Homologação Auditável ($150$ registros / $3\%$ do dataset total ou $15\%$ do Holdout):** Extraído da partição Holdout com semente fixa (`np.random.seed(42)` e `n_samples = 150`) pelo script [export_evaluation_dataset.py](file:///c:/IFG/Trabalho_Modulo2/main-github/src/ml/export_evaluation_dataset.py) para gerar os artefatos auditáveis de teste (`X_test.csv`, `y_test.csv`, `predictions.csv` e `metrics.json`), fornecendo a medição isolada de homologação ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$).
-   * **Massa para Inferência Continuada em Lote ($850$ registros / $17\%$ do dataset total ou $85\%$ do Holdout):** Os 850 registros remanescentes da partição Holdout constituem o lote reservado para as rotinas automatizadas de predição em lote (`batch_inference.py`).
+   * Mantida totalmente intocada e isolada de todas as etapas de treino, HPO e cálculo de parâmetros do `StandardScaler`.
+   * **Lote Formal de Homologação Auditável ($150$ registros / $3\%$ do dataset total ou $15\%$ do Holdout):** Amostra real extraída da partição de teste Holdout (`X_test`) com semente reproduzível pelo script [src/ml/export_evaluation_dataset.py](src/ml/export_evaluation_dataset.py). O modelo treinado ([sklearn_best_model.joblib](src/ml/sklearn_best_model.joblib)) realiza predições reais sobre este lote para gerar as métricas formais auditáveis ($MAE = 2.0449$, $RMSE = 2.5902$, $R^2 = 0.9114$) e exportar os arquivos `X_test.csv`, `y_test.csv`, `predictions.csv`, `metrics.json` e `analise_qualitativa_erros.csv`.
+   * **Reserva de Teste Adicional ($850$ registros / $17\%$ do dataset total ou $85\%$ do Holdout):** Registros remanescentes mantidos no conjunto de teste Holdout como reserva estática.
+   * **Pipeline Independente de Inferência em Lote:** O fluxo operacional contínuo ([src/ml/batch_inference.py](src/ml/batch_inference.py)) atua de forma independente em produção sobre tarefas operacionais sem rotulagem (`WHERE HORAS_EXECUTADAS IS NULL` no Snowflake).
 
 #### D. Estratégia de Particionamento, Reprodutibilidade e Baseline
 A estratégia de particionamento empregou amostragem aleatória com embaralhamento (`shuffle=True`). Para assegurar a reprodutibilidade inviolável dos experimentos, foi adotada de forma consistente a semente pseudoaleatória **`random_state = 42`**, utilizada nas operações de particionamento e validação (`KFold`, `train_test_split` e `np.random.seed(42)`).

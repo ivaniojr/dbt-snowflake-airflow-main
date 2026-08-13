@@ -1,80 +1,107 @@
 """
 export_evaluation_dataset.py
-Gera e formaliza o conjunto de teste de avaliacao de ML (X_test.csv, y_test.csv, predictions.csv, metrics.json)
-e executa a analise qualitativa de erros do modelo (Hard-code NumPy vs Scikit-Learn).
+Gera e formaliza o conjunto de teste de homologação de ML REAL baseado nas predições efetivas
+do modelo treinado (sklearn_best_model.joblib) sobre o conjunto de teste Holdout isolado (1.000 amostras).
+Exporta X_test.csv, y_test.csv, predictions.csv, metrics.json e a analise qualitativa de erros.
 """
 import os
 import json
 import pandas as pd
 import numpy as np
+import joblib
+from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
+
+from dataset import get_train_test_split
 
 def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     eval_dir = os.path.join(base_dir, "evaluation")
     os.makedirs(eval_dir, exist_ok=True)
 
+    # 1. Carregar Partição Real de Teste Holdout (1.000 amostras intocadas)
+    X_train_full, X_test_full, y_train_full, y_test_full, feature_names = get_train_test_split(
+        test_size=0.2, random_state=42
+    )
+
+    # 2. Carregar Scaler e Modelo Treinado Real
+    scaler_path = os.path.join(base_dir, "scaler.joblib")
+    model_path = os.path.join(base_dir, "sklearn_best_model.joblib")
+
+    if os.path.exists(scaler_path) and os.path.exists(model_path):
+        print("Carregando Scaler e Modelo Campeão serializados...")
+        scaler = joblib.load(scaler_path)
+        model = joblib.load(model_path)
+    else:
+        print("[Aviso] Modelo/Scaler salvos não encontrados. Ajustando modelo base de homologação real...")
+        from sklearn.neural_network import MLPRegressor
+        from sklearn.preprocessing import StandardScaler
+        scaler = StandardScaler()
+        X_train_scaled = scaler.fit_transform(X_train_full)
+        model = MLPRegressor(hidden_layer_sizes=(8, 8, 32), max_iter=500, random_state=42, alpha=0.0004, learning_rate_init=0.011)
+        model.fit(X_train_scaled, y_train_full.ravel())
+        joblib.dump(scaler, scaler_path)
+        joblib.dump(model, model_path)
+
+    # Transformar features do teste Holdout
+    X_test_scaled = scaler.transform(X_test_full)
+    y_pred_full = model.predict(X_test_scaled).reshape(-1, 1)
+    y_real_full = y_test_full.reshape(-1, 1)
+
+    # 3. Calcular Métricas Reais sobre todo o Teste Holdout (1.000 amostras)
+    mse_total = float(mean_squared_error(y_real_full, y_pred_full))
+    mae_total = float(mean_absolute_error(y_real_full, y_pred_full))
+    rmse_total = float(np.sqrt(mse_total))
+    r2_total = float(r2_score(y_real_full, y_pred_full))
+
+    # 4. Selecionar Subconjunto Amostral de 150 Registros Reais para Auditoria Qualitativa
     np.random.seed(42)
-    n_samples = 150
+    n_audit_samples = min(150, len(X_test_full))
+    audit_indices = np.random.choice(len(X_test_full), size=n_audit_samples, replace=False)
 
-    # 1. Dataset de Features
-    df_x = pd.DataFrame({
-        'QTD_IMAGENS': np.random.randint(0, 5, n_samples),
-        'QTD_LINKS': np.random.randint(0, 3, n_samples),
-        'TEM_CODIGO': np.random.randint(0, 2, n_samples),
-        'TEM_SQL': np.random.randint(0, 2, n_samples),
-        'TEM_COMMIT': np.random.randint(0, 2, n_samples),
-        'TEM_ANEXO': np.random.randint(0, 2, n_samples),
-        'FL_ENVOLVE_FRONTEND': np.random.randint(0, 2, n_samples),
-        'FL_ENVOLVE_BACKEND': np.random.randint(0, 2, n_samples),
-        'FL_ENVOLVE_DADOS': np.random.randint(0, 2, n_samples),
-        'FL_IS_BUGFIX': np.random.randint(0, 2, n_samples),
-        'QTD_BLOCOS_CODIGO': np.random.randint(0, 10, n_samples),
-        'FL_TEM_PULL_REQUEST': np.random.randint(0, 2, n_samples),
-        'TAMANHO_TEXTO': np.random.randint(50, 1000, n_samples),
-        'SCORE_QUALIDADE_EVIDENCIA': np.random.uniform(0.1, 1.0, n_samples)
-    })
+    df_x_audit = pd.DataFrame(X_test_full[audit_indices], columns=feature_names)
+    y_real_audit = y_real_full[audit_indices].ravel()
+    y_pred_audit = y_pred_full[audit_indices].ravel()
 
-    # Target Real vs Predito pelo Modelo MLP (NumPy Hard-code / Sklearn Baseline)
-    y_real = np.random.uniform(2.0, 35.0, n_samples)
-    noise = np.random.normal(0, 2.5, n_samples)
-    y_pred = np.clip(y_real + noise, 1.0, 40.0)
+    df_y_audit = pd.DataFrame({'HORAS_EXECUTADAS': y_real_audit})
 
-    df_y = pd.DataFrame({'HORAS_EXECUTADAS': y_real})
-
-    # 2. Métricas Formais
-    mse = float(np.mean((y_real - y_pred) ** 2))
-    mae = float(np.mean(np.abs(y_real - y_pred)))
-    rmse = float(np.sqrt(mse))
-    var_y = np.var(y_real)
-    r2 = float(1.0 - (mse / var_y)) if var_y > 0 else 0.85
+    # Métricas Auditáveis da Amostra Formal (150 amostras)
+    mse_audit = float(mean_squared_error(y_real_audit, y_pred_audit))
+    mae_audit = float(mean_absolute_error(y_real_audit, y_pred_audit))
+    rmse_audit = float(np.sqrt(mse_audit))
+    r2_audit = float(r2_score(y_real_audit, y_pred_audit))
 
     metrics = {
         "model_name": "MLP HPO Scikit-Learn (Modelo final selecionado)",
-        "test_samples": n_samples,
-        "MAE": round(mae, 4),
-        "RMSE": round(rmse, 4),
-        "MSE": round(mse, 4),
-        "R2_Score": round(r2, 4),
-        "hpo_status": "Modelo HPO Scikit-Learn selecionado como Campeao final (superou a Baseline de referencia)",
+        "total_holdout_samples": len(X_test_full),
+        "audit_sample_size": n_audit_samples,
+        "MAE": round(mae_audit, 4),
+        "RMSE": round(rmse_audit, 4),
+        "MSE": round(mse_audit, 4),
+        "R2_Score": round(r2_audit, 4),
+        "MAE_holdout_total": round(mae_total, 4),
+        "RMSE_holdout_total": round(rmse_total, 4),
+        "MSE_holdout_total": round(mse_total, 4),
+        "R2_Score_holdout_total": round(r2_total, 4),
+        "hpo_status": "Modelo HPO Scikit-Learn avaliado sobre amostra real de homologacao extraida do conjunto de teste Holdout",
         "evaluation_timestamp": pd.Timestamp.now().isoformat()
     }
 
-    # 3. Exportar Arquivos Formais
-    df_x.to_csv(os.path.join(eval_dir, "X_test.csv"), index=False)
-    df_y.to_csv(os.path.join(eval_dir, "y_test.csv"), index=False)
+    # 5. Exportar Arquivos Formais
+    df_x_audit.to_csv(os.path.join(eval_dir, "X_test.csv"), index=False)
+    df_y_audit.to_csv(os.path.join(eval_dir, "y_test.csv"), index=False)
 
     df_preds = pd.DataFrame({
-        "y_real": y_real,
-        "y_predito": y_pred,
-        "erro_absoluto": np.abs(y_real - y_pred),
-        "erro_percentual": np.abs(y_real - y_pred) / np.maximum(y_real, 1e-5) * 100
+        "y_real": y_real_audit,
+        "y_predito": y_pred_audit,
+        "erro_absoluto": np.abs(y_real_audit - y_pred_audit),
+        "erro_percentual": np.abs(y_real_audit - y_pred_audit) / np.maximum(y_real_audit, 1e-5) * 100
     })
     df_preds.to_csv(os.path.join(eval_dir, "predictions.csv"), index=False)
 
     with open(os.path.join(eval_dir, "metrics.json"), "w", encoding="utf-8") as f:
         json.dump(metrics, f, indent=2, ensure_ascii=False)
 
-    # 4. Análise Qualitativa de Erros
+    # 6. Análise Qualitativa de Erros Reais
     df_preds_sorted = df_preds.sort_values(by="erro_absoluto")
     top_acertos = df_preds_sorted.head(5).copy()
     top_acertos["categoria"] = "Acerto Relevante"
@@ -87,7 +114,8 @@ def main():
     df_analise = pd.concat([top_acertos, top_erros], ignore_index=True)
     df_analise.to_csv(os.path.join(eval_dir, "analise_qualitativa_erros.csv"), index=False)
 
-    print(f"OK: Conjunto de avaliacao formal exportado para {eval_dir}")
+    print(f"OK: Conjunto de avaliacao formal REAL exportado para {eval_dir}")
+    print(f"Métricas Auditáveis (150 amostras): MAE={mae_audit:.4f}, RMSE={rmse_audit:.4f}, MSE={mse_audit:.4f}, R2={r2_audit:.4f}")
 
 if __name__ == "__main__":
     main()

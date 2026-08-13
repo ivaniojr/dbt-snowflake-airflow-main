@@ -96,55 +96,35 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
 
     X, y, feature_names = get_raw_dataset()
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
-    mlflow.set_tracking_uri(tracking_uri)
-    mlflow.set_experiment("Auditoria_MLP_Best_Params")
+def run_best_sklearn(params_dict):
+    hidden_sizes, lr, epochs = parse_sklearn_params(params_dict)
+    from dataset import get_train_test_split
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
 
-    with mlflow.start_run(run_name="Sklearn_Best_Retrain"):
-        # Loga a origem da configuracao
-        mlflow.log_param("config_source", config_path)
-        mlflow.log_param("hpo_best_val_mse", config["best_val_mse"])
-        mlflow.log_param("hpo_improvement_pct", config["improvement_vs_baseline_pct"])
+    print(f"\n--- Retreinando Scikit-Learn com Melhores Hiperparâmetros ---")
+    print(f"Topologia: {hidden_sizes} | LR: {lr:.5f} | Épocas Max: {epochs}")
+
+    with mlflow.start_run(run_name="Sklearn_Best_Model"):
         mlflow.log_params({
-            "model": "sklearn",
-            "epochs": epochs,
-            "learning_rate": lr,
             "hidden_sizes": str(hidden_sizes),
-            "alpha": hp["alpha"],
-            "retrained_at": datetime.now().isoformat(),
+            "learning_rate": lr,
+            "epochs": epochs,
+            "framework": "scikit-learn"
         })
 
-        # K-Fold 5 splits
-        print("\n  Executando 5-Fold Cross Validation...")
+        # 5-Fold no conjunto de treino de 4.000 amostras (3.200 treino / 800 val por fold)
         kf = KFold(n_splits=5, shuffle=True, random_state=42)
         mse_list, mae_list, r2_list = [], [], []
 
-        for fold, (train_idx, test_idx) in enumerate(kf.split(X), 1):
-            X_train, X_test = X[train_idx], X[test_idx]
-            y_train, y_test = y[train_idx], y[test_idx]
+        for fold, (train_idx, test_idx) in enumerate(kf.split(X_train_full), 1):
+            X_tr, X_val = X_train_full[train_idx], X_train_full[test_idx]
+            y_tr, y_val = y_train_full[train_idx], y_train_full[test_idx]
             scaler = StandardScaler()
-            X_train_sc = scaler.fit_transform(X_train)
-            X_test_sc = scaler.transform(X_test)
-            model = train_sklearn_mlp(X_train_sc, y_train,
+            X_tr_sc = scaler.fit_transform(X_tr)
+            X_val_sc = scaler.transform(X_val)
+            model = train_sklearn_mlp(X_tr_sc, y_tr,
                                       hidden_sizes=hidden_sizes,
                                       learning_rate=lr, epochs=epochs)
-            preds = model.predict(X_test_sc).reshape(-1, 1)
-            mse_list.append(mean_squared_error(y_test, preds))
-            mae_list.append(mean_absolute_error(y_test, preds))
-            r2_list.append(r2_score(y_test, preds))
-            print(f"  Fold {fold}: MSE={mse_list[-1]:.4f}  R2={r2_list[-1]:.4f}")
-
-        kfold_mse = float(np.mean(mse_list))
-        kfold_r2  = float(np.mean(r2_list))
-        mlflow.log_metrics({
-            "kfold_mse": kfold_mse,
-            "kfold_mae": float(np.mean(mae_list)),
-            "kfold_r2":  kfold_r2,
-        })
-
-        # Treino final para artefatos
-        X_train_f, X_test_f, y_train_f, y_test_f = train_test_split(
-            X, y, test_size=0.2, random_state=42
         )
         scaler_f = StandardScaler()
         X_train_sc_f = scaler_f.fit_transform(X_train_f)
@@ -210,7 +190,8 @@ def retrain_numpy(config_path="numpy_best_params.json"):
     print(f" HPO mse      : {config['best_val_mse']:.4f}")
     print(f"{'='*55}")
 
-    X, y, feature_names = get_raw_dataset()
+    from dataset import get_train_test_split
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
 
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
     mlflow.set_tracking_uri(tracking_uri)
@@ -228,28 +209,28 @@ def retrain_numpy(config_path="numpy_best_params.json"):
             "retrained_at": datetime.now().isoformat(),
         })
 
-        # K-Fold 5 splits
-        print("\n  Executando 5-Fold Cross Validation...")
+        # K-Fold 5 splits sobre os 4.000 de treino (3.200 treino / 800 val por fold)
+        print("\n  Executando 5-Fold Cross Validation no treino (4.000 amostras)...")
         kf = KFold(n_splits=5, shuffle=True, random_state=42)
         mse_list, mae_list, r2_list = [], [], []
 
-        for fold, (train_idx, test_idx) in enumerate(kf.split(X), 1):
-            X_train, X_test = X[train_idx], X[test_idx]
-            y_train, y_test = y[train_idx], y[test_idx]
+        for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_full), 1):
+            X_tr, X_val = X_train_full[train_idx], X_train_full[val_idx]
+            y_tr, y_val = y_train_full[train_idx], y_train_full[val_idx]
             scaler = StandardScaler()
-            X_train_sc = scaler.fit_transform(X_train)
-            X_test_sc  = scaler.transform(X_test)
+            X_tr_sc = scaler.fit_transform(X_tr)
+            X_val_sc  = scaler.transform(X_val)
             model = NumPyMLPRegressor(
-                input_size=X_train_sc.shape[1],
+                input_size=X_tr_sc.shape[1],
                 hidden_sizes=hidden_sizes,
                 learning_rate=lr,
                 epochs=epochs
             )
-            model.train(X_train_sc, y_train, log_interval=1000)
-            preds = model.predict(X_test_sc)
-            mse_list.append(mean_squared_error(y_test, preds))
-            mae_list.append(mean_absolute_error(y_test, preds))
-            r2_list.append(r2_score(y_test, preds))
+            model.train(X_tr_sc, y_tr, log_interval=1000)
+            preds = model.predict(X_val_sc)
+            mse_list.append(mean_squared_error(y_val, preds))
+            mae_list.append(mean_absolute_error(y_val, preds))
+            r2_list.append(r2_score(y_val, preds))
             print(f"  Fold {fold}: MSE={mse_list[-1]:.4f}  R2={r2_list[-1]:.4f}")
 
         kfold_mse = float(np.mean(mse_list))
@@ -260,13 +241,10 @@ def retrain_numpy(config_path="numpy_best_params.json"):
             "kfold_r2":  kfold_r2,
         })
 
-        # Treino final para artefatos
-        X_train_f, X_test_f, y_train_f, y_test_f = train_test_split(
-            X, y, test_size=0.2, random_state=42
-        )
+        # Treino final sobre todos os 4.000 de treino e teste sobre os 1.000 do Holdout
         scaler_f = StandardScaler()
-        X_train_sc_f = scaler_f.fit_transform(X_train_f)
-        X_test_sc_f  = scaler_f.transform(X_test_f)
+        X_train_sc_f = scaler_f.fit_transform(X_train_full)
+        X_test_sc_f  = scaler_f.transform(X_test)
 
         final_model = NumPyMLPRegressor(
             input_size=X_train_sc_f.shape[1],
@@ -274,13 +252,19 @@ def retrain_numpy(config_path="numpy_best_params.json"):
             learning_rate=lr,
             epochs=epochs
         )
-        final_model.train(X_train_sc_f, y_train_f,
-                          X_val=X_test_sc_f, y_val=y_test_f,
+        final_model.train(X_train_sc_f, y_train_full,
+                          X_val=X_test_sc_f, y_val=y_test,
                           log_interval=1000)
 
         final_preds = final_model.predict(X_test_sc_f)
-        final_mse = mean_squared_error(y_test_f, final_preds)
-        mlflow.log_metric("final_test_mse", final_mse)
+        final_mse = mean_squared_error(y_test, final_preds)
+        final_mae = mean_absolute_error(y_test, final_preds)
+        final_r2  = r2_score(y_test, final_preds)
+        mlflow.log_metrics({
+            "final_test_mse": final_mse,
+            "final_test_mae": final_mae,
+            "final_test_r2": final_r2
+        })
 
         # Curva de loss
         plot_loss_curve(

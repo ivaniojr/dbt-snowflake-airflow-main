@@ -50,8 +50,11 @@ BASELINE_NUMPY_MSE = 6.0377
 # Dados
 # ──────────────────────────────────────────────
 def get_hpo_data():
-    X, y, _ = get_raw_dataset()
-    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)
+    from dataset import get_train_test_split
+    # Carrega X_train_full (4.000 amostras do conjunto de treino principal)
+    X_train_full, X_test, y_train_full, y_test, _ = get_train_test_split(test_size=0.2, random_state=42)
+    # Subdivide os 4.000 registros em 3.200 treino interno / 800 validação interna para o HPO
+    X_train, X_val, y_train, y_val = train_test_split(X_train_full, y_train_full, test_size=0.2, random_state=42)
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_val_scaled = scaler.transform(X_val)

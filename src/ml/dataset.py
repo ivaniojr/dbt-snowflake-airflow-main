@@ -108,8 +108,16 @@ def get_raw_dataset():
     # Preencher nulos (boa prática)
     df = df.fillna(0)
     
-    feature_names = [col for col in df.columns if col != 'HORAS_EXECUTADAS']
-    X = df.drop(columns=['HORAS_EXECUTADAS']).values
-    y = df['HORAS_EXECUTADAS'].values.reshape(-1, 1)
-    
     return X, y, feature_names
+
+def get_train_test_split(test_size=0.2, random_state=42):
+    """
+    Função centralizada para partição reprodutiva em todo o projeto ML.
+    Garante que 80% (4.000) fiquem em Treino/HPO e 20% (1.000) fiquem em Teste Holdout.
+    """
+    X, y, feature_names = get_raw_dataset()
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, test_size=test_size, random_state=random_state
+    )
+    return X_train, X_test, y_train, y_test, feature_names
+

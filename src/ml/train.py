@@ -132,8 +132,9 @@ def run_kfold_evaluation(X, y, params):
 
 def main():
     print("Iniciando Pipeline de ML Avançado...")
-    X, y, feature_names = get_raw_dataset()
-    input_size = X.shape[1]
+    from dataset import get_train_test_split
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
+    input_size = X_train_full.shape[1]
     
     params = {
         "learning_rate": 0.01,
@@ -148,20 +149,21 @@ def main():
     with mlflow.start_run(run_name="NumPy_vs_Sklearn_Advanced"):
         mlflow.log_params(params)
         mlflow.log_param("input_features", input_size)
-        mlflow.log_param("dataset_size", len(X))
+        mlflow.log_param("dataset_size", len(X_train_full) + len(X_test))
+        mlflow.log_param("train_size", len(X_train_full))
+        mlflow.log_param("test_size", len(X_test))
 
-        # 1. Avaliação K-Fold
-        print("\n=== Executando 5-Fold Cross Validation ===")
-        kfold_results = run_kfold_evaluation(X, y, params)
+        # 1. Avaliação K-Fold (Executada estritamente sobre a partição de Treinamento de 4.000 amostras: 3.200 treino / 800 val por fold)
+        print("\n=== Executando 5-Fold Cross Validation no Conjunto de Treino (4.000 amostras) ===")
+        kfold_results = run_kfold_evaluation(X_train_full, y_train_full, params)
         mlflow.log_metrics(kfold_results)
         
         print("\n=== Resultados Médios do K-Fold (Estabilidade) ===")
         print(f"NumPy   -> R2: {kfold_results['numpy_kfold_r2']:.4f} | MSE: {kfold_results['numpy_kfold_mse']:.4f}")
         print(f"Sklearn -> R2: {kfold_results['sklearn_kfold_r2']:.4f} | MSE: {kfold_results['sklearn_kfold_mse']:.4f}")
         
-        # 2. Treinamento do Modelo Final (com gráfico de Validação e Permutation Importance)
-        print("\n=== Treinando Modelo Final para Gráficos de Interpretabilidade ===")
-        X_train_full, X_test, y_train_full, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        # 2. Treinamento do Modelo Final (com validação interna de 3.200/800 e Teste Holdout isolado de 1.000)
+        print("\n=== Treinando Modelo Final com Validação Interna e Teste Holdout Isolado ===")
         X_train, X_val, y_train, y_val = train_test_split(X_train_full, y_train_full, test_size=0.2, random_state=42)
         
         scaler = StandardScaler()
