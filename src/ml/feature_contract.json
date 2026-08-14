@@ -1,0 +1,25 @@
+{
+    "model_scope": "retrospective_analysis",
+    "analysis_moment": "post_execution",
+    "uses_execution_evidence": true,
+    "feature_set_name": "retrospective_features_v1",
+    "target": "HORAS_EXECUTADAS",
+    "n_features": 15,
+    "features": [
+        "FATOR_AJUSTE",
+        "HET_MAX",
+        "QTD_IMAGENS",
+        "QTD_LINKS",
+        "TEM_CODIGO",
+        "TEM_SQL",
+        "TEM_COMMIT",
+        "TEM_ANEXO",
+        "FL_ENVOLVE_FRONTEND",
+        "FL_ENVOLVE_BACKEND",
+        "FL_ENVOLVE_DADOS",
+        "FL_IS_BUGFIX",
+        "QTD_BLOCOS_CODIGO",
+        "FL_TEM_PULL_REQUEST",
+        "TAMANHO_TEXTO"
+    ]
+}

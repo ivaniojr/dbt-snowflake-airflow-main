@@ -59,7 +59,7 @@ def load_data():
             database=database,
             schema=schema
         )
-        query = f"SELECT * FROM {database}.{schema}.ML_TAREFA_FEATURES"
+        query = f"SELECT * FROM {database}.{schema}.ML_TAREFA_FEATURES WHERE HORAS_EXECUTADAS IS NOT NULL LIMIT 5000"
         df = pd.read_sql(query, ctx)
         ctx.close()
         print("Dados carregados com sucesso do Snowflake!")

@@ -1,0 +1,19 @@
+{
+    "model_scope": "retrospective_analysis",
+    "analysis_moment": "post_execution",
+    "uses_execution_evidence": true,
+    "feature_set_name": "retrospective_features_v1",
+    "target": "HORAS_EXECUTADAS",
+    "n_samples": 100,
+    "data_source": [
+        "SNOWFLAKE"
+    ],
+    "sklearn_mae": 0.692816848640615,
+    "sklearn_mse": 1.8239400095584997,
+    "sklearn_rmse": 1.3505332315639256,
+    "sklearn_r2": 0.9029480149011421,
+    "numpy_mae": 0.7970734162908308,
+    "numpy_mse": 2.626615033616405,
+    "numpy_rmse": 1.6206835081583342,
+    "numpy_r2": 0.8602376164966739
+}

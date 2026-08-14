@@ -1,4 +1,5 @@
 import os
+import json
 import mlflow
 import numpy as np
 import matplotlib.pyplot as plt
@@ -7,9 +8,18 @@ from sklearn.model_selection import KFold, train_test_split
 from sklearn.preprocessing import StandardScaler
 from sklearn.inspection import permutation_importance
 from sklearn.base import BaseEstimator, RegressorMixin
-from dataset import get_raw_dataset
 from mlp_numpy import NumPyMLPRegressor
 from mlp_sklearn import train_sklearn_mlp
+
+# ============================================================
+# Contrato metodológico do modelo
+# ============================================================
+
+MODEL_SCOPE = "retrospective_analysis"
+ANALYSIS_MOMENT = "post_execution"
+USES_EXECUTION_EVIDENCE = True
+FEATURE_SET_NAME = "retrospective_features_v1"
+TARGET_NAME = "HORAS_EXECUTADAS"
 
 def plot_residuals(y_true, numpy_preds, sklearn_preds, save_path="residuals_comparison.png"):
     plt.figure(figsize=(14, 6))
@@ -40,8 +50,9 @@ class SklearnWrapper(BaseEstimator, RegressorMixin):
     """Wrapper para satisfazer a validação do sklearn (precisa de fit e predict)."""
     def __init__(self, model):
         self.model = model
+        self.is_fitted_ = True
         
-    def fit(self, X, y):
+    def fit(self, X, y=None):
         self.is_fitted_ = True
         return self
         
@@ -97,7 +108,7 @@ def run_kfold_evaluation(X, y, params):
         X_train, X_test = X[train_index], X[test_index]
         y_train, y_test = y[train_index], y[test_index]
         
-        # Scaling Isolado por Fold (Prevenção Absoluta de Data Leakage)
+        # Scaling isolado por Fold (prevenção de Data Leakage na etapa de padronização)
         scaler_X = StandardScaler()
         X_train_scaled = scaler_X.fit_transform(X_train)
         X_test_scaled = scaler_X.transform(X_test)
@@ -131,27 +142,63 @@ def run_kfold_evaluation(X, y, params):
     }
 
 def main():
-    print("Iniciando Pipeline de ML Avançado...")
+    print("Iniciando Pipeline de ML Retrospectivo...")
     from dataset import get_train_test_split
-    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(
+        test_size=0.2, random_state=42
+    )
     input_size = X_train_full.shape[1]
     
     params = {
         "learning_rate": 0.01,
-        "epochs": 500,
+        "epochs": 100,
         "hidden_sizes": (32, 16)
     }
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    default_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "mlflow.db")).replace("\\", "/")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
     mlflow.set_tracking_uri(tracking_uri)
-    mlflow.set_experiment("Auditoria_MLP_Tarefas")
 
-    with mlflow.start_run(run_name="NumPy_vs_Sklearn_Advanced"):
+    # Experimento explicitamente retrospectivo
+    mlflow.set_experiment("MUNKA_MLP_Retrospective")
+
+    with mlflow.start_run(run_name="NumPy_vs_Sklearn_Retrospective"):
+        # Contexto metodológico
+        mlflow.log_param("model_scope", MODEL_SCOPE)
+        mlflow.log_param("analysis_moment", ANALYSIS_MOMENT)
+        mlflow.log_param("uses_execution_evidence", USES_EXECUTION_EVIDENCE)
+        mlflow.log_param("feature_set_name", FEATURE_SET_NAME)
+        mlflow.log_param("target_variable", TARGET_NAME)
+
+        # Parâmetros do treinamento
         mlflow.log_params(params)
         mlflow.log_param("input_features", input_size)
         mlflow.log_param("dataset_size", len(X_train_full) + len(X_test))
         mlflow.log_param("train_size", len(X_train_full))
         mlflow.log_param("test_size", len(X_test))
+
+        # Contrato das features utilizadas
+        feature_contract = {
+            "model_scope": MODEL_SCOPE,
+            "analysis_moment": ANALYSIS_MOMENT,
+            "uses_execution_evidence": USES_EXECUTION_EVIDENCE,
+            "feature_set_name": FEATURE_SET_NAME,
+            "target": TARGET_NAME,
+            "n_features": len(feature_names),
+            "features": list(feature_names)
+        }
+
+        OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+        feature_contract_path = os.path.join(
+            OUTPUT_DIR,
+            "feature_contract.json"
+        )
+
+        with open(feature_contract_path,"w",encoding="utf-8") as f:
+            json.dump(feature_contract, f, ensure_ascii=False, indent=4)
+
+        mlflow.log_artifact(feature_contract_path)
 
         # 1. Avaliação K-Fold (Executada estritamente sobre a partição de Treinamento de 4.000 amostras: 3.200 treino / 800 val por fold)
         print("\n=== Executando 5-Fold Cross Validation no Conjunto de Treino (4.000 amostras) ===")
@@ -178,34 +225,78 @@ def main():
         # Treina Sklearn Final
         sklearn_model = train_sklearn_mlp(X_train_scaled, y_train, hidden_sizes=params["hidden_sizes"], learning_rate=params["learning_rate"], epochs=params["epochs"])
         
-        # 3. Gerando Gráficos
+        # 3. Avaliação final no Holdout
         numpy_preds = numpy_model.predict(X_test_scaled)
         sklearn_preds = sklearn_model.predict(X_test_scaled).reshape(-1, 1)
+
+        numpy_holdout_mse = mean_squared_error(y_test, numpy_preds)
+        numpy_holdout_mae = mean_absolute_error(y_test, numpy_preds)
+        numpy_holdout_rmse = np.sqrt(numpy_holdout_mse)
+        numpy_holdout_r2 = r2_score(y_test, numpy_preds)
+
+        sklearn_holdout_mse = mean_squared_error(y_test, sklearn_preds)
+        sklearn_holdout_mae = mean_absolute_error(y_test, sklearn_preds)
+        sklearn_holdout_rmse = np.sqrt(sklearn_holdout_mse)
+        sklearn_holdout_r2 = r2_score(y_test, sklearn_preds)
+
+        holdout_metrics = {
+            "numpy_holdout_mse": numpy_holdout_mse,
+            "numpy_holdout_mae": numpy_holdout_mae,
+            "numpy_holdout_rmse": numpy_holdout_rmse,
+            "numpy_holdout_r2": numpy_holdout_r2,
+            "sklearn_holdout_mse": sklearn_holdout_mse,
+            "sklearn_holdout_mae": sklearn_holdout_mae,
+            "sklearn_holdout_rmse": sklearn_holdout_rmse,
+            "sklearn_holdout_r2": sklearn_holdout_r2,
+        }
+        mlflow.log_metrics(holdout_metrics)
+
+        print("\n=== Resultado Final no Holdout ===")
+        print(
+            f"NumPy   -> MAE: {numpy_holdout_mae:.4f} | "
+            f"RMSE: {numpy_holdout_rmse:.4f} | "
+            f"R2: {numpy_holdout_r2:.4f}"
+        )
+        print(
+            f"Sklearn -> MAE: {sklearn_holdout_mae:.4f} | "
+            f"RMSE: {sklearn_holdout_rmse:.4f} | "
+            f"R2: {sklearn_holdout_r2:.4f}"
+        )
+
+        # 4. Gerando Gráficos
         
         # Resíduos
-        plot_residuals(y_test, numpy_preds, sklearn_preds, save_path="residuals_comparison.png")
-        mlflow.log_artifact("residuals_comparison.png")
+        residuals_path = os.path.join(OUTPUT_DIR, "residuals_comparison.png")
+        plot_residuals(y_test, numpy_preds, sklearn_preds, save_path=residuals_path)
+        mlflow.log_artifact(residuals_path)
         
         # Curvas de Aprendizado (Loss / Val Loss)
-        # sklearn_model.validation_scores_ não é diretamente a Loss (MSE), é o score invertido, mas serve para ver convergência.
-        # Iremos omitir o sklearn validation na curva se não estiver em escala, mas adicionaremos se presente.
-        sk_val_loss = getattr(sklearn_model, 'validation_scores_', None)
-        if sk_val_loss is not None:
-             # sklearn salva como R2 score no validation_scores_, inverta ou multiplique
-             sk_val_loss = [-x for x in sk_val_loss]
-             
-        plot_loss_curves(numpy_model.loss_history, numpy_model.val_loss_history, sklearn_model.loss_curve_, sk_val_loss, save_path="loss_validation_curve.png")
-        mlflow.log_artifact("loss_validation_curve.png")
+        # validation_scores_ do MLPRegressor corresponde ao score R²,
+        # portanto não deve ser representado como MSE.
+        sk_val_loss = None
+
+        loss_curve_path = os.path.join(OUTPUT_DIR, "loss_validation_curve.png")
+        plot_loss_curves(
+            numpy_model.loss_history,
+            numpy_model.val_loss_history,
+            sklearn_model.loss_curve_,
+            sk_val_loss,
+            save_path=loss_curve_path
+        )
+        mlflow.log_artifact(loss_curve_path)
         
         # Permutation Importance
         print("\nCalculando Importância das Features (Isso pode demorar alguns segundos)...")
-        plot_feature_importance(numpy_model, X_test_scaled, y_test, feature_names, "NumPy MLP", "feat_imp_numpy.png")
-        mlflow.log_artifact("feat_imp_numpy.png")
+        feat_imp_np_path = os.path.join(OUTPUT_DIR, "feat_imp_numpy.png")
+        plot_feature_importance(numpy_model, X_test_scaled, y_test.ravel(), feature_names, "NumPy MLP", feat_imp_np_path)
+        mlflow.log_artifact(feat_imp_np_path)
         
-        plot_feature_importance(sklearn_model, X_test_scaled, y_test.ravel(), feature_names, "Scikit-Learn MLP", "feat_imp_sklearn.png")
-        mlflow.log_artifact("feat_imp_sklearn.png")
+        feat_imp_sk_path = os.path.join(OUTPUT_DIR, "feat_imp_sklearn.png")
+        plot_feature_importance(sklearn_model, X_test_scaled, y_test.ravel(), feature_names, "Scikit-Learn MLP", feat_imp_sk_path)
+        mlflow.log_artifact(feat_imp_sk_path)
         
-        print("\nTreinamento Avançado finalizado! Artefatos gravados no MLflow.")
+        print("\nTreinamento retrospectivo finalizado! Artefatos gravados no MLflow.")
 
 if __name__ == "__main__":
     main()
+
