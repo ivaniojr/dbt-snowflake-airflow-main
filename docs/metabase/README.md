@@ -161,10 +161,43 @@ Estes cards não têm Field Filter conectado aos filtros de dashboard (Complexid
 Período são específicos da aba `MUNKA_GOLD`); todos exibem o conjunto completo de
 161.968 registros da camada ML.
 
-## 10. Evidência visual
+## 10. Camada de Retrospectiva (aba "Retrospectiva - Avaliação Real do Modelo")
 
-Ver [`dashboard.png`](dashboard.png) (aba "Camada Gold - Previsto x Realizado", camada
-`MUNKA_GOLD`) e [`dashboard_ml.png`](dashboard_ml.png) (aba "Camada ML - Features do
-Modelo", camada `MUNKA_ML`) — screenshots reais do dashboard renderizado com dados ao
-vivo do Snowflake (capturados via link público temporário do Metabase, removido em
-seguida por segurança).
+Esta terceira aba resolve a limitação descrita na seção 3: como o modelo de ML
+treinado (`src/ml/train_model.py` / `batch_inference.py`) não persiste suas previsões
+no Snowflake, foi gerada uma análise retrospectiva real — reaplicando o modelo
+treinado (sklearn) e um baseline (numpy) sobre uma amostra de 100 tarefas reais já
+executadas (`FONTE_DADOS = 'SNOWFLAKE'`), comparando a previsão de cada modelo com as
+horas efetivamente executadas. O resultado é uma tabela real no Snowflake,
+`MUNKA_ML.ML_ANALISE_RETROSPECTIVA` (100 linhas). Todos os cards desta aba consultam
+essa tabela diretamente via SQL nativo.
+
+### 10.1. KPIs
+| Card | Fórmula | Valor real |
+|---|---|---|
+| Retro - KPI Tarefas Avaliadas | `COUNT(*)` | 100 |
+| Retro - KPI MAE Sklearn | `AVG(ERRO_ABSOLUTO_SKLEARN)` | 0.57 |
+| Retro - KPI RMSE Sklearn | `SQRT(AVG(ERRO_QUADRATICO_SKLEARN))` | 0.99 |
+| Retro - KPI MAE Numpy | `AVG(ERRO_ABSOLUTO_NUMPY)` | 0.74 |
+| Retro - KPI Pct Sklearn Mais Proximo | % de tarefas em que `MODELO_MAIS_PROXIMO = 'SKLEARN'` | 69% |
+
+### 10.2. Gráficos e tabela
+| Card | Descrição |
+|---|---|
+| Retro - Gráfico Erro Medio por Modelo | Barras comparando MAE e RMSE entre o modelo sklearn treinado e o baseline numpy, sobre as mesmas 100 tarefas. O sklearn tem erro menor em ambas as métricas (MAE 0.57 vs 0.74; RMSE 0.99 vs 1.17). |
+| Retro - Gráfico Modelo Mais Próximo | Pizza com a contagem de tarefas em que cada modelo ficou mais próximo do valor real executado — sklearn vence em 69% dos casos, numpy em 31%. |
+| Retro - Gráfico Dispersão Executado vs Sklearn | Dispersão de horas executadas (real) vs. horas estimadas pelo sklearn, tarefa a tarefa — mostra forte correlação linear entre previsão do modelo e execução real. |
+| Retro - Tabela Maiores Diferenças | Top 15 tarefas com maior divergência entre as estimativas dos dois modelos (`DIFERENCA_MODELOS`), com horas executadas, estimativas de ambos os modelos e qual ficou mais próximo. |
+
+Assim como a aba ML, estes cards não têm Field Filter conectado aos filtros de
+dashboard (Complexidade/Período); a aba trabalha com a amostra retrospectiva completa
+de 100 tarefas reais.
+
+## 11. Evidência visual
+
+Ver [`dashboard_gold.png`](dashboard_gold.png) (aba "Camada Gold - Previsto x Realizado",
+camada `MUNKA_GOLD`), [`dashboard_ml.png`](dashboard_ml.png) (aba "Camada ML - Features do
+Modelo", camada `MUNKA_ML`) e [`dashboard_retrospectiva.png`](dashboard_retrospectiva.png)
+(aba "Retrospectiva - Avaliação Real do Modelo", camada `MUNKA_ML`) — screenshots reais
+do dashboard renderizado com dados ao vivo do Snowflake (capturados via link público
+temporário do Metabase, removido em seguida por segurança).

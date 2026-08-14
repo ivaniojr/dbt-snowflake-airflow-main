@@ -1,0 +1,11 @@
+-- Gráfico: MAE e RMSE comparados entre o modelo sklearn treinado e o
+-- baseline numpy, ambos avaliados sobre as mesmas tarefas reais (retrospectiva).
+SELECT 'SKLEARN' AS MODELO,
+       ROUND(AVG(ERRO_ABSOLUTO_SKLEARN), 2) AS MAE,
+       ROUND(SQRT(AVG(ERRO_QUADRATICO_SKLEARN)), 2) AS RMSE
+FROM MUNKA_ML.ML_ANALISE_RETROSPECTIVA
+UNION ALL
+SELECT 'NUMPY' AS MODELO,
+       ROUND(AVG(ERRO_ABSOLUTO_NUMPY), 2) AS MAE,
+       ROUND(SQRT(AVG(ERRO_QUADRATICO_NUMPY)), 2) AS RMSE
+FROM MUNKA_ML.ML_ANALISE_RETROSPECTIVA

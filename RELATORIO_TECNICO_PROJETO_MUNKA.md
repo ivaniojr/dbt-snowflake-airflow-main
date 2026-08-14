@@ -370,7 +370,7 @@ O **Metabase** foi conectado diretamente ao Data Warehouse Snowflake (`DRAGON_DB
 
 As seções a seguir (8.1 a 8.3) descrevem a aba **"Camada Gold - Previsto x Realizado"**, que consulta a camada `MUNKA_GOLD`. A seção 8.4 descreve a segunda aba, referente à camada `MUNKA_ML`.
 
-![Dashboard de acompanhamento no Metabase](docs/metabase/dashboard.png)
+![Dashboard de acompanhamento no Metabase](docs/metabase/dashboard_gold.png)
 
 ### 8.1. KPIs
 
@@ -407,6 +407,21 @@ Técnicas presentes por tipo, Envolvimento por Área Frontend/Backend/Dados) e 1
 da evidência e as horas médias executadas crescem juntos com a complexidade
 declarada da tarefa (de "Única" a "Alta"), reforçando a coerência entre as features
 extraídas e o esforço real. Screenshot em [`docs/metabase/dashboard_ml.png`](docs/metabase/dashboard_ml.png).
+
+### 8.5. Aba "Retrospectiva - Avaliação Real do Modelo" (schema `MUNKA_ML`)
+
+Uma terceira aba resolve a limitação da seção 9.3 (o modelo de ML treinado não
+persiste previsões no Snowflake): foi reaplicado o modelo treinado (sklearn) e um
+baseline (numpy) sobre uma amostra de 100 tarefas reais já executadas, comparando cada
+previsão com as horas efetivamente executadas. O resultado — `MUNKA_ML.ML_ANALISE_RETROSPECTIVA`
+— é uma tabela real no Snowflake, consultada diretamente por todos os cards da aba.
+Contém 5 KPIs (Tarefas Avaliadas = 100, MAE Sklearn = 0,57, RMSE Sklearn = 0,99, MAE
+Numpy = 0,74, % Sklearn Mais Próximo = 69%), 3 gráficos (Erro Médio por Modelo, Modelo
+Mais Próximo, Dispersão Executado x Sklearn) e 1 tabela (top 15 maiores diferenças
+entre os dois modelos). Achado relevante: o modelo sklearn treinado supera o baseline
+numpy em ambas as métricas de erro (MAE 0,57 vs 0,74; RMSE 0,99 vs 1,17) e fica mais
+próximo do valor real executado em 69% das tarefas avaliadas. Screenshot em
+[`docs/metabase/dashboard_retrospectiva.png`](docs/metabase/dashboard_retrospectiva.png).
 
 ---
 
