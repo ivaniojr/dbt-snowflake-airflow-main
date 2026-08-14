@@ -64,7 +64,7 @@ calcular um "custo previsto" a partir de `HET_MAX`. Conforme instrução explíc
 escopo do projeto (não inventar taxas), o dashboard exibe apenas o **custo realizado**
 (`SUM(VALOR_FATURADO)`), sem nenhuma comparação "previsto x realizado" para custo.
 
-## 5. Estrutura do dashboard
+## 5. Estrutura do dashboard (aba "Camada Gold - Previsto x Realizado")
 
 ### KPIs (linha superior)
 | Card | Fórmula | Fonte |
@@ -145,11 +145,16 @@ direto sobre essa tabela, sem joins com a camada Gold.
 | ML - KPI UST Media | `AVG(TOTAL_UST)` | 4.41 |
 
 ### 9.2. Gráficos e tabela
+
+Layout (de cima para baixo): "Score e Horas por Complexidade" e "Envolvimento por
+Área" lado a lado na mesma linha; "Evidências Técnicas" e "Maiores Scores de
+Evidência" ocupando toda a largura horizontal, cada um em sua própria linha.
+
 | Card | Descrição |
 |---|---|
 | Gráfico ML - Score e Horas por Complexidade | Score médio de qualidade da evidência e horas médias executadas, por `NOME_COMPLEXIDADE`. O score cresce com a complexidade (11.2 em "Única" até 33.0 em "Alta"), assim como as horas médias (2.2h até 8.6h) — evidência mais rica tende a acompanhar tarefas mais complexas. |
-| Gráfico ML - Evidências Técnicas | Contagem de tarefas por tipo de evidência técnica extraída (`TEM_CODIGO`, `TEM_SQL`, `TEM_COMMIT`, `FL_TEM_PULL_REQUEST`, `FL_IS_BUGFIX`). `TEM_COMMIT` domina (147.740 tarefas, ~91%); Pull Request é raríssimo (13 casos). |
 | Gráfico ML - Envolvimento por Área | Contagem de tarefas por área técnica envolvida (`FL_ENVOLVE_FRONTEND`, `FL_ENVOLVE_BACKEND`, `FL_ENVOLVE_DADOS`). Backend concentra a maior parte (~38 mil), seguido de Frontend e Dados. |
+| Gráfico ML - Evidências Técnicas | Contagem de tarefas por tipo de evidência técnica extraída (`TEM_CODIGO`, `TEM_SQL`, `TEM_COMMIT`, `FL_TEM_PULL_REQUEST`, `FL_IS_BUGFIX`). `TEM_COMMIT` domina (147.740 tarefas, ~91%); Pull Request é raríssimo (13 casos). |
 | Tabela ML - Maiores Scores de Evidência | Top 15 tarefas com maior `SCORE_QUALIDADE_EVIDENCIA`, com projeto, complexidade, horas executadas e UST. |
 
 Estes cards não têm Field Filter conectado aos filtros de dashboard (Complexidade/
@@ -158,8 +163,8 @@ Período são específicos da aba `MUNKA_GOLD`); todos exibem o conjunto complet
 
 ## 10. Evidência visual
 
-Ver [`dashboard.png`](dashboard.png) (aba "Tab 1", camada `MUNKA_GOLD`) e
-[`dashboard_ml.png`](dashboard_ml.png) (aba "Camada ML - Features do Modelo",
-camada `MUNKA_ML`) — screenshots reais do dashboard renderizado com dados ao vivo do
-Snowflake (capturados via link público temporário do Metabase, removido em seguida
-por segurança).
+Ver [`dashboard.png`](dashboard.png) (aba "Camada Gold - Previsto x Realizado", camada
+`MUNKA_GOLD`) e [`dashboard_ml.png`](dashboard_ml.png) (aba "Camada ML - Features do
+Modelo", camada `MUNKA_ML`) — screenshots reais do dashboard renderizado com dados ao
+vivo do Snowflake (capturados via link público temporário do Metabase, removido em
+seguida por segurança).

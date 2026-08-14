@@ -368,6 +368,8 @@ Cada execução de treinamento salvou automaticamente os seguintes artefatos no 
 
 O **Metabase** foi conectado diretamente ao Data Warehouse Snowflake (`DRAGON_DB`), autenticando via chave RSA, com acesso restrito aos schemas `MUNKA_GOLD` e `MUNKA_ML`. Foi construído o dashboard **"Acompanhamento de Previsões de Tarefas"**, inteiramente a partir de SQL nativo sobre as tabelas já existentes na camada Gold (`FCT_TAREFA`, `DIM_REGRA`, `DIM_PROJETO`) — sem criação de tabelas/views novas no Snowflake e sem qualquer dado sintético ou mockado. Documentação completa, decisões de modelagem e narrativa de apoio à decisão em [`docs/metabase/README.md`](docs/metabase/README.md).
 
+As seções a seguir (8.1 a 8.3) descrevem a aba **"Camada Gold - Previsto x Realizado"**, que consulta a camada `MUNKA_GOLD`. A seção 8.4 descreve a segunda aba, referente à camada `MUNKA_ML`.
+
 ![Dashboard de acompanhamento no Metabase](docs/metabase/dashboard.png)
 
 ### 8.1. KPIs
