@@ -7,7 +7,8 @@ Orquestra o pipeline completo ponta a ponta do projeto MUNKA (IFG):
   4. Transformacao Marts (dbt run --select marts)
   5. Testes de Qualidade de Dados (dbt test)
   6. Treinamento de ML (HPO + Sklearn & NumPy MLP)
-  7. Inferencia em Lote e Carga para o Dashboard Metabase
+  7. Inferencia em Lote (Passo 6)
+  8. Carga dos Resultados da Análise Retrospectiva no Snowflake (dbt seed + mart)
 """
 from __future__ import annotations
 
@@ -84,4 +85,12 @@ with DAG(
         poke_interval=10,
     )
 
-    trigger_passo1 >> trigger_passo2 >> trigger_passo3 >> trigger_passo4 >> trigger_passo5 >> trigger_passo6
+    trigger_passo7 = TriggerDagRunOperator(
+        task_id="passo7_carga_analise_retrospectiva",
+        trigger_dag_id="dag_carga_analise_retrospectiva",
+        reset_dag_run=True,
+        wait_for_completion=True,
+        poke_interval=10,
+    )
+
+    trigger_passo1 >> trigger_passo2 >> trigger_passo3 >> trigger_passo4 >> trigger_passo5 >> trigger_passo6 >> trigger_passo7

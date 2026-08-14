@@ -38,3 +38,28 @@ models:
       ml:
         +materialized: table
         +schema: munka_ml
+
+seeds:
+  munka_warehouse:
+    +schema: munka_raw
+    analise_retrospectiva:
+      +schema: munka_ml
+      +column_types:
+        TAREFA_ID: varchar(255)
+        FONTE_DADOS: varchar(50)
+        HORAS_EXECUTADAS: float
+        HORAS_ESTIMADAS_SKLEARN: float
+        HORAS_ESTIMADAS_NUMPY: float
+        ERRO_SKLEARN: float
+        ERRO_ABSOLUTO_SKLEARN: float
+        ERRO_QUADRATICO_SKLEARN: float
+        ERRO_PERCENTUAL_SKLEARN: float
+        ERRO_NUMPY: float
+        ERRO_ABSOLUTO_NUMPY: float
+        ERRO_QUADRATICO_NUMPY: float
+        ERRO_PERCENTUAL_NUMPY: float
+        DIFERENCA_MODELOS: float
+        MODELO_MAIS_PROXIMO: varchar(50)
+        MODEL_SCOPE: varchar(100)
+        FEATURE_SET_NAME: varchar(100)
+        DATA_ANALISE: timestamp_ntz
