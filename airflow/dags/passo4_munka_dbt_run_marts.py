@@ -81,7 +81,7 @@ with DAG(
         task_id="dbt_run_marts",
         bash_command=(
             f"set -euo pipefail; dbt "
-            f"run --select intermediate marts {DBT_OPTIONS}"
+            f"run --select intermediate marts --exclude ml_analise_retrospectiva {DBT_OPTIONS}"
         ),
         env=DBT_ENV,
         append_env=True,
@@ -93,7 +93,7 @@ with DAG(
         task_id="dbt_test",
         bash_command=(
             f"set -euo pipefail; dbt "
-            f"test {DBT_OPTIONS}"
+            f"test --exclude ml_analise_retrospectiva {DBT_OPTIONS}"
         ),
         env=DBT_ENV,
         append_env=True,

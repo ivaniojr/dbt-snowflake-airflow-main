@@ -18,7 +18,7 @@ try:
 except ImportError:
     from airflow.operators.bash import BashOperator
 
-DAG_ID = "dag_carga_analise_retrospectiva"
+DAG_ID = "dag_ml_carga_analise_retrospectiva"
 SNOWFLAKE_CONN_ID = "snowflake_munka"
 PROJECT_DIR = "/opt/airflow/project"
 DBT_PROJECT_DIR = "/opt/airflow/dbt/munka_warehouse"
