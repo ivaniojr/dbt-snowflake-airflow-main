@@ -398,21 +398,62 @@ Cada execução de treinamento salvou automaticamente os seguintes artefatos no 
 
 ## 8. 📊 Dashboard e Principais Análises (Metabase)
 
-O **Metabase** foi conectado diretamente ao Data Warehouse Snowflake (`DRAGON_DB`), permitindo que gestores e analistas explorem visualmente a camada Gold.
+O **Metabase** foi conectado diretamente ao Data Warehouse Snowflake (`DRAGON_DB`), autenticando via chave RSA, com acesso restrito aos schemas `MUNKA_GOLD` e `MUNKA_ML`. Foi construído o dashboard **"Acompanhamento de Previsões de Tarefas"**, inteiramente a partir de SQL nativo sobre as tabelas já existentes na camada Gold (`FCT_TAREFA`, `DIM_REGRA`, `DIM_PROJETO`) — sem criação de tabelas/views novas no Snowflake e sem qualquer dado sintético ou mockado. Documentação completa, decisões de modelagem e narrativa de apoio à decisão em [`docs/metabase/README.md`](docs/metabase/README.md).
 
-### 8.1. Painéis Desenvolvidos e Principais Perguntas Respondidas
+As seções a seguir (8.1 a 8.3) descrevem a aba **"Camada Gold - Previsto x Realizado"**, que consulta a camada `MUNKA_GOLD`. A seção 8.4 descreve a segunda aba, referente à camada `MUNKA_ML`.
 
-#### 1. Painel Executivo de Gestão de Projetos e Entregas
-* **Perguntas Respondidas:** Quais projetos possuem o maior consumo de horas e esforço? Qual a distribuição de tarefas por status e complexidade?
-* **Principais Métricas:** Total de Projetos Ativos, Volume Total de Horas Executadas, Média de Tarefas Concluídas por Sprint.
+![Dashboard de acompanhamento no Metabase](docs/metabase/dashboard_gold.png)
 
-#### 2. Painel Financeiro, Faturamento e Contratos
-* **Perguntas Respondidas:** Qual o valor total faturado por unidade administrativa contratante? Como os reajustes contratuais afetaram a receita acumulada?
-* **Principais Métricas:** Receita Total Faturada, Valor Médio por UST, Custo por Coordenação.
+### 8.1. KPIs
 
-#### 3. Painel MLOps, Auditoria e Acurácia Preditiva
-* **Perguntas Respondidas:** Qual o desvio entre as horas estimadas pelo modelo e as horas reais executadas? Qual o percentual de tarefas com evidências técnicas insuficientes?
-* **Principais Métricas:** MSE Preditivo, Distribuição de Resíduos, Taxa de Densidade de Código nas Evidências.
+| Indicador | Valor | Fórmula |
+|---|---|---|
+| Tarefas Analisadas | 159.608 | `COUNT(*)` sobre tarefas com horas executadas e regra associada |
+| Horas Realizadas | 416.232,1 | `SUM(HORAS_EXECUTADAS)` |
+| Horas Previstas (regra) | 516.735 | `SUM(HET_MAX)` |
+| Erro Médio Absoluto | 0,64h | `AVG(ABS(HET_MAX - HORAS_EXECUTADAS))` |
+| Custo Realizado | R$ 59.855.818,96 | `SUM(VALOR_FATURADO)` |
+| MAE / RMSE / R² da regra | 0,64 / 3,19 / 0,38 | ver limitação na seção 9.3 |
+
+### 8.2. Gráficos e tabela
+
+* **Previsto x Realizado por Complexidade** — média de horas previstas (regra) vs. realizadas, por `COMPLEXIDADE`.
+* **Erro por Complexidade** — erro médio (com sinal) e erro médio absoluto por `COMPLEXIDADE`; o erro cresce com a complexidade declarada.
+* **Evolução Temporal** — soma mensal de horas previstas x realizadas ao longo de ~49 meses.
+* **Distribuição do Erro** — histograma da diferença previsto−realizado em 5 faixas; a maioria das tarefas concentra-se na faixa de erro pequeno (−1h a 1h).
+* **Tabela de Maiores Diferenças** — top 15 tarefas com maior erro absoluto, para auditoria pontual.
+
+### 8.3. Filtros
+
+O dashboard possui dois filtros conectados via Field Filter às métricas de tarefas analisadas e horas realizadas: **Complexidade** (múltipla escolha) e **Período** (intervalo de datas sobre `DATA_FIM`).
+
+### 8.4. Aba "Camada ML - Features do Modelo" (schema `MUNKA_ML`)
+
+Uma segunda aba do mesmo dashboard consulta diretamente `MUNKA_ML.ML_TAREFA_FEATURES`
+— a *wide table* com as 15 features de entrada do modelo de ML e as variáveis-alvo
+(`HORAS_EXECUTADAS`, `TOTAL_UST`) — sem depender da camada Gold. Contém 4 KPIs
+(Registros na Camada = 161.968, Score de Qualidade Médio = 13,8, Tarefas de Bugfix =
+42.436, UST Médio = 4,41), 3 gráficos (Score/Horas por Complexidade, Evidências
+Técnicas presentes por tipo, Envolvimento por Área Frontend/Backend/Dados) e 1 tabela
+(top 15 por Score de Qualidade de Evidência). Achado relevante: o score de qualidade
+da evidência e as horas médias executadas crescem juntos com a complexidade
+declarada da tarefa (de "Única" a "Alta"), reforçando a coerência entre as features
+extraídas e o esforço real. Screenshot em [`docs/metabase/dashboard_ml.png`](docs/metabase/dashboard_ml.png).
+
+### 8.5. Aba "Retrospectiva - Avaliação Real do Modelo" (schema `MUNKA_ML`)
+
+Uma terceira aba resolve a limitação da seção 9.3 (o modelo de ML treinado não
+persiste previsões no Snowflake): foi reaplicado o modelo treinado (sklearn) e um
+baseline (numpy) sobre uma amostra de 100 tarefas reais já executadas, comparando cada
+previsão com as horas efetivamente executadas. O resultado — `MUNKA_ML.ML_ANALISE_RETROSPECTIVA`
+— é uma tabela real no Snowflake, consultada diretamente por todos os cards da aba.
+Contém 5 KPIs (Tarefas Avaliadas = 100, MAE Sklearn = 0,57, RMSE Sklearn = 0,99, MAE
+Numpy = 0,74, % Sklearn Mais Próximo = 69%), 3 gráficos (Erro Médio por Modelo, Modelo
+Mais Próximo, Dispersão Executado x Sklearn) e 1 tabela (top 15 maiores diferenças
+entre os dois modelos). Achado relevante: o modelo sklearn treinado supera o baseline
+numpy em ambas as métricas de erro (MAE 0,57 vs 0,74; RMSE 0,99 vs 1,17) e fica mais
+próximo do valor real executado em 69% das tarefas avaliadas. Screenshot em
+[`docs/metabase/dashboard_retrospectiva.png`](docs/metabase/dashboard_retrospectiva.png).
 
 ---
 
@@ -422,6 +463,7 @@ O **Metabase** foi conectado diretamente ao Data Warehouse Snowflake (`DRAGON_DB
 1. **Histórico Limitado em Algumas Categorias:** Determinados tipos raros de tarefas no sistema legado possuem pouca amostragem histórica, aumentando a variância das estimativas preditivas nessas categorias específicas.
 2. **Dependência de Execução Local do SQLite no MLflow:** No ambiente de desenvolvimento Docker/Windows, o SQLite do MLflow exige armazenamento no caminho do container (`/tmp/mlflow.db`) para evitar bloqueios de I/O em pastas compartilhadas.
 3. **Modelos Não-Lineares de Gradient Boosting:** O escopo do trabalho focou estritamente em Redes Neurais MLP (Scikit-Learn e implementação customizada em NumPy), sem explorar algoritmos de árvores de decisão como XGBoost ou LightGBM.
+4. **Previsões do modelo de ML não persistidas no Snowflake:** `batch_inference.py` grava as previsões apenas em um CSV local (`novas_previsoes.csv`), não em uma tabela do warehouse. Por isso, o dashboard Metabase (seção 8) não compara a saída do modelo de ML treinado com o realizado — em vez disso, usa `DIM_REGRA.HET_MAX` (estimativa de regra de negócio, também uma das features de entrada do modelo) como "previsto", deixando isso explícito na documentação do dashboard. Da mesma forma, as métricas MAE=2,0449/RMSE=2,5902/R²=0,9114 reportadas na seção 7 vêm de um dataset de avaliação gerado com `np.random` (`export_evaluation_dataset.py`), não de dados reais do Snowflake — o dashboard ao vivo mostra as métricas reais da regra de negócio (MAE=0,64/RMSE=3,19/R²=0,38), que são conceitualmente distintas e não devem ser comparadas diretamente.
 
 ### 9.2. Próximos Passos e Recomendações de Evolução
 * **Implantação de Monitoramento de Data Drift (Evidently AI):** Configurar checagens diárias para detectar mudanças na distribuição estatística das evidências e re-disparar o retreinamento automático (DAG Passo 5) caso o desvio atinja um limiar crítico.
