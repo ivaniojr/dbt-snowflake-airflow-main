@@ -86,8 +86,8 @@ with DAG(
     )
 
     trigger_passo7 = TriggerDagRunOperator(
-        task_id="passo7_carga_analise_retrospectiva",
-        trigger_dag_id="dag_ml_carga_analise_retrospectiva",
+        task_id="passo7_ml_carga_analise_retrospectiva",
+        trigger_dag_id="passo7_ml_carga_analise_retrospectiva",
         reset_dag_run=True,
         wait_for_completion=True,
         poke_interval=10,

@@ -1,5 +1,5 @@
 """
-DAG: dag_carga_analise_retrospectiva
+DAG: passo7_ml_carga_analise_retrospectiva
 DAG independente para criação de tabela e carga dos dados da Análise Retrospectiva (analise_retrospectiva.csv)
 no Snowflake (schema MUNKA_ML).
 
@@ -18,7 +18,7 @@ try:
 except ImportError:
     from airflow.operators.bash import BashOperator
 
-DAG_ID = "dag_ml_carga_analise_retrospectiva"
+DAG_ID = "passo7_ml_carga_analise_retrospectiva"
 SNOWFLAKE_CONN_ID = "snowflake_munka"
 PROJECT_DIR = "/opt/airflow/project"
 DBT_PROJECT_DIR = "/opt/airflow/dbt/munka_warehouse"

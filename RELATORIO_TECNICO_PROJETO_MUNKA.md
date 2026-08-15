@@ -154,7 +154,7 @@ FROM {{ ref('stg_anexos') }}
 
 ## 5. 🔄 Pipeline de ELT com Airflow, dbt e Snowflake
 
-O pipeline de dados é automatizado ponta a ponta no Apache Airflow através de 6 sub-DAGs coordenadas por um DAG Master (`dag_munka_full_pipeline`).
+O pipeline de dados é automatizado ponta a ponta no Apache Airflow através de 7 sub-DAGs coordenadas por um DAG Master (`dag_munka_full_pipeline`).
 
 ```mermaid
 gantt
@@ -174,6 +174,8 @@ gantt
     Passo 5 (Optuna + MLflow)   :p5, after p4, 45m
     section Batch Inference
     Passo 6 (Inferência Lote)   :p6, after p5, 3m
+    section ML Retrospective
+    Passo 7 (Carga Analise Retrospectiva):p7, after p6, 2m
 ```
 
 ### 5.1. Detalhamento dos Passos do Pipeline
@@ -202,6 +204,11 @@ gantt
 #### Passo 6 — Inferência em Lote (`passo6_batch_inference`)
 * **Objetivo:** Carregar o modelo campeão retreinado (`sklearn_best_model.joblib`) e o escalador (`scaler.joblib`) para realizar previsões de horas em tarefas ativas sem fechamento.
 * **Saída:** Tabela `novas_previsoes.csv` carregada de volta para análise no Snowflake e Metabase.
+
+#### Passo 7 — Carga e Modelagem da Análise Retrospectiva (`passo7_ml_carga_analise_retrospectiva`)
+* **Objetivo:** Sincronizar o arquivo de avaliação e validação cruzada dos modelos de Machine Learning (`analise_retrospectiva.csv`), carregar a tabela via `dbt seed` e materializar a mart analítica `ml_analise_retrospectiva` no schema `MUNKA_ML` do Snowflake.
+* **Comando dbt:** `dbt seed --select analise_retrospectiva` seguido de `dbt run --select ml_analise_retrospectiva`.
+* **Saída:** Tabela analítica `MUNKA_ML.ML_ANALISE_RETROSPECTIVA` disponível para exploração e visualização em dashboards no Metabase.
 
 ---
 

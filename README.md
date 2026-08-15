@@ -11,11 +11,16 @@ A arquitetura do projeto foi desenhada para extrair dados brutos, limpá-nos e t
 - **GOLD/MARTS (`MUNKA_GOLD` e `MUNKA_ML`)**: Modelagem Dimensional Estrela (Fatos e Dimensões) e Tabelões Desnormalizados (Wide Tables) prontos para treinamento de modelos de Machine Learning (ex: previsão de horas de tarefas).
 
 ## Orquestração (DAGs no Airflow)
-O pipeline de dados é automatizado no Apache Airflow, dividido em passos sequenciais:
-1. `passo1_munka_dbt_create_raw_tables`: Criação do DDL inicial da RAW.
-2. `passo2_s3_to_snowflake_munka_raw`: Ingestão de dados do S3 para o Snowflake.
-3. `passo3_munka_dbt_create_stg`: Executa a camada Silver/Staging no dbt (`dbt run --select staging`).
-4. `passo4_munka_dbt_run_marts`: Executa a modelagem dimensional Gold e ML no dbt (`dbt run --select intermediate marts`).
+O pipeline de dados é automatizado ponta a ponta no Apache Airflow, composto por um pipeline master e 7 passos modulares sequenciais:
+
+- **`dag_munka_full_pipeline`**: DAG Master orquestradora que dispara e monitora sequencialmente todos os passos do pipeline.
+1. **`passo1_munka_dbt_create_raw_tables`**: Criação do DDL inicial e tabelas na camada RAW (`MUNKA_RAW`).
+2. **`passo2_s3_to_snowflake_munka_raw`**: Ingestão paralela de dados brutos do AWS S3 para o Snowflake via `COPY INTO`.
+3. **`passo3_munka_dbt_create_stg`**: Executa a camada Silver/Staging no dbt (`dbt run --select staging`) com limpeza e deduplicação via `QUALIFY`.
+4. **`passo4_munka_dbt_run_marts`**: Executa a modelagem dimensional Gold e ML no dbt (`dbt run --select intermediate marts`) e executa a suíte de testes de qualidade de dados (`dbt test`).
+5. **`passo5_ml_hpo_e_retreinamento`**: Otimização automática de hiperparâmetros via Optuna (HPO), retreinamento com validação cruzada 5-Fold e rastreamento completo no MLflow.
+6. **`passo6_batch_inference`**: Inferência em lote com o modelo campeão para predição de horas em tarefas em aberto (`novas_previsoes.csv`).
+7. **`passo7_ml_carga_analise_retrospectiva`**: Sincronização do dataset de auditoria (`analise_retrospectiva.csv`), carga via `dbt seed` e materialização da mart `MUNKA_ML.ML_ANALISE_RETROSPECTIVA` no Snowflake para visualização no Metabase.
 
 ## Planejamentos Executados no Projeto
 Durante a evolução deste repositório, executamos marcos arquiteturais importantes:
