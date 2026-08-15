@@ -433,6 +433,8 @@ Em **Admin > Databases > Add a database**, use os mesmos dados de conexão do db
 
 ## Guia de Reprodutibilidade Passo a Passo
 
+> 📖 Para um guia completo e aprofundado com todas as variáveis, comandos de infraestrutura AWS, DDLs do Snowflake e troubleshooting, consulte o documento dedicado: [ROTEIRO_IMPLANTACAO.md](ROTEIRO_IMPLANTACAO.md).
+
 Para clonar e executar o pipeline completo em uma máquina do zero:
 
 1. **Clonar o Repositório:**
