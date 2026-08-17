@@ -1,16 +1,16 @@
 {
   "model": "sklearn_restricted",
-  "generated_at": "2026-08-17T11:46:36.793376",
+  "generated_at": "2026-08-17T20:13:34.674125",
   "mlflow_experiment": "Auditoria_MLP_HPO",
   "n_trials": 10,
   "epochs": 150,
-  "best_val_mse": 2.989051,
-  "improvement_vs_baseline_pct": 34.34,
+  "best_val_mse": 4.344136,
+  "improvement_vs_baseline_pct": 4.57,
   "hyperparameters": {
-    "learning_rate": 0.0018189164911005368,
+    "learning_rate": 0.00343109092818227,
     "hidden_sizes": [
       16,
-      8
+      16
     ],
     "alpha": 0.0001
   }

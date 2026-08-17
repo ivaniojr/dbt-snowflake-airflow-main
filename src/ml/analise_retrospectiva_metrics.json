@@ -4,16 +4,16 @@
     "uses_execution_evidence": true,
     "feature_set_name": "retrospective_features_v1",
     "target": "HORAS_EXECUTADAS",
-    "n_samples": 100,
+    "n_samples": 1000,
     "data_source": [
         "SNOWFLAKE"
     ],
-    "sklearn_mae": 0.7474734070415484,
-    "sklearn_mse": 2.2311614880627757,
-    "sklearn_rmse": 1.4937072966491045,
-    "sklearn_r2": 0.7386689092667229,
-    "numpy_mae": 0.9142711315730224,
-    "numpy_mse": 2.5568491952739234,
-    "numpy_rmse": 1.5990150703711092,
-    "numpy_r2": 0.7005218167235432
+    "sklearn_mae": 0.6813926399712069,
+    "sklearn_mse": 2.288578313919408,
+    "sklearn_rmse": 1.5128047838103262,
+    "sklearn_r2": 0.8867683638244114,
+    "numpy_mae": 0.8251689080254321,
+    "numpy_mse": 3.694603744609453,
+    "numpy_rmse": 1.9221352045601405,
+    "numpy_r2": 0.8172026604996848
 }

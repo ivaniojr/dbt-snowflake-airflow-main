@@ -156,12 +156,32 @@ mlflow ui --backend-store-uri sqlite:///src/ml/mlflow.db --port 5000
 
 | Script | Descrição |
 |---|---|
+| [`src/ml/config.py`](src/ml/config.py) | Central de parametrização do ML (volumetria, amostragem, splits, K-Fold, HPO e inferência) |
+| [`src/ml/dataset.py`](src/ml/dataset.py) | Extração e preparação de features da camada `MUNKA_ML` do Snowflake com fallback sintético |
 | [`src/ml/train.py`](src/ml/train.py) | Treinamento Baseline comparando NumPy vs Sklearn (5-Fold CV + Holdout) |
 | [`src/ml/hpo.py`](src/ml/hpo.py) | Otimização Automática de Hiperparâmetros via Optuna (Passo 5) |
 | [`src/ml/train_best.py`](src/ml/train_best.py) | Retreinamento com os melhores parâmetros e exportação dos modelos (Passo 5) |
 | [`src/ml/batch_inference.py`](src/ml/batch_inference.py) | Análise Retrospectiva em lote sobre tarefas executadas (Passo 6) |
 | [`src/ml/load_analise_retrospectiva.py`](src/ml/load_analise_retrospectiva.py) | Carga direta e autônoma do CSV de auditoria no Snowflake via Python |
 | [`src/ml/export_evaluation_dataset.py`](src/ml/export_evaluation_dataset.py) | Exportação de dataset Holdout isolado para auditoria |
+
+### ⚙️ Central de Parametrização e Perfilamento (`src/ml/config.py`)
+
+Para facilitar a customização de testes, experimentos e volumetria sem necessidade de editar múltiplos scripts, o projeto possui o módulo centralizador [`src/ml/config.py`](src/ml/config.py). Qualquer alteração feita nele se propaga instantaneamente para todo o pipeline:
+
+| Parâmetro | Valor Padrão | Finalidade e Impacto |
+|---|:---:|---|
+| **`DATASET_SAMPLE_SIZE`** | `50000` | Quantidade de tarefas extraídas do Snowflake para Treino/Validação/Teste (`LIMIT`). Se definido como `None`, processa a base completa com todas as **157.873 tarefas** executadas. |
+| **`DATASET_MOCK_SIZE`** | `5000` | Quantidade de tarefas sintéticas geradas no modo offline/fallback local. |
+| **`TEST_SPLIT_SIZE`** | `0.2` | Proporção da partição de **Teste Cego Holdout** (ex: `0.2` = 20% teste intocado / 80% treino). |
+| **`RANDOM_STATE`** | `42` | Semente pseudo-aleatória global para garantia de **reprodutibilidade científica exata**. |
+| **`HPO_VAL_SPLIT_SIZE`** | `0.2` | Proporção interna de **Validação** reservada dentro do treino para o Optuna medir o $MSE$ a cada tentativa. |
+| **`KFOLD_N_SPLITS`** | `5` | Número de dobras da **Validação Cruzada** (5-Fold CV) no retreinamento dos modelos campeões. |
+| **`HPO_EPOCHS`** | `150` | Quantidade máxima de épocas de treinamento por trial durante a busca HPO. |
+| **`HPO_N_TRIALS_SKLEARN`** | `10` | Quantidade de arquiteturas e combinações testadas pelo Optuna para o Scikit-Learn. |
+| **`HPO_N_TRIALS_NUMPY`** | `10` | Quantidade de combinações testadas pelo Optuna para o modelo matemático em NumPy. |
+| **`BATCH_INFERENCE_SAMPLE_SIZE`** | `1000` | Amostra de tarefas executadas processadas na inferência retrospectiva do **Passo 6** e carregadas no Snowflake no **Passo 7**. |
+| **`AUDIT_SAMPLE_SIZE`** | `150` | Amostra de tarefas selecionadas para o relatório qualitativo de diagnóstico de resíduos. |
 
 ---
 
