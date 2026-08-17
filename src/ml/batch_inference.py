@@ -27,9 +27,22 @@ import numpy as np
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
-# Adicionar o diretório atual ao path para poder importar mlp_numpy
+# Adicionar o diretório atual ao path para poder importar mlp_numpy e config
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from mlp_numpy import NumPyMLPRegressor
+
+try:
+    from config import (
+        BATCH_INFERENCE_SAMPLE_SIZE,
+        BATCH_INFERENCE_MOCK_SIZE,
+        RANDOM_STATE
+    )
+except ImportError:
+    from config import (
+        BATCH_INFERENCE_SAMPLE_SIZE,
+        BATCH_INFERENCE_MOCK_SIZE,
+        RANDOM_STATE
+    )
 
 
 # ============================================================
@@ -176,11 +189,12 @@ def get_retrospective_tasks():
             schema=schema
         )
 
+        limit_clause = f"LIMIT {BATCH_INFERENCE_SAMPLE_SIZE}" if BATCH_INFERENCE_SAMPLE_SIZE is not None else ""
         query = f"""
             SELECT *
             FROM {database}.{schema}.ML_TAREFA_FEATURES
             WHERE HORAS_EXECUTADAS IS NOT NULL
-            LIMIT 100
+            {limit_clause}
         """
 
         df = pd.read_sql(query, ctx)
@@ -192,32 +206,33 @@ def get_retrospective_tasks():
                 "mas nenhuma tarefa executada foi encontrada."
             )
             print(
-                " [Aviso] Para demonstração da DAG, "
-                "serão geradas 100 tarefas simuladas."
+                f" [Aviso] Para demonstração da DAG, "
+                f"serão geradas {BATCH_INFERENCE_MOCK_SIZE} tarefas simuladas."
             )
             return _generate_mock_tasks()
 
         df["FONTE_DADOS"] = "SNOWFLAKE"
-        print(" Tarefas executadas carregadas do Snowflake!")
+        print(f" Tarefas executadas carregadas do Snowflake ({len(df)} tarefas)!")
         return df
 
     except Exception as e:
         print(f" [Aviso] Falha ao conectar no Snowflake: {e}")
         print(
-            " [Aviso] Gerando 100 tarefas simuladas apenas "
+            f" [Aviso] Gerando {BATCH_INFERENCE_MOCK_SIZE} tarefas simuladas apenas "
             "para demonstração técnica do fluxo."
         )
         return _generate_mock_tasks()
 
 
-def _generate_mock_tasks():
+def _generate_mock_tasks(n_samples=None):
     """
     Gera dados fictícios e reproduzíveis para teste técnico do pipeline.
 
     Esses dados não devem ser utilizados para reportar desempenho científico.
     """
-    rng = np.random.default_rng(42)
-    n_samples = 100
+    if n_samples is None:
+        n_samples = BATCH_INFERENCE_MOCK_SIZE
+    rng = np.random.default_rng(RANDOM_STATE)
 
     df = pd.DataFrame({
         "TAREFA_ID": [f"TASK-{i}" for i in range(1000, 1000 + n_samples)],

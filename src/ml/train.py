@@ -96,8 +96,15 @@ def plot_loss_curves(numpy_train_loss, numpy_val_loss, sklearn_train_loss, sklea
     plt.savefig(save_path)
     plt.close()
 
+try:
+    from config import KFOLD_N_SPLITS, RANDOM_STATE
+except ImportError:
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from config import KFOLD_N_SPLITS, RANDOM_STATE
+
 def run_kfold_evaluation(X, y, params):
-    kf = KFold(n_splits=5, shuffle=True, random_state=42)
+    kf = KFold(n_splits=KFOLD_N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
     
     numpy_metrics = {'mse': [], 'mae': [], 'r2': []}
     sklearn_metrics = {'mse': [], 'mae': [], 'r2': []}
@@ -144,9 +151,7 @@ def run_kfold_evaluation(X, y, params):
 def main():
     print("Iniciando Pipeline de ML Retrospectivo...")
     from dataset import get_train_test_split
-    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(
-        test_size=0.2, random_state=42
-    )
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split()
     input_size = X_train_full.shape[1]
     
     params = {

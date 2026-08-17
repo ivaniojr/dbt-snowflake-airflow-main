@@ -13,15 +13,20 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 
 from dataset import get_train_test_split
 
+try:
+    from config import AUDIT_SAMPLE_SIZE, RANDOM_STATE
+except ImportError:
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from config import AUDIT_SAMPLE_SIZE, RANDOM_STATE
+
 def main():
     base_dir = os.path.dirname(os.path.abspath(__file__))
     eval_dir = os.path.join(base_dir, "evaluation")
     os.makedirs(eval_dir, exist_ok=True)
 
-    # 1. Carregar Partição Real de Teste Holdout (1.000 amostras intocadas)
-    X_train_full, X_test_full, y_train_full, y_test_full, feature_names = get_train_test_split(
-        test_size=0.2, random_state=42
-    )
+    # 1. Carregar Partição Real de Teste Holdout
+    X_train_full, X_test_full, y_train_full, y_test_full, feature_names = get_train_test_split()
 
     # 2. Carregar Scaler e Modelo Treinado Real
     scaler_path = os.path.join(base_dir, "scaler.joblib")
@@ -37,7 +42,7 @@ def main():
         from sklearn.preprocessing import StandardScaler
         scaler = StandardScaler()
         X_train_scaled = scaler.fit_transform(X_train_full)
-        model = MLPRegressor(hidden_layer_sizes=(8, 8, 32), max_iter=500, random_state=42, alpha=0.0004, learning_rate_init=0.011)
+        model = MLPRegressor(hidden_layer_sizes=(8, 8, 32), max_iter=500, random_state=RANDOM_STATE, alpha=0.0004, learning_rate_init=0.011)
         model.fit(X_train_scaled, y_train_full.ravel())
         joblib.dump(scaler, scaler_path)
         joblib.dump(model, model_path)
@@ -47,15 +52,15 @@ def main():
     y_pred_full = model.predict(X_test_scaled).reshape(-1, 1)
     y_real_full = y_test_full.reshape(-1, 1)
 
-    # 3. Calcular Métricas Reais sobre todo o Teste Holdout (1.000 amostras)
+    # 3. Calcular Métricas Reais sobre todo o Teste Holdout
     mse_total = float(mean_squared_error(y_real_full, y_pred_full))
     mae_total = float(mean_absolute_error(y_real_full, y_pred_full))
     rmse_total = float(np.sqrt(mse_total))
     r2_total = float(r2_score(y_real_full, y_pred_full))
 
-    # 4. Selecionar Subconjunto Amostral de 150 Registros Reais para Auditoria Qualitativa
-    np.random.seed(42)
-    n_audit_samples = min(150, len(X_test_full))
+    # 4. Selecionar Subconjunto Amostral para Auditoria Qualitativa
+    np.random.seed(RANDOM_STATE)
+    n_audit_samples = min(AUDIT_SAMPLE_SIZE, len(X_test_full))
     audit_indices = np.random.choice(len(X_test_full), size=n_audit_samples, replace=False)
 
     df_x_audit = pd.DataFrame(X_test_full[audit_indices], columns=feature_names)

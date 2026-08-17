@@ -4,6 +4,24 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
+try:
+    from config import (
+        DATASET_SAMPLE_SIZE,
+        DATASET_MOCK_SIZE,
+        TEST_SPLIT_SIZE,
+        RANDOM_STATE
+    )
+except ImportError:
+    # Fallback caso importado fora da pasta src/ml
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from config import (
+        DATASET_SAMPLE_SIZE,
+        DATASET_MOCK_SIZE,
+        TEST_SPLIT_SIZE,
+        RANDOM_STATE
+    )
+
 def load_data():
     """
     Função principal que busca dados. 
@@ -59,10 +77,12 @@ def load_data():
             database=database,
             schema=schema
         )
-        query = f"SELECT * FROM {database}.{schema}.ML_TAREFA_FEATURES WHERE HORAS_EXECUTADAS IS NOT NULL LIMIT 5000"
+        
+        limit_clause = f" LIMIT {DATASET_SAMPLE_SIZE}" if DATASET_SAMPLE_SIZE is not None else ""
+        query = f"SELECT * FROM {database}.{schema}.ML_TAREFA_FEATURES WHERE HORAS_EXECUTADAS IS NOT NULL{limit_clause}"
         df = pd.read_sql(query, ctx)
         ctx.close()
-        print("Dados carregados com sucesso do Snowflake!")
+        print(f"Dados carregados com sucesso do Snowflake ({len(df)} registros)!")
     except Exception as e:
         print(f"[Aviso] Falha ao conectar no Snowflake: {e}")
         print("[Aviso] Gerando dataset sintético baseado no schema para fins de execução e auditoria local.")
@@ -70,9 +90,11 @@ def load_data():
         
     return df
 
-def generate_mock_data(n_samples=5000):
+def generate_mock_data(n_samples=None):
     """Gera um dataset mock imitando a tabela MUNKA_ML.ML_TAREFA_FEATURES"""
-    np.random.seed(42)
+    if n_samples is None:
+        n_samples = DATASET_MOCK_SIZE
+    np.random.seed(RANDOM_STATE)
     return pd.DataFrame({
         'FATOR_AJUSTE': np.random.uniform(0.5, 2.0, n_samples),
         'HET_MAX': np.random.randint(10, 100, n_samples),
@@ -114,14 +136,18 @@ def get_raw_dataset():
     
     return X, y, feature_names
 
-def get_train_test_split(test_size=0.2, random_state=42):
+def get_train_test_split(test_size=None, random_state=None):
     """
     Função centralizada para partição reprodutiva em todo o projeto ML.
-    Garante que 80% (4.000) fiquem em Treino/HPO e 20% (1.000) fiquem em Teste Holdout.
+    Utiliza as configurações definidas em config.py como padrão.
     """
+    if test_size is None:
+        test_size = TEST_SPLIT_SIZE
+    if random_state is None:
+        random_state = RANDOM_STATE
+        
     X, y, feature_names = get_raw_dataset()
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=random_state
     )
     return X_train, X_test, y_train, y_test, feature_names
-

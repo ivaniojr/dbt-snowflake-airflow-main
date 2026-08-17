@@ -31,6 +31,13 @@ warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 OUTPUT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+try:
+    from config import KFOLD_N_SPLITS, RANDOM_STATE
+except ImportError:
+    import sys
+    sys.path.append(OUTPUT_DIR)
+    from config import KFOLD_N_SPLITS, RANDOM_STATE
+
 # ──────────────────────────────────────────────
 # Utilidades de graficos
 # ──────────────────────────────────────────────
@@ -95,7 +102,7 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
     print(f"{'='*55}")
 
     from dataset import get_train_test_split
-    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split()
 
     default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
@@ -114,9 +121,9 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
             "retrained_at": datetime.now().isoformat(),
         })
 
-        # 5-Fold no conjunto de treino de 4.000 amostras (3.200 treino / 800 val por fold)
-        print("\n  Executando 5-Fold Cross Validation no treino (4.000 amostras)...")
-        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        # K-Fold Cross Validation no treino
+        print(f"\n  Executando {KFOLD_N_SPLITS}-Fold Cross Validation no treino...")
+        kf = KFold(n_splits=KFOLD_N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
         mse_list, mae_list, r2_list = [], [], []
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_full), 1):
@@ -209,7 +216,7 @@ def retrain_sklearn_restricted(config_path="sklearn_restricted_best_params.json"
     print(f"{'='*55}")
 
     from dataset import get_train_test_split
-    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split()
 
     default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
@@ -228,9 +235,9 @@ def retrain_sklearn_restricted(config_path="sklearn_restricted_best_params.json"
             "retrained_at": datetime.now().isoformat(),
         })
 
-        # 5-Fold no conjunto de treino de 4.000 amostras (3.200 treino / 800 val por fold)
-        print("\n  Executando 5-Fold Cross Validation no treino (4.000 amostras)...")
-        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        # K-Fold Cross Validation no treino
+        print(f"\n  Executando {KFOLD_N_SPLITS}-Fold Cross Validation no treino...")
+        kf = KFold(n_splits=KFOLD_N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
         mse_list, mae_list, r2_list = [], [], []
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_full), 1):
@@ -316,7 +323,7 @@ def retrain_numpy(config_path="numpy_best_params.json"):
     print(f"{'='*55}")
 
     from dataset import get_train_test_split
-    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
+    X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split()
 
     default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
     tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
@@ -335,9 +342,9 @@ def retrain_numpy(config_path="numpy_best_params.json"):
             "retrained_at": datetime.now().isoformat(),
         })
 
-        # K-Fold 5 splits sobre os 4.000 de treino (3.200 treino / 800 val por fold)
-        print("\n  Executando 5-Fold Cross Validation no treino (4.000 amostras)...")
-        kf = KFold(n_splits=5, shuffle=True, random_state=42)
+        # K-Fold Cross Validation no treino
+        print(f"\n  Executando {KFOLD_N_SPLITS}-Fold Cross Validation no treino...")
+        kf = KFold(n_splits=KFOLD_N_SPLITS, shuffle=True, random_state=RANDOM_STATE)
         mse_list, mae_list, r2_list = [], [], []
 
         for fold, (train_idx, val_idx) in enumerate(kf.split(X_train_full), 1):

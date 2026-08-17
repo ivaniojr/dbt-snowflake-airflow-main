@@ -36,12 +36,33 @@ import warnings
 from sklearn.exceptions import ConvergenceWarning
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
+try:
+    from config import (
+        HPO_EPOCHS,
+        HPO_N_TRIALS_SKLEARN,
+        HPO_N_TRIALS_NUMPY,
+        HPO_TIMEOUT_SECONDS,
+        HPO_VAL_SPLIT_SIZE,
+        RANDOM_STATE
+    )
+except ImportError:
+    import sys
+    sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+    from config import (
+        HPO_EPOCHS,
+        HPO_N_TRIALS_SKLEARN,
+        HPO_N_TRIALS_NUMPY,
+        HPO_TIMEOUT_SECONDS,
+        HPO_VAL_SPLIT_SIZE,
+        RANDOM_STATE
+    )
+
 # ──────────────────────────────────────────────
-# Configuracoes globais
+# Configuracoes globais (centralizadas em config.py)
 # ──────────────────────────────────────────────
-EPOCHS = 150
-N_TRIALS_SKLEARN = 10
-N_TRIALS_NUMPY = 10
+EPOCHS = HPO_EPOCHS
+N_TRIALS_SKLEARN = HPO_N_TRIALS_SKLEARN
+N_TRIALS_NUMPY = HPO_N_TRIALS_NUMPY
 
 BASELINE_SKLEARN_MSE = 4.5521
 BASELINE_NUMPY_MSE = 6.0377
@@ -51,10 +72,10 @@ BASELINE_NUMPY_MSE = 6.0377
 # ──────────────────────────────────────────────
 def get_hpo_data():
     from dataset import get_train_test_split
-    # Carrega X_train_full (4.000 amostras do conjunto de treino principal)
-    X_train_full, X_test, y_train_full, y_test, _ = get_train_test_split(test_size=0.2, random_state=42)
-    # Subdivide os 4.000 registros em 3.200 treino interno / 800 validação interna para o HPO
-    X_train, X_val, y_train, y_val = train_test_split(X_train_full, y_train_full, test_size=0.2, random_state=42)
+    X_train_full, X_test, y_train_full, y_test, _ = get_train_test_split()
+    X_train, X_val, y_train, y_val = train_test_split(
+        X_train_full, y_train_full, test_size=HPO_VAL_SPLIT_SIZE, random_state=RANDOM_STATE
+    )
     scaler = StandardScaler()
     X_train_scaled = scaler.fit_transform(X_train)
     X_val_scaled = scaler.transform(X_val)
