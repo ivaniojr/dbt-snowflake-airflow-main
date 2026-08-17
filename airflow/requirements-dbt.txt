@@ -4,7 +4,7 @@ dbt-core==1.7.19
 dbt-snowflake==1.7.5
 apache-airflow-providers-snowflake==5.6.1
 apache-airflow-providers-amazon==8.28.0
-mlflow>=2.0.0
+mlflow==2.20.2
 optuna
 scikit-learn
 pandas

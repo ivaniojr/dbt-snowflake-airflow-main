@@ -162,7 +162,7 @@ with DAG(
             f"cd {PROJECT_DIR} && "
             f"{PYTHON} -c \""
             f"import os, mlflow; "
-            f"mlflow.set_tracking_uri(os.getenv('MLFLOW_TRACKING_URI', 'sqlite:////tmp/mlflow.db')); "
+            f"mlflow.set_tracking_uri(os.getenv('MLFLOW_TRACKING_URI', 'sqlite:///{ML_DIR}/mlflow.db')); "
             f"client = mlflow.tracking.MlflowClient(); "
             f"exp = client.get_experiment_by_name('Auditoria_MLP_Best_Params'); "
             f"runs = client.search_runs(exp.experiment_id, order_by=['start_time DESC'], max_results=3); "

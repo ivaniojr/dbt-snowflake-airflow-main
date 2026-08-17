@@ -99,7 +99,9 @@ x-airflow-common:
     # Diretórios usados pelo DAG que executa dbt Core.
     DBT_PROJECT_DIR: /opt/airflow/dbt/munka_warehouse
     DBT_PROFILES_DIR: /opt/airflow/dbt/munka_warehouse
-    DBT_SEND_ANONYMOUS_USAGE_STATS: 'false'
+    # MLflow Tracking URI apontando para o volume montado compartilhado
+    MLFLOW_TRACKING_URI: ${MLFLOW_TRACKING_URI:-sqlite:////opt/airflow/project/src/ml/mlflow.db}
+
     # Dependências pré-instaladas no Dockerfile.dbt
     _PIP_ADDITIONAL_REQUIREMENTS: ''
     # The following line can be used to set a custom config file, stored in the local config folder

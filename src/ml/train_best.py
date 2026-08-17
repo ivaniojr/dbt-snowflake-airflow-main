@@ -97,7 +97,8 @@ def retrain_sklearn(config_path="sklearn_best_params.json"):
     from dataset import get_train_test_split
     X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Best_Params")
 
@@ -210,7 +211,8 @@ def retrain_sklearn_restricted(config_path="sklearn_restricted_best_params.json"
     from dataset import get_train_test_split
     X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Best_Params")
 
@@ -316,7 +318,8 @@ def retrain_numpy(config_path="numpy_best_params.json"):
     from dataset import get_train_test_split
     X_train_full, X_test, y_train_full, y_test, feature_names = get_train_test_split(test_size=0.2, random_state=42)
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    default_db = os.path.abspath(os.path.join(OUTPUT_DIR, "mlflow.db")).replace("\\", "/")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_Best_Params")
 

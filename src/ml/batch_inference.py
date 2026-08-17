@@ -21,6 +21,7 @@ import json
 import os
 import sys
 import joblib
+import mlflow
 import pandas as pd
 import numpy as np
 
@@ -507,6 +508,35 @@ def run_batch_inference():
             ensure_ascii=False,
             indent=4
         )
+
+    # Registrar experimento e artefatos no MLflow
+    try:
+        default_db = os.path.abspath(os.path.join(output_dir, "mlflow.db")).replace("\\", "/")
+        tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
+        mlflow.set_tracking_uri(tracking_uri)
+        mlflow.set_experiment("MUNKA_ML_Analise_Retrospectiva")
+
+        with mlflow.start_run(run_name="Inferencia_Lote_Retrospectiva"):
+            mlflow.log_param("model_scope", MODEL_SCOPE)
+            mlflow.log_param("analysis_moment", ANALYSIS_MOMENT)
+            mlflow.log_param("uses_execution_evidence", USES_EXECUTION_EVIDENCE)
+            mlflow.log_param("feature_set_name", FEATURE_SET_NAME)
+            mlflow.log_param("target", TARGET_NAME)
+            mlflow.log_param("n_samples", int(len(df_results)))
+            mlflow.log_param("n_features", len(feature_names))
+
+            # Métricas de performance agregadas
+            mlflow.log_metrics({k: float(v) for k, v in sklearn_metrics.items()})
+            mlflow.log_metrics({k: float(v) for k, v in numpy_metrics.items()})
+
+            # Artefatos gerados
+            if os.path.exists(output_csv):
+                mlflow.log_artifact(output_csv)
+            if os.path.exists(metrics_json):
+                mlflow.log_artifact(metrics_json)
+        print(" Experimento e artefatos registrados com sucesso no MLflow (MUNKA_ML_Analise_Retrospectiva).")
+    except Exception as e:
+        print(f" [Aviso] Não foi possível registrar no MLflow: {e}")
 
     print(f"\n{'=' * 68}")
     print(f" SUCESSO! {len(df_results)} tarefas analisadas retrospectivamente.")

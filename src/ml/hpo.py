@@ -251,7 +251,8 @@ def main():
     )
     args = parser.parse_args()
 
-    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", "sqlite:////tmp/mlflow.db")
+    default_db = os.path.abspath(os.path.join(os.path.dirname(__file__), "mlflow.db")).replace("\\", "/")
+    tracking_uri = os.getenv("MLFLOW_TRACKING_URI", f"sqlite:///{default_db}")
     mlflow.set_tracking_uri(tracking_uri)
     mlflow.set_experiment("Auditoria_MLP_HPO")
 
