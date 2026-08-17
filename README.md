@@ -216,5 +216,3 @@ O Metabase consome diretamente as tabelas dimensionais Gold e a mart de prediç�
 |---|---|---|
 | **Ivanio Junior** | Engenharia de Dados & Pipeline Airflow | ivaniojr@users.noreply.github.com |
 | **Robson Silva** | Arquitetura Snowflake & Metabase BI | robson.silva.cr@gmail.com |
-| **Integrante 3** | Engenharia de Machine Learning & HPO | integrante3@ifg.edu.br |
-| **Integrante 4** | Infraestrutura AWS CloudFormation & Governança | integrante4@ifg.edu.br |
