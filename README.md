@@ -204,8 +204,9 @@ O Metabase consome diretamente as tabelas dimensionais Gold e a mart de prediç�
 
 ## 📚 Documentação Técnica Adicional
 
+* 📕 **[RelatorioProjetov15.pdf](RelatorioProjetov15.pdf)**: Relatório executivo e acadêmico final consolidado do Projeto MUNKA (formato PDF oficial).
 * 📖 **[ROTEIRO_IMPLANTACAO.md](ROTEIRO_IMPLANTACAO.md)**: Guia completo de implantação, infraestrutura AWS CloudFormation, DDLs Snowflake, comandos passo a passo e troubleshooting.
-* 📄 **[RELATORIO_TECNICO_PROJETO_MUNKA.md](RELATORIO_TECNICO_PROJETO_MUNKA.md)**: Relatório acadêmico e técnico detalhado com fundamentação teórica, modelagem dimensional e arquitetura MLOps.
+* 📄 **[RELATORIO_TECNICO_PROJETO_MUNKA.md](RELATORIO_TECNICO_PROJETO_MUNKA.md)**: Relatório técnico detalhado com fundamentação teórica, modelagem dimensional e arquitetura MLOps.
 
 ---
 
